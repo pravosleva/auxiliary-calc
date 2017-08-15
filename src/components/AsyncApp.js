@@ -9,7 +9,8 @@ import Glycole from './Glycole';
 * - AsyncApp
     props = {
       obj: state,
-      updateQFormState (QFormState),
+      updateQFormState (fs),
+      updateGlycoleFormState (fs),
     }
 */
 

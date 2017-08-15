@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-//css..
+import Density from './Density';
+console.log(Density.density({glycoleType:'MEG', temperature:50, percentage:10}));
 
 class Glycole extends Component {
   _getNumericValue(val){ return (val!=="" && !isNaN(val)) ? Number(val) : "" }
