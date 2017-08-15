@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../css/index.css';
 import Q from './Q';
-import Glycol from './Glycol';
+import Glycole from './Glycole';
 
 /*
 *                             COMPONENT STRUCTURE
@@ -18,7 +18,7 @@ class AsyncApp extends Component {
     return (
       <div className='container'>
         <Q {...this.props} />
-        <Glycol {...this.props} />
+        <Glycole {...this.props} />
       </div>
     );
   }
