@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../css/index.css';
 import Q from './Q';
+import Glycol from './Glycol';
 
 /*
 *                             COMPONENT STRUCTURE
@@ -8,7 +9,7 @@ import Q from './Q';
 * - AsyncApp
     props = {
       obj: state,
-      updateFormState (formState),
+      updateQFormState (QFormState),
     }
 */
 
@@ -17,6 +18,7 @@ class AsyncApp extends Component {
     return (
       <div className='container'>
         <Q {...this.props} />
+        <Glycol {...this.props} />
       </div>
     );
   }

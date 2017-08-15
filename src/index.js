@@ -16,7 +16,8 @@ const render = () => {
   ReactDOM.render(
     <AsyncApp
       obj = {store.getState()}
-      updateFormState = {(fs) => store.dispatch({ type: 'UPDATE_FORM_STATE', formState: fs })}
+      updateQFormState = {(fs) => store.dispatch({ type: 'UPDATE_Q_FORM_STATE', QFormState: fs })}
+      updateGlycoleFormState = {(fs) => store.dispatch({ type: 'UPDATE_GLYCOLE_FORM_STATE', GlycoleFormState: fs })}
     />,
     rootEl
   );
