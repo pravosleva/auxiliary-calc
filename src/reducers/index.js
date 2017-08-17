@@ -8,10 +8,11 @@ export default (
       liquidTemperatureOut: 35
     },
     GlycoleFormState: {
-      glycoleType: "MEG",
-      percentage: 0,
-      temperature: 0,
-      ro: 1000
+      glycoleType: 'MEG',
+      percentage: 10,
+      temperature: 50,
+      ro: 1000,
+      freezingTemperature: 0
     }
   },
   action
