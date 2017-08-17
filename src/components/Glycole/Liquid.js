@@ -1,16 +1,32 @@
 import interpolate from '../interpolate';
 //console.log(interpolate.line({x:0.5, x1:0, y1:1, x2:1, y2:2}));
 
-let Density = (function() {
+let Liquid = (function() {
   return {
-    density: function(obj){
+    freezingTemperature(obj){
+      let { glycoleType, percentage } = obj;
+      switch(glycoleType){
+        case 'MEG':
+
+          //...
+          break;
+        case 'MPG':
+
+          //...
+          break;
+        default: break;
+      }
+      //...
+      return 0;
+    },
+    density(obj){
       let diagram = {}, result, t1, t2, numOfDataObj, d1, d2,
         { glycoleType, temperature, percentage } = obj;
       diagram.percentage = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
       //console.log(`${glycoleType} t=${temperature} %=${percentage}`);
       switch(glycoleType){
         case 'MEG':
-          diagram.temperature = [-45, -40, -35, -30, -25, -20, -15, -10, -5, 0, 5, 10, 15, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100];
+          diagram.temperature = [-45, -40, -35, -30, -25, -20, -15, -10, -5, 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100];
           diagram.data = [
             {// 10%
               range: { tMin: -10, tMax: 100 },
@@ -36,14 +52,74 @@ let Density = (function() {
               range: { tMin: -45, tMax: 100 },
               density: [1110, 1108, 1105, 1103, 1101, 1098, 1096, 1094, 1091, 1088, 1085, 1083, 1080, 1077, 1074, 1071, 1067, 1064, 1060, 1057, 1054, 1051, 1047, 1044, 1040, 1036, 1032, 1028, 1024, 1020]
             },
+            {// 70%
+              range: { tMin: -45, tMax: 100 },
+              density: [1125, 1122, 1120, 1118, 1115, 1112, 1109, 1107, 1104, 1101, 1097, 1094, 1091, 1088, 1084, 1081, 1078, 1074, 1071, 1067, 1064, 1060, 1057, 1053, 1050, 1046, 1042, 1038, 1034, 1030]
+            },
+            {// 80%
+              range: { tMin: -45, tMax: 100 },
+              density: [1137, 1134, 1131, 1129, 1126, 1123, 1120, 1117, 1114, 1111, 1108, 1105, 1102, 1098, 1094, 1091, 1087, 1084, 1081, 1077, 1073, 1069, 1065, 1062, 1058, 1054, 1050, 1046, 1043, 1040]
+            },
+            {// 90%
+              range: { tMin: -20, tMax: 100 },
+              density: [0, 0, 0, 0, 0, 1133, 1130, 1127, 1123, 1120, 1160, 1113, 1100, 1106, 1102, 1099, 1096, 1093, 1089, 1085, 1082, 1078, 1074, 1070, 1066, 1063, 1059, 1055, 1051, 1047]
+            },
+            {// 100%
+              range: { tMin: -15, tMax: 100 },
+              density: [0, 0, 0, 0, 0, 0, 1137, 1134, 1131, 1127, 1124, 1120, 1117, 1113, 1110, 1106, 1103, 1099, 1096, 1093, 1089, 1085, 1081, 1078, 1074, 1070, 1067, 1063, 1059, 1055]
+            },
           ];
+          /*
           console.group(`Test`);
+          console.log(diagram.temperature.length);
           diagram.data.map((e, i)=>{ console.log(`For ${diagram.percentage[i]}%: ${diagram.data[i].density.length} elements`) });
           console.groupEnd(`Test`);
+          */
           break;
         case 'MPG':
-
-          //...
+          diagram.temperature = [-30, -25, -20, -15, -10, -5, 0, 5, 10, 15, 20, 25];
+          diagram.data = [
+            {// 10%
+              range: { tMin: -5, tMax: 25 },
+              density: [0, 0, 0, 0, 0, 1010, 1009, 1008, 1008, 1008, 1006, 1004]
+            },
+            {// 20%
+              range: { tMin: -15, tMax: 25 },
+              density: [0, 0, 0, 1024, 1022, 1020, 1020, 1019, 1018, 1017, 1015, 1012]
+            },
+            {// 30%
+              range: { tMin: -10, tMax: 25 },
+              density: [0, 0, 0, 0, 1038, 1035, 1033, 1031, 1030, 1026, 1023, 1020]
+            },
+            {// 40%
+              range: { tMin: -20, tMax: 25 },
+              density: [0, 0, 1055, 1052, 1050, 1047, 1044, 1041, 1038, 1034, 1032, 1027]
+            },
+            {// 50%
+              range: { tMin: -20, tMax: 25 },
+              density: [0, 0, 1064, 1061, 1058, 1055, 1052, 1048, 1044, 1042, 1039, 1032]
+            },
+            {// 60%
+              range: { tMin: -20, tMax: 25 },
+              density: [0, 0, 1068, 1065, 1062, 1059, 1056, 1052, 1049, 1046, 1042, 1037]
+            },
+            {// 70%
+              range: { tMin: 5, tMax: 25 },
+              density: [0, 0, 0, 0, 0, 0, 0, 1055, 1051, 1048, 1044, 1040]
+            },
+            {// 80%
+              range: { tMin: 5, tMax: 25 },
+              density: [0, 0, 0, 0, 0, 0, 0, 1055, 1051, 1048, 1044, 1040]
+            },
+            {// 90%
+              range: { tMin: 5, tMax: 25 },
+              density: [0, 0, 0, 0, 0, 0, 0, 1052, 1049, 1045, 1041, 1037]
+            },
+            {// 100%
+              range: { tMin: -30, tMax: 25 },
+              density: [1073, 1069, 1065, 1062, 1059, 1055, 1051, 1047, 1044, 1040, 1037, 1033]
+            },
+          ];
           break;
         case 'WATER':
 
@@ -64,10 +140,12 @@ let Density = (function() {
       // Out of temperature range:
       if(
         (temperature < diagram.temperature[0]) ||
-        (temperature > diagram.temperature[diagram.temperature.length-1])
+        (temperature > diagram.temperature[diagram.temperature.length-1]) ||
+        (temperature < diagram.data[numOfDataObj].range.tMin) ||
+        (temperature > diagram.data[numOfDataObj].range.tMax)
       ){ result = 0 }
       // If =last then last range:
-      console.log(diagram.temperature[diagram.temperature.length-1])
+      //console.log(diagram.temperature[diagram.temperature.length-1])
       if(temperature === diagram.temperature[diagram.temperature.length-1]){
         t1 = diagram.temperature[diagram.temperature.length-2];
         t2 = diagram.temperature[diagram.temperature.length-1];
@@ -110,4 +188,4 @@ let Density = (function() {
   }
 })();
 
-export default Density;
+export default Liquid;

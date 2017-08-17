@@ -41,28 +41,24 @@ class Q extends Component {
     //...
     let Q = cp * Gm * ro * (liquidTemperatureIn-liquidTemperatureOut) / 3600 // to kW
     return (
-      <div className='container'>
-        <h1>Q</h1>
-        <pre>Cooling Capacity by Liquid Flow.</pre>
-        <div className='row'>
-          <div className='col-lg6 col-md-6 col-sm-6 col-xs-12'>
-            <h2>Input data</h2>
-            <label>cp, kJ/kg.K</label>
-            <input className='form-control inout-sm' value={cp} onChange={this.changeFormState.bind(this, 'cp')} />
-            <label>ro, kg/m3</label>
-            <input className='form-control inout-sm' value={ro} onChange={this.changeFormState.bind(this, 'ro')} />
-            <label>Gm, m3/h</label>
-            <input className='form-control inout-sm' value={Gm} onChange={this.changeFormState.bind(this, 'Gm')} />
-            <label>liquid temperature in, C</label>
-            <input className='form-control inout-sm' value={liquidTemperatureIn} onChange={this.changeFormState.bind(this, 'liquidTemperatureIn')} />
-            <label>liquid temperature out, C</label>
-            <input className='form-control inout-sm' value={liquidTemperatureOut} onChange={this.changeFormState.bind(this, 'liquidTemperatureOut')} />
-          </div>
-          <div className='col-lg6 col-md-6 col-sm-6 col-xs-12'>
-            <h2>Output data</h2>
-            <strong>Q = {Q.toFixed(2)} kW</strong>
-          </div>
-        </div>
+      <div>
+        <h1>Q by Liquid Flow</h1>
+
+        <h2>Input data</h2>
+        <label>cp, kJ/kg.K</label>
+        <input className='form-control input-sm' value={cp} onChange={this.changeFormState.bind(this, 'cp')} />
+        <label>ro, kg/m3</label>
+        <input className='form-control input-sm' value={ro} onChange={this.changeFormState.bind(this, 'ro')} />
+        <label>Gm, m3/h</label>
+        <input className='form-control input-sm' value={Gm} onChange={this.changeFormState.bind(this, 'Gm')} />
+        <label>liquid temperature in, C</label>
+        <input className='form-control input-sm' value={liquidTemperatureIn} onChange={this.changeFormState.bind(this, 'liquidTemperatureIn')} />
+        <label>liquid temperature out, C</label>
+        <input className='form-control input-sm' value={liquidTemperatureOut} onChange={this.changeFormState.bind(this, 'liquidTemperatureOut')} />
+
+        <h2>Output data</h2>
+        <strong>Q = {Q.toFixed(2)} kW</strong>
+
       </div>
     );
   }
