@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 class Q extends Component {
 
   _getNumericValue(val){ return (val!=="" && !isNaN(val)) ? Number(val) : "" }
-  changeFormState(propName, e) {
+  changeQFormState(propName, e) {
     const { obj } = this.props;
     let cp = obj.QFormState.cp,
       ro = obj.QFormState.ro,
@@ -46,15 +46,15 @@ class Q extends Component {
 
         <h2>Input data</h2>
         <label>cp, kJ/kg.K</label>
-        <input className='form-control input-sm' value={cp} onChange={this.changeFormState.bind(this, 'cp')} />
+        <input className='form-control input-sm' value={cp} onChange={this.changeQFormState.bind(this, 'cp')} />
         <label>ro, kg/m3</label>
-        <input className='form-control input-sm' value={ro} onChange={this.changeFormState.bind(this, 'ro')} />
+        <input disabled className='form-control input-sm' value={ro} />
         <label>Gm, m3/h</label>
-        <input className='form-control input-sm' value={Gm} onChange={this.changeFormState.bind(this, 'Gm')} />
+        <input className='form-control input-sm' value={Gm} onChange={this.changeQFormState.bind(this, 'Gm')} />
         <label>liquid temperature in, C</label>
-        <input className='form-control input-sm' value={liquidTemperatureIn} onChange={this.changeFormState.bind(this, 'liquidTemperatureIn')} />
+        <input className='form-control input-sm' value={liquidTemperatureIn} onChange={this.changeQFormState.bind(this, 'liquidTemperatureIn')} />
         <label>liquid temperature out, C</label>
-        <input className='form-control input-sm' value={liquidTemperatureOut} onChange={this.changeFormState.bind(this, 'liquidTemperatureOut')} />
+        <input className='form-control input-sm' value={liquidTemperatureOut} onChange={this.changeQFormState.bind(this, 'liquidTemperatureOut')} />
 
         <h2>Output data</h2>
         <strong>Q = {Q.toFixed(2)} kW</strong>

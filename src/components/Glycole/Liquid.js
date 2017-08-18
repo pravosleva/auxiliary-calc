@@ -22,11 +22,12 @@ let Liquid = (function() {
     density(obj){
       let diagram = {}, result, t1, t2, numOfDataObj, d1, d2,
         { glycoleType, temperature, percentage } = obj,
-        msg = 'No comment';
-      diagram.percentage = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+        error = false, msg = 'Ok';
       //console.log(`${glycoleType} t=${temperature} %=${percentage}`);
+      //console.log(obj);
       switch(glycoleType){
         case 'MEG':
+          diagram.percentage = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
           diagram.temperature = [-45, -40, -35, -30, -25, -20, -15, -10, -5, 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100];
           diagram.data = [
             {// 10%
@@ -78,6 +79,7 @@ let Liquid = (function() {
           */
           break;
         case 'MPG':
+          diagram.percentage = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
           diagram.temperature = [-30, -25, -20, -15, -10, -5, 0, 5, 10, 15, 20, 25];
           diagram.data = [
             {// 10%
@@ -123,70 +125,93 @@ let Liquid = (function() {
           ];
           break;
         case 'WATER':
-
-          //...
+          diagram.percentage = [100, 100];
+          diagram.temperature = [0, 50, 100];
+          diagram.data = [
+            {
+              range: { tMin: 0, tMax: 100 },
+              density: [1000, 1000, 1000]
+            },
+            {
+              range: { tMin: 0, tMax: 100 },
+              density: [1000, 1000, 1000]
+            },
+          ];
           break;
         default: break;
       };
-      console.log(diagram)
+      //console.log(diagram)
 
       // Out of percentage range:
       if(
         (percentage < diagram.percentage[0]) ||
         (percentage > diagram.percentage[diagram.percentage.length-1])
-      ){ result = 0 }
-      // If =last then last range:
-      diagram.percentage.map(function(e, i){ if(percentage === e){ numOfDataObj = i } });
-      //console.log(`numOfDataObj = ${numOfDataObj}`);
-
-      // Out of temperature range:
-      if(
-        (temperature < diagram.temperature[0]) ||
-        (temperature > diagram.temperature[diagram.temperature.length-1]) ||
-        (temperature < diagram.data[numOfDataObj].range.tMin) ||
-        (temperature > diagram.data[numOfDataObj].range.tMax)
-      ){ result = 0; msg = 'Out of temperature range' }
-      // If =last then last range:
-      //console.log(diagram.temperature[diagram.temperature.length-1])
-      if(temperature === diagram.temperature[diagram.temperature.length-1]){
-        t1 = diagram.temperature[diagram.temperature.length-2];
-        t2 = diagram.temperature[diagram.temperature.length-1];
-        d1 = diagram.data[numOfDataObj].density[diagram.temperature.length-2];
-        d2 = diagram.data[numOfDataObj].density[diagram.temperature.length-1];
+      ){
+        error = true;
+        result = 1000;
+        msg = `Out of percentage range for ${percentage} %`;
       }else{
-        // DETECT the t1 & t2 - is the min & max values of local t range
-        // ...and d1 & d2
-        for(let i=0, max=diagram.temperature.length; i<max; i++){//console.log(i);
-          if(temperature < diagram.temperature[diagram.temperature.length-1] && temperature > diagram.temperature[diagram.temperature.length-2]){
-            t1 = diagram.temperature[diagram.temperature.length-2];
-            t2 = diagram.temperature[diagram.temperature.length-1];
-            d1 = diagram.data[numOfDataObj].density[diagram.temperature.length-2];
-            d2 = diagram.data[numOfDataObj].density[diagram.temperature.length-1];
-          }else if(temperature >= diagram.temperature[i] && temperature < diagram.temperature[i+1]){
-            t1 = diagram.temperature[i];
-            t2 = diagram.temperature[i+1];
-            d1 = diagram.data[numOfDataObj].density[i];
-            d2 = diagram.data[numOfDataObj].density[i+1];
-          }else{
-            //console.error(`${diagram.temperature[i]} -- ${diagram.temperature[i+1]} wtf`);
-          }
-        };
-        //console.group(`That was set`);
-        //console.log(`t1 = ${t1}, t2 = ${t2}`);
-        //console.log(`d1 = ${d1}, d2 = ${d2}`);
-        //console.groupEnd(`That was set`);
+        // If =last then last range:
+        diagram.percentage.map(function(e, i){ if(percentage === e){ numOfDataObj = i }; return false; });
+        //console.log(`numOfDataObj = ${numOfDataObj}`);
+        if(
+          (temperature < diagram.temperature[0]) ||
+          (temperature > diagram.temperature[diagram.temperature.length-1]) ||
+          (temperature < diagram.data[numOfDataObj].range.tMin) ||
+          (temperature > diagram.data[numOfDataObj].range.tMax)
+        ){
+          error = true;
+          result = 1000;
+          msg = `Out of temperature range for ${glycoleType} ${percentage} % / Temp value should be between ${diagram.data[numOfDataObj].range.tMin} & ${diagram.data[numOfDataObj].range.tMax} C`
+        }
       }
-      msg = `Between t1 = ${t1} and t2 = ${t2} & d1 = ${d1} and d2 = ${d2}`;
+      if(error===false){
+        // If =last then last range:
+        //console.log(diagram.temperature[diagram.temperature.length-1])
+        if(temperature === diagram.temperature[diagram.temperature.length-1]){
+          t1 = diagram.temperature[diagram.temperature.length-2];
+          t2 = diagram.temperature[diagram.temperature.length-1];
+          d1 = diagram.data[numOfDataObj].density[diagram.temperature.length-2];
+          d2 = diagram.data[numOfDataObj].density[diagram.temperature.length-1];
+        }else{
+          // DETECT the t1 & t2 - is the min & max values of local t range
+          // ...and d1 & d2
+          for(let i=0, max=diagram.temperature.length; i<max; i++){//console.log(i);
+            if(temperature < diagram.temperature[diagram.temperature.length-1] && temperature > diagram.temperature[diagram.temperature.length-2]){
+              t1 = diagram.temperature[diagram.temperature.length-2];
+              t2 = diagram.temperature[diagram.temperature.length-1];
+              d1 = diagram.data[numOfDataObj].density[diagram.temperature.length-2];
+              d2 = diagram.data[numOfDataObj].density[diagram.temperature.length-1];
+            }else if(temperature >= diagram.temperature[i] && temperature < diagram.temperature[i+1]){
+              t1 = diagram.temperature[i];
+              t2 = diagram.temperature[i+1];
+              d1 = diagram.data[numOfDataObj].density[i];
+              d2 = diagram.data[numOfDataObj].density[i+1];
+            }else{
+              //console.error(`${diagram.temperature[i]} -- ${diagram.temperature[i+1]} wtf`);
+            }
+          };
+          //console.group(`That was set`);
+          //console.log(`t1 = ${t1}, t2 = ${t2}`);
+          //console.log(`d1 = ${d1}, d2 = ${d2}`);
+          //console.groupEnd(`That was set`);
+        }
+        msg += ` / Interpolated between t1 = ${t1} and t2 = ${t2} & d1 = ${d1} and d2 = ${d2}`;
+      }
 
-      result = interpolate.line({
-        x: temperature,
-        x1: t1,
-        y1: d1,
-        x2: t2,
-        y2: d2
-      });
+      if(error===false){
+        result = interpolate.line({
+          x: temperature,
+          x1: t1,
+          y1: d1,
+          x2: t2,
+          y2: d2
+        });
+      }else{
+        result = 1000;
+      }
 
-      return { diagram, result, msg };
+      return { diagram, error, result, msg };
     }
   }
 })();
