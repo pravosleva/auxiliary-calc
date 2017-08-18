@@ -21,7 +21,8 @@ let Liquid = (function() {
     },
     density(obj){
       let diagram = {}, result, t1, t2, numOfDataObj, d1, d2,
-        { glycoleType, temperature, percentage } = obj;
+        { glycoleType, temperature, percentage } = obj,
+        msg = 'No comment';
       diagram.percentage = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
       //console.log(`${glycoleType} t=${temperature} %=${percentage}`);
       switch(glycoleType){
@@ -127,6 +128,7 @@ let Liquid = (function() {
           break;
         default: break;
       };
+      console.log(diagram)
 
       // Out of percentage range:
       if(
@@ -143,7 +145,7 @@ let Liquid = (function() {
         (temperature > diagram.temperature[diagram.temperature.length-1]) ||
         (temperature < diagram.data[numOfDataObj].range.tMin) ||
         (temperature > diagram.data[numOfDataObj].range.tMax)
-      ){ result = 0 }
+      ){ result = 0; msg = 'Out of temperature range' }
       // If =last then last range:
       //console.log(diagram.temperature[diagram.temperature.length-1])
       if(temperature === diagram.temperature[diagram.temperature.length-1]){
@@ -169,11 +171,12 @@ let Liquid = (function() {
             //console.error(`${diagram.temperature[i]} -- ${diagram.temperature[i+1]} wtf`);
           }
         };
-        console.group(`That was set`);
-        console.log(`t1 = ${t1}, t2 = ${t2}`);
-        console.log(`d1 = ${d1}, d2 = ${d2}`);
-        console.groupEnd(`That was set`);
+        //console.group(`That was set`);
+        //console.log(`t1 = ${t1}, t2 = ${t2}`);
+        //console.log(`d1 = ${d1}, d2 = ${d2}`);
+        //console.groupEnd(`That was set`);
       }
+      msg = `Between t1 = ${t1} and t2 = ${t2} & d1 = ${d1} and d2 = ${d2}`;
 
       result = interpolate.line({
         x: temperature,
@@ -183,7 +186,7 @@ let Liquid = (function() {
         y2: d2
       });
 
-      return result;
+      return { diagram, result, msg };
     }
   }
 })();

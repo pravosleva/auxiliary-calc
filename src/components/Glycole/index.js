@@ -5,6 +5,7 @@ import Liquid from './Liquid';
 class Glycole extends Component {
   _getNumericValue(val){ return (val!=="" && !isNaN(val)) ? Number(val) : "" }
   changeFormState(propName, e) {
+    console.log(propName)
     let _getNumericValue = (val) => { return (val!=="" && !isNaN(val)) ? Number(val) : "" };
     const { obj } = this.props;
     let { glycoleType, temperature, percentage, freezingTemperature } = obj.GlycoleFormState;
@@ -30,7 +31,9 @@ class Glycole extends Component {
     const { obj } = this.props;
     let { glycoleType, temperature, percentage, freezingTemperature } = obj.GlycoleFormState;
     //...
-    let density = Liquid.density({glycoleType, temperature, percentage});
+    let density = Liquid.density({glycoleType, temperature, percentage}).result,
+      densityReport = Liquid.density({glycoleType, temperature, percentage}).msg,
+      percentageRange = Liquid.density({glycoleType, temperature, percentage}).diagram.percentage;
     return (
       <div>
         <h1>Glycole</h1>
@@ -63,7 +66,11 @@ class Glycole extends Component {
           </span>
         </div>
         <label>Percentage, %</label>
-        <input className='form-control input-sm' value={percentage} onChange={this.changeFormState.bind(this, 'percentage')} />
+        <select className='form-control input-sm' value={percentage} onChange={this.changeFormState.bind(this, 'percentage')}>
+          {
+            percentageRange.map((e, i) => <option key={i} value={e}>{e}</option>)
+          }
+        </select>
         <label>Temperature, C</label>
         <input className='form-control input-sm' value={temperature} onChange={this.changeFormState.bind(this, 'temperature')} />
         <label>Freezing Temperature, C</label>
@@ -71,7 +78,7 @@ class Glycole extends Component {
 
 
         <h2>Output data</h2>
-        <strong>ro = {density} kg/m3</strong>
+        <strong>ro = {density} kg/m3</strong><br /><span className='text-muted'>Density report: {densityReport}</span>
 
       </div>
     );
