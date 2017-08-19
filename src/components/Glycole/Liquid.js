@@ -3,6 +3,28 @@ import interpolate from '../interpolate';
 
 let Liquid = (function() {
   return {
+    cp(obj){// Should be as function by temp & percentage...
+      let { glycoleType } = obj,
+        result;// kJ/kg.K
+      switch(glycoleType){
+        case 'MEG':
+          result = 2.4;// tmp value (+20 )
+
+          //...
+          break;
+        case 'MPG':
+          result = 3.7;// tmp value (+20 C 37 %)
+
+          //...
+          break;
+        default:// WATER
+          result = 4.19;
+
+          //...
+          break;
+      }
+      return { result };
+    },
     freezingTemperature(obj){
       let { glycoleType, percentage } = obj;
       switch(glycoleType){
@@ -14,7 +36,10 @@ let Liquid = (function() {
 
           //...
           break;
-        default: break;
+        default:// WATER
+
+          //...
+          break;
       }
       //...
       return 0;
@@ -22,7 +47,7 @@ let Liquid = (function() {
     density(obj){
       let diagram = {}, result, t1, t2, numOfDataObj, d1, d2,
         { glycoleType, temperature, percentage } = obj,
-        error = false, msg = 'Ok';
+        error = false, report = 'Ok';
       //console.log(`${glycoleType} t=${temperature} %=${percentage}`);
       //console.log(obj);
       switch(glycoleType){
@@ -125,14 +150,14 @@ let Liquid = (function() {
           ];
           break;
         case 'WATER':
-          diagram.percentage = [100, 100];
+          diagram.percentage = [100, 100];// Need to have the range.
           diagram.temperature = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50];
           diagram.data = [
             {
               range: { tMin: 0, tMax: 50 },
               density: [999.87, 999.97, 1000.0, 999.97, 999.88, 999.73, 999.53, 999.27, 998.97, 998.62, 998.23, 997.80, 997.33, 996.81, 996.26, 995.68, 995.06, 994.4, 993.72, 993.0, 992.25, 991.47, 990.7, 989.8, 989.0, 988.1]// For each temp value
             },
-            {
+            {// Copyed.
               range: { tMin: 0, tMax: 50 },
               density: [999.87, 999.97, 1000.0, 999.97, 999.88, 999.73, 999.53, 999.27, 998.97, 998.62, 998.23, 997.80, 997.33, 996.81, 996.26, 995.68, 995.06, 994.4, 993.72, 993.0, 992.25, 991.47, 990.7, 989.8, 989.0, 988.1]
             },
@@ -149,7 +174,7 @@ let Liquid = (function() {
       ){
         error = true;
         result = 1000;
-        msg = `Out of percentage range for ${percentage} %`;
+        report = `Out of percentage range for ${percentage} %`;
       }else{
         // If =last then last range:
         diagram.percentage.map(function(e, i){ if(percentage === e){ numOfDataObj = i }; return false; });
@@ -162,7 +187,7 @@ let Liquid = (function() {
         ){
           error = true;
           result = 1000;
-          msg = `Out of temperature range for ${glycoleType} ${percentage} % / Temp value should be between ${diagram.data[numOfDataObj].range.tMin} & ${diagram.data[numOfDataObj].range.tMax} C`
+          report = `Out of temperature range for ${glycoleType} ${percentage} % / Temp value should be between ${diagram.data[numOfDataObj].range.tMin} & ${diagram.data[numOfDataObj].range.tMax} C`
         }
       }
       if(error===false){
@@ -196,7 +221,7 @@ let Liquid = (function() {
           //console.log(`d1 = ${d1}, d2 = ${d2}`);
           //console.groupEnd(`That was set`);
         }
-        msg += ` / Interpolated between t1 = ${t1} and t2 = ${t2} & d1 = ${d1} and d2 = ${d2}`;
+        report += ` / Interpolated between t1 = ${t1} and t2 = ${t2} & d1 = ${d1} and d2 = ${d2}`;
       }
 
       if(error===false){
@@ -211,7 +236,7 @@ let Liquid = (function() {
         result = 1000;
       }
 
-      return { diagram, error, result, msg };
+      return { diagram, error, result, report };
     }
   }
 })();

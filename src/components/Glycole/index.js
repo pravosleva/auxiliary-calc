@@ -46,7 +46,7 @@ class Glycole extends Component {
     // Need to update QFormState:
     const { obj } = this.props;
     let { glycoleType, temperature, percentage } = obj.GlycoleFormState;
-    let cp = obj.QFormState.cp,
+    let cp = Liquid.cp({ glycoleType }).result,//obj.QFormState.cp,
       ro = Liquid.density({ glycoleType, temperature, percentage }).result,
       Gm = obj.QFormState.Gm,
       liquidTemperatureIn = obj.QFormState.liquidTemperatureIn,
@@ -58,11 +58,9 @@ class Glycole extends Component {
   render() {
     const { obj } = this.props;
     let { glycoleType, temperature, percentage } = obj.GlycoleFormState;
-    //console.log(obj.GlycoleFormState);
-    //...
     let ro = Liquid.density({glycoleType, temperature, percentage}).result,
       error = Liquid.density({glycoleType, temperature, percentage}).error,
-      densityReport = Liquid.density({glycoleType, temperature, percentage}).msg,
+      densityReport = Liquid.density({glycoleType, temperature, percentage}).report,
       percentageRange = Liquid.density({glycoleType, temperature, percentage}).diagram.percentage,
       freezingTemperature = 0;
 

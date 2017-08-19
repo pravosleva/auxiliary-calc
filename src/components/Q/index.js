@@ -39,14 +39,14 @@ class Q extends Component {
       liquidTemperatureIn = obj.QFormState.liquidTemperatureIn,
       liquidTemperatureOut = obj.QFormState.liquidTemperatureOut;
     //...
-    let Q = cp * Gm * ro * (liquidTemperatureIn-liquidTemperatureOut) / 3600 // to kW
+    let Q = cp * Gm * ro * (liquidTemperatureIn-liquidTemperatureOut) / 3600;// to kW
     return (
       <div>
         <h1>Q by Liquid Flow</h1>
 
         <h2>Input data</h2>
         <label>cp, kJ/kg.K</label>
-        <input className='form-control input-sm' value={cp} onChange={this.changeQFormState.bind(this, 'cp')} />
+        <input disabled className='form-control input-sm' value={cp} />{/* onChange={this.changeQFormState.bind(this, 'cp')}*/}
         <label>ro, kg/m3</label>
         <input disabled className='form-control input-sm' value={ro} />
         <label>Gm, m3/h</label>
