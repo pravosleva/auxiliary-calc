@@ -4,13 +4,13 @@ export default (
       cp: 4.19,
       ro: 1000,
       Gm: 42,
-      liquidTemperatureIn: 45,
-      liquidTemperatureOut: 35
+      liquidTemperatureIn: 12,
+      liquidTemperatureOut: 7
     },
     GlycoleFormState: {
       glycoleType: 'WATER',
       percentage: 100,
-      temperature: 4
+      temperature: 7
     }
   },
   action

@@ -51,9 +51,9 @@ class Q extends Component {
         <input disabled className='form-control input-sm' value={ro} />
         <label>Gm, m3/h</label>
         <input className='form-control input-sm' value={Gm} onChange={this.changeQFormState.bind(this, 'Gm')} />
-        <label>liquid temperature in, C</label>
+        <label>Liquid Temperature in, C</label>
         <input className='form-control input-sm' value={liquidTemperatureIn} onChange={this.changeQFormState.bind(this, 'liquidTemperatureIn')} />
-        <label>liquid temperature out, C</label>
+        <label>Liquid Temperature out, C</label>
         <input className='form-control input-sm' value={liquidTemperatureOut} onChange={this.changeQFormState.bind(this, 'liquidTemperatureOut')} />
 
         <h2>Output data</h2>

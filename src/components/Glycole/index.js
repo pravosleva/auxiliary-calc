@@ -15,12 +15,15 @@ class Glycole extends Component {
     switch(propName){
       case 'glycoleType':
         glycoleType = e.target.value;
+        this.props.updateGlycoleFormState({ glycoleType, temperature, percentage });
+
         diagram = Liquid.density({ glycoleType, temperature, percentage }).diagram;
 
         // --- Need to Refactiring:
-        let numOfDataObj = 0;
-        diagram.percentage.map(function(e, i){ if(percentage === e){ numOfDataObj = i }; return false; });
-        t0 = diagram.data[numOfDataObj].range.tMin;
+        //let numOfDataObj = 0;
+        //diagram.percentage.map(function(e, i){ if(percentage === e){ numOfDataObj = i }; return false; });
+        //t0 = diagram.data[numOfDataObj].range.tMin;
+        t0 = 7;
         //console.log(diagram.percentage);
         p0 = diagram.percentage[0];
         freezingTemperature = 0;
@@ -72,7 +75,7 @@ class Glycole extends Component {
         <div className='input-group'>
           <input className='form-control input-sm' value={glycoleType} onChange={this.changeGlycoleFormState.bind(this, 'glycoleType')} disabled />
           <span className="input-group-btn dropdown">
-            <button className="btn btn-sm btn-secondary dropdown-toggle btn-danger" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button className="btn btn-sm btn-secondary dropdown-toggle btn-default" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span>{glycoleType}</span>&nbsp;&nbsp;<span className="caret"></span>
             </button>
             <ul className="dropdown-menu dropdown-menu-right" role="menu">
@@ -80,12 +83,12 @@ class Glycole extends Component {
                 className="dropdown-item"
                 value="MEG"
                 onClick={this.changeGlycoleFormState.bind( this, 'glycoleType', {target:{value:"MEG"}} )}
-                >MEG</a></li>
+                >ETHYLENE GLYCOLE</a></li>
               <li><a style={{cursor:'pointer'}}
                 className="dropdown-item"
                 value="MPG"
                 onClick={this.changeGlycoleFormState.bind( this, 'glycoleType', {target:{value:"MPG"}} )}
-                >MPG</a></li>
+                >PROPYLENE GLYCOLE</a></li>
               <li><a style={{cursor:'pointer'}}
                 className="dropdown-item"
                 value="WATER"
@@ -100,11 +103,11 @@ class Glycole extends Component {
             percentageRange.map((e, i) => <option key={i} value={e}>{e}</option>)
           }
         </select>
-        <label>Temperature, C</label>
+        <label>Liquid Temperature, C</label>
         <input className='form-control input-sm' value={temperature} onChange={this.changeGlycoleFormState.bind(this, 'temperature')} />
 
         <h2>Output data</h2>
-        <strong>ro = {ro} kg/m3</strong><br />
+        <strong>ro = {ro.toFixed(2)} kg/m3</strong><br />
         <span className={error===true?'text-danger':'text-muted'}>
           Density report: {densityReport}
         </span>
