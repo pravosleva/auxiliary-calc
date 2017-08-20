@@ -96,14 +96,15 @@ class Glycole extends Component {
           </span>
         </div>
         <label>Percentage, %</label>
+        {/*
         <select disabled={liquidType==='WATER'?true:false} className='form-control input-sm' value={percentage} onChange={this.changeGlycoleFormState.bind(this, 'percentage')}>
           {
             percentageRange.map((e, i) => <option key={i} value={e}>{e}</option>)
           }
         </select>
-        {/*
-        <input disabled={liquidType==='WATER'?true:false} className='form-control input-sm' value={percentage} onChange={this.changeGlycoleFormState.bind(this, 'percentage')} />
         */}
+        <input disabled={liquidType==='WATER'?true:false} className='form-control input-sm' value={percentage} onChange={this.changeGlycoleFormState.bind(this, 'percentage')} />
+
         <label>Liquid Temperature, C</label>
         <input className='form-control input-sm' value={temperature} onChange={this.changeGlycoleFormState.bind(this, 'temperature')} />
 

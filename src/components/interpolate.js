@@ -14,12 +14,24 @@ let interpolate = (function() {
         b = y1-k*x1;
       return { k, b }
     },
-    byLine(obj){
-      let { x, x1, y1, x2, y2 } = obj,
-        interpolateResult1 = this.line({ x, x1, y1, x2, y2:y1 }),
-        interpolateResult2 = this.line({ x, x1, y1:y2, x2, y2 });
-      //console.log(`byLine between ${interpolateResult1} & ${interpolateResult2}`);
-      return this.line({ x, x1:x, x2:x, y1:interpolateResult1, y2:interpolateResult2 });
+    biLine(obj){
+      let { x, y, x1, y1, x2, y2, q11, q12, q21, q22 } = obj,
+        interResult1 = this.line({ x: x,
+                                   x1: x1,
+                                   y1: q11,
+                                   x2: x2,
+                                   y2: q12}),
+        interResult2 = this.line({ x: x,
+                                   x1: x1,
+                                   y1: q21,
+                                   x2: x2,
+                                   y2: q22 });
+      //console.log(`biLine between ${interResult1} & ${interResult2}`);
+      return this.line({ x: y,
+                         x1: y1,
+                         y1: interResult1,
+                         x2: y2,
+                         y2: interResult2 });
     },
   }
 })();

@@ -1,3 +1,12 @@
+# Auxiliary calc
+
+## Tasklist (2 of 4 are completed)
+
+- [x] Interpolate.
+- [ ] **Q** calc by Fiquid Flow _(Gw)_ and Heating Coefficient _(cp)_.
+- [x] **Liquid density** calc by Liquid Type and others... (should be refactored)
+- [ ] **Chillers** (something brand for example).
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
@@ -1760,7 +1769,7 @@ If you’re using [Apache HTTP Server](https://httpd.apache.org/), you need to c
     RewriteRule ^ index.html [QSA,L]
 ```
 
-It will get copied to the `build` folder when you run `npm run build`. 
+It will get copied to the `build` folder when you run `npm run build`.
 
 If you’re using [Apache Tomcat](http://tomcat.apache.org/), you need to follow [this Stack Overflow answer](https://stackoverflow.com/a/41249464/4878474).
 
