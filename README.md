@@ -1,10 +1,12 @@
 # Auxiliary calc
 
-## Tasklist (2 of 4 are completed)
+## Tasklist (2 of 6 are completed)
 
 - [x] Interpolate.
-- [ ] **Q** calc by Fiquid Flow _(Gw)_ and Heating Coefficient _(cp)_.
+- [ ] **Q** calc by Fiquid Flow _(Gw)_...
+- [ ] _cp_ should be added as method LiquidParameters.cp ({ liquidType, temperature, percentage })
 - [x] **Liquid density** calc by Liquid Type and others... (should be refactored)
+- [ ] _freezingTemperature_ should be added as method LiquidParameters.freezingTemperature ({ liquidType, percentage })
 - [ ] **Chillers** (something brand for example).
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
