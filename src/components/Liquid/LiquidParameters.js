@@ -1,12 +1,12 @@
 import interpolate from '../interpolate';
 //console.log(interpolate.line({x:0.5, x1:0, y1:1, x2:1, y2:2}));
 
-let Liquid = (function() {
+let LiquidParameters = (function() {
   return {
     cp(obj){// Should be as function by temp & percentage...
-      let { glycoleType } = obj,
+      let { liquidType } = obj,
         result;// kJ/kg.K
-      switch(glycoleType){
+      switch(liquidType){
         case 'MEG':
           result = 2.4;// tmp value (+20 )
 
@@ -26,8 +26,8 @@ let Liquid = (function() {
       return { result };
     },
     freezingTemperature(obj){
-      let { glycoleType, percentage } = obj;
-      switch(glycoleType){
+      let { liquidType, percentage } = obj;
+      switch(liquidType){
         case 'MEG':
 
           //...
@@ -46,11 +46,11 @@ let Liquid = (function() {
     },
     density(obj){
       let diagram = {}, result, t1, t2, numOfDataObj, d1, d2,
-        { glycoleType, temperature, percentage } = obj,
+        { liquidType, temperature, percentage } = obj,
         error = false, report = 'Ok';
-      //console.log(`${glycoleType} t=${temperature} %=${percentage}`);
+      //console.log(`${liquidType} t=${temperature} %=${percentage}`);
       //console.log(obj);
-      switch(glycoleType){
+      switch(liquidType){
         case 'MEG':
           diagram.percentage = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
           diagram.temperature = [-45, -40, -35, -30, -25, -20, -15, -10, -5, 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100];
@@ -177,7 +177,11 @@ let Liquid = (function() {
         report = `Out of percentage range for ${percentage} %`;
       }else{
         // If =last then last range:
-        diagram.percentage.map(function(e, i){ if(percentage === e){ numOfDataObj = i }; return false; });
+        numOfDataObj = diagram.percentage.findIndex(function(e, i){ return (percentage === e) });
+        //console.log(numOfDataObj);
+        if(numOfDataObj===undefined || numOfDataObj===-1){
+          numOfDataObj = 0;// Wrong!
+        }
         //console.log(`numOfDataObj = ${numOfDataObj}`);
         if(
           (temperature < diagram.temperature[0]) ||
@@ -187,10 +191,12 @@ let Liquid = (function() {
         ){
           error = true;
           result = 1000;
-          report = `Out of temperature range for ${glycoleType} ${percentage} % / Temp value should be between ${diagram.data[numOfDataObj].range.tMin} & ${diagram.data[numOfDataObj].range.tMax} C`
+          report = `Out of temperature range for ${liquidType} ${percentage} % / Temp value should be between ${diagram.data[numOfDataObj].range.tMin} & ${diagram.data[numOfDataObj].range.tMax} C`
         }
       }
       if(error===false){
+        // --- Should be refactored! numOfDataObj must die.
+
         // If =last then last range:
         //console.log(diagram.temperature[diagram.temperature.length-1])
         if(temperature === diagram.temperature[diagram.temperature.length-1]){
@@ -221,11 +227,16 @@ let Liquid = (function() {
           //console.log(`d1 = ${d1}, d2 = ${d2}`);
           //console.groupEnd(`That was set`);
         }
+        // --- ---
+
         report += ` / Interpolated between t1 = ${t1} and t2 = ${t2} & d1 = ${d1} and d2 = ${d2}`;
       }
 
       if(error===false){
-        result = interpolate.line({
+        //console.group(`byLine test`);
+        //console.info(interpolate.byLine({ x:temperature, x1:t1, y1:d1, x2:t2, y2:d2 }));
+        //console.groupEnd(`byLine test`);
+        result = interpolate.byLine({
           x: temperature,
           x1: t1,
           y1: d1,
@@ -241,4 +252,4 @@ let Liquid = (function() {
   }
 })();
 
-export default Liquid;
+export default LiquidParameters;

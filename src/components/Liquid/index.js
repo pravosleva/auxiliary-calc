@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Liquid from './Liquid';
-//console.log(Liquid.density({glycoleType:'MEG', temperature:50, percentage:10}));
+import LiquidParameters from './LiquidParameters';
+//console.log(LiquidParameters.density({liquidType:'MEG', temperature:50, percentage:10}));
 
 class Glycole extends Component {
   _getNumericValue(val){ return (val!=="" && !isNaN(val)) ? Number(val) : "" }
@@ -9,15 +9,15 @@ class Glycole extends Component {
     //console.log(e)
     let _getNumericValue = (val) => { return (val!=="" && !isNaN(val)) ? Number(val) : "" };
     const { obj } = this.props;
-    let { glycoleType, temperature, percentage } = obj.GlycoleFormState;
+    let { liquidType, temperature, percentage } = obj.LiquidFormState;
     let diagram, t0, p0, freezingTemperature;
 
     switch(propName){
-      case 'glycoleType':
-        glycoleType = e.target.value;
-        this.props.updateGlycoleFormState({ glycoleType, temperature, percentage });
+      case 'liquidType':
+        liquidType = e.target.value;
+        this.props.updateGlycoleFormState({ liquidType, temperature, percentage });
 
-        diagram = Liquid.density({ glycoleType, temperature, percentage }).diagram;
+        diagram = LiquidParameters.density({ liquidType, temperature, percentage }).diagram;
 
         // --- Need to Refactiring:
         //let numOfDataObj = 0;
@@ -29,13 +29,13 @@ class Glycole extends Component {
         freezingTemperature = 0;
         // ---
 
-        this.props.updateGlycoleFormState({ glycoleType, temperature:t0, percentage:p0 });
+        this.props.updateGlycoleFormState({ liquidType, temperature:t0, percentage:p0 });
         break;
       case 'temperature':
-        this.props.updateGlycoleFormState({ glycoleType, temperature:_getNumericValue(e.target.value), percentage });
+        this.props.updateGlycoleFormState({ liquidType, temperature:_getNumericValue(e.target.value), percentage });
         break;
       case 'percentage':
-        this.props.updateGlycoleFormState({ glycoleType, temperature, percentage:_getNumericValue(e.target.value) });
+        this.props.updateGlycoleFormState({ liquidType, temperature, percentage:_getNumericValue(e.target.value) });
         break;
       //...
       default: break;
@@ -45,62 +45,65 @@ class Glycole extends Component {
   changeQFormState(){
     // Need to update QFormState:
     const { obj } = this.props;
-    let { glycoleType, temperature, percentage } = obj.GlycoleFormState;
-    let cp = Liquid.cp({ glycoleType }).result,//obj.QFormState.cp,
-      ro = Liquid.density({ glycoleType, temperature, percentage }).result,
+    let { liquidType, temperature, percentage } = obj.LiquidFormState;
+    let cp = LiquidParameters.cp({ liquidType }).result,//obj.QFormState.cp,
+      ro = LiquidParameters.density({ liquidType, temperature, percentage }).result,
       Gm = obj.QFormState.Gm,
       liquidTemperatureIn = obj.QFormState.liquidTemperatureIn,
       liquidTemperatureOut = obj.QFormState.liquidTemperatureOut;
     this.props.updateQFormState({ cp, ro, Gm, liquidTemperatureIn, liquidTemperatureOut });
-    //console.log(obj.GlycoleFormState);
+    //console.log(obj.LiquidFormState);
     //console.log({ cp, ro, Gm, liquidTemperatureIn, liquidTemperatureOut });
   }
   render() {
     const { obj } = this.props;
-    let { glycoleType, temperature, percentage } = obj.GlycoleFormState;
-    let ro = Liquid.density({glycoleType, temperature, percentage}).result,
-      error = Liquid.density({glycoleType, temperature, percentage}).error,
-      densityReport = Liquid.density({glycoleType, temperature, percentage}).report,
-      percentageRange = Liquid.density({glycoleType, temperature, percentage}).diagram.percentage,
+    let { liquidType, temperature, percentage } = obj.LiquidFormState;
+    let ro = LiquidParameters.density({liquidType, temperature, percentage}).result,
+      error = LiquidParameters.density({liquidType, temperature, percentage}).error,
+      densityReport = LiquidParameters.density({liquidType, temperature, percentage}).report,
+      percentageRange = LiquidParameters.density({liquidType, temperature, percentage}).diagram.percentage,
       freezingTemperature = 0;
 
     return (
       <div>
-        <h1>Glycole</h1>
+        <h1>Liquid</h1>
 
         <h2>Input data</h2>
         <label>Glycole type</label>
         <div className='input-group'>
-          <input className='form-control input-sm' value={glycoleType} onChange={this.changeGlycoleFormState.bind(this, 'glycoleType')} disabled />
+          <input className='form-control input-sm' value={liquidType} onChange={this.changeGlycoleFormState.bind(this, 'liquidType')} disabled />
           <span className="input-group-btn dropdown">
             <button className="btn btn-sm btn-secondary dropdown-toggle btn-default" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span>{glycoleType}</span>&nbsp;&nbsp;<span className="caret"></span>
+              <span>{liquidType}</span>&nbsp;&nbsp;<span className="caret"></span>
             </button>
             <ul className="dropdown-menu dropdown-menu-right" role="menu">
               <li><a style={{cursor:'pointer'}}
                 className="dropdown-item"
                 value="MEG"
-                onClick={this.changeGlycoleFormState.bind( this, 'glycoleType', {target:{value:"MEG"}} )}
+                onClick={this.changeGlycoleFormState.bind( this, 'liquidType', {target:{value:"MEG"}} )}
                 >ETHYLENE GLYCOLE</a></li>
               <li><a style={{cursor:'pointer'}}
                 className="dropdown-item"
                 value="MPG"
-                onClick={this.changeGlycoleFormState.bind( this, 'glycoleType', {target:{value:"MPG"}} )}
+                onClick={this.changeGlycoleFormState.bind( this, 'liquidType', {target:{value:"MPG"}} )}
                 >PROPYLENE GLYCOLE</a></li>
               <li><a style={{cursor:'pointer'}}
                 className="dropdown-item"
                 value="WATER"
-                onClick={this.changeGlycoleFormState.bind( this, 'glycoleType', {target:{value:"WATER"}} )}
+                onClick={this.changeGlycoleFormState.bind( this, 'liquidType', {target:{value:"WATER"}} )}
                 >WATER</a></li>
             </ul>
           </span>
         </div>
         <label>Percentage, %</label>
-        <select disabled={glycoleType==='WATER'?true:false} className='form-control input-sm' value={percentage} onChange={this.changeGlycoleFormState.bind(this, 'percentage')}>
+        <select disabled={liquidType==='WATER'?true:false} className='form-control input-sm' value={percentage} onChange={this.changeGlycoleFormState.bind(this, 'percentage')}>
           {
             percentageRange.map((e, i) => <option key={i} value={e}>{e}</option>)
           }
         </select>
+        {/*
+        <input disabled={liquidType==='WATER'?true:false} className='form-control input-sm' value={percentage} onChange={this.changeGlycoleFormState.bind(this, 'percentage')} />
+        */}
         <label>Liquid Temperature, C</label>
         <input className='form-control input-sm' value={temperature} onChange={this.changeGlycoleFormState.bind(this, 'temperature')} />
 
