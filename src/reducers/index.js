@@ -5,12 +5,13 @@ export default (
       ro: 1000,
       Gm: 42,
       liquidTemperatureIn: 12,
-      liquidTemperatureOut: 7
+      liquidTemperatureOut: 7,
     },
     LiquidFormState: {
       liquidType: 'WATER',
       percentage: 100,
-      temperature: 7
+      temperature: 7,
+      freezingTemperature: 0,
     }
   },
   action

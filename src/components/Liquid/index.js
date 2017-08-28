@@ -15,7 +15,7 @@ class Glycole extends Component {
     switch(propName){
       case 'liquidType':
         liquidType = e.target.value;
-        this.props.updateGlycoleFormState({ liquidType, temperature, percentage });
+        this.props.updateLiquidFormState({ liquidType, temperature, percentage });
 
         diagram = LiquidParameters.density({ liquidType, temperature, percentage }).diagram;
 
@@ -26,16 +26,23 @@ class Glycole extends Component {
         t0 = 7;
         //console.log(diagram.percentage);
         p0 = diagram.percentage[0];
-        freezingTemperature = 0;
+        freezingTemperature = LiquidParameters.freezingTemperature({ liquidType, percentage: p0 });
         // ---
 
-        this.props.updateGlycoleFormState({ liquidType, temperature:t0, percentage:p0 });
+        this.props.updateLiquidFormState({ liquidType, temperature:t0, percentage:p0, freezingTemperature });
         break;
       case 'temperature':
-        this.props.updateGlycoleFormState({ liquidType, temperature:_getNumericValue(e.target.value), percentage });
+        freezingTemperature = LiquidParameters.freezingTemperature({ liquidType, percentage });
+        this.props.updateLiquidFormState({ liquidType, temperature:_getNumericValue(e.target.value), percentage, freezingTemperature });
         break;
       case 'percentage':
-        this.props.updateGlycoleFormState({ liquidType, temperature, percentage:_getNumericValue(e.target.value) });
+        freezingTemperature = LiquidParameters.freezingTemperature({ liquidType, percentage: _getNumericValue(e.target.value) });
+        this.props.updateLiquidFormState({ liquidType, temperature, percentage:_getNumericValue(e.target.value), freezingTemperature });
+        break;
+      case 'freezingTemperature':
+        freezingTemperature = _getNumericValue(e.target.value);
+        //percentage = LiquidParameters.freezingTemperature({ liquidType, freezingTemperature });
+        this.props.updateLiquidFormState({ liquidType, temperature, percentage, freezingTemperature });
         break;
       //...
       default: break;
@@ -46,7 +53,7 @@ class Glycole extends Component {
     // Need to update QFormState:
     const { obj } = this.props;
     let { liquidType, temperature, percentage } = obj.LiquidFormState;
-    let cp = LiquidParameters.cp({ liquidType }).result,//obj.QFormState.cp,
+    let cp = LiquidParameters.cp({ liquidType, percentage, temperature }).result,//obj.QFormState.cp,
       ro = LiquidParameters.density({ liquidType, temperature, percentage }).result,
       Gm = obj.QFormState.Gm,
       liquidTemperatureIn = obj.QFormState.liquidTemperatureIn,
@@ -56,14 +63,13 @@ class Glycole extends Component {
     //console.log({ cp, ro, Gm, liquidTemperatureIn, liquidTemperatureOut });
   }
   render() {
+    console.clear();
     const { obj } = this.props;
-    let { liquidType, temperature, percentage } = obj.LiquidFormState;
+    let { liquidType, temperature, percentage, freezingTemperature } = obj.LiquidFormState;
     let ro = LiquidParameters.density({liquidType, temperature, percentage}).result,
       error = LiquidParameters.density({liquidType, temperature, percentage}).error,
       densityReport = LiquidParameters.density({liquidType, temperature, percentage}).report,
-      percentageRange = LiquidParameters.density({liquidType, temperature, percentage}).diagram.percentage,
-      freezingTemperature = 0;
-
+      percentageRange = LiquidParameters.density({liquidType, temperature, percentage}).diagram.percentage;
     return (
       <div>
         <h1>Liquid</h1>
@@ -107,6 +113,9 @@ class Glycole extends Component {
 
         <label>Liquid Temperature, C</label>
         <input className='form-control input-sm' value={temperature} onChange={this.changeGlycoleFormState.bind(this, 'temperature')} />
+
+        <label>Freezing Temperature, C</label>
+        <input disabled={true} className='form-control input-sm' value={freezingTemperature.toFixed(2)} onChange={this.changeGlycoleFormState.bind(this, 'freezingTemperature')} />
 
         <h2>Output data</h2>
         <strong>ro = {ro.toFixed(2)} kg/m3</strong><br />

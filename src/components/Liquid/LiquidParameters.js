@@ -3,12 +3,37 @@ import interpolate from '../interpolate';
 
 let LiquidParameters = (function() {
   return {
-    cp(obj){// Should be as function by temp & percentage...
-      let { liquidType } = obj,
+    cp(obj){// Should be as function by liquidType & percentage & temp...
+      let { liquidType, percentage, temperature } = obj,
+        dataObj,
         result;// kJ/kg.K
       switch(liquidType){
         case 'MEG':
-          result = 2.4;// tmp value (+20 )
+          result = 2.4;// tmp value (+20 C)
+          dataObj = [
+            {
+              percentage: 4.6,
+              temperatureDataObj: [
+                { temperature: 50, cp: 4.145 },
+                { temperature: 20, cp: 4.145 },
+                { temperature: 10, cp: 4.124 },
+                { temperature: 0, cp: 4.103 },
+              ]
+            },
+            {
+              percentage: 46.4,
+              temperatureDataObj: [
+                { temperature: 50, cp: 3.517 },
+                { temperature: 20, cp: 3.391 },
+                { temperature: 0, cp: 3.349 },
+                { temperature: -10, cp: 3.308 },
+                { temperature: -15, cp: 3.287 },
+                { temperature: -20, cp: 3.266 },
+                { temperature: -25, cp: 3.245 },
+                { temperature: -30, cp: 3.224 },
+              ]
+            }
+          ];
 
           //...
           break;
@@ -20,29 +45,133 @@ let LiquidParameters = (function() {
         default:// WATER
           result = 4.19;
 
+          dataObj = [
+            {
+              percentage: 0,
+              temperatureDataObj: [
+                { temperature: 20, cp: 4.19 },
+                { temperature: 0, cp: 4.18 },// need to change
+              ]
+            },
+            {
+              percentage: 100,
+              temperatureDataObj: [
+                { temperature: 20, cp: 4.19 },
+                { temperature: 0, cp: 4.18 },// need to change
+              ]
+            }
+          ];
+
           //...
           break;
       }
+      /*
+      if(percentage < dataObj[0].percentage){
+        result = dataObj[0].temperatureDataObj[dataObj[0].temperatureDataObj.length-1].cp;// lowest value
+      }else if(percentage >= dataObj[0].percentage && percentage <= dataObj[dataObj.length-1].percentage){
+        dataObj.reduce(function(ePrevious, eCurrent, i, a){
+          console.log(ePrevious, eCurrent);
+          // Это выполнится для всех элементов кроме первого
+          if(ePrevious.percentage <= percentage && percentage <= eCurrent.percentage){
+            p1 = ePrevious.percentage;
+            p2 = eCurrent.percentage;
+            t1DataObj = ePrevious.temperatureDataObj;
+            t2DataObj = eCurrent.temperatureDataObj;
+
+            if(temperature < t1DataObj[t1DataObj.length-1].temperature){
+              result = t1DataObj[t1DataObj.length-1].cp;// lowest value
+            }else if(temperature >= t1DataObj[t1DataObj.length-1].temperature && temperature <= t2DataObj[0].temperature){
+              result = ;
+            }else if(temperature > t2DataObj[0].temperature){
+              result = t2DataObj[0].cp;// highest value
+            }else{
+
+            }
+
+            t1 = ePrevious.freezingTemperature;
+            t2 = eCurrent.freezingTemperature;
+          }
+          return ePrevious;
+        });
+        //result =
+      }else if(percentage > dataObj[dataObj.length-1].percentage){
+        result = dataObj[dataObj.length-1].temperatureDataObj[dataObj[dataObj.length-1].temperatureDataObj.length-1].cp;// lowest value
+      }else{}
+      */
       return { result };
     },
     freezingTemperature(obj){
-      let { liquidType, percentage } = obj;
+      // This function created to get freezingTemperature by Liquid type & %
+      let { liquidType, percentage } = obj,
+        dataObj = [],
+        result,
+        p1, p2, f1, f2;
       switch(liquidType){
         case 'MEG':
-
-          //...
+          dataObj = [
+            { percentage: 30, freezingTemperature: -15 },
+            { percentage: 35, freezingTemperature: -20 },
+            { percentage: 40, freezingTemperature: -25 },
+            { percentage: 45, freezingTemperature: -30 },
+            { percentage: 50, freezingTemperature: -35 },
+            { percentage: 55, freezingTemperature: -43 },
+            { percentage: 60, freezingTemperature: -50 },
+            { percentage: 65, freezingTemperature: -60 },
+            { percentage: 70, freezingTemperature: -70 },
+          ];
           break;
         case 'MPG':
-
-          //...
+          dataObj = [
+            { percentage: 30, freezingTemperature: -13 },
+            { percentage: 35, freezingTemperature: -20 },
+            { percentage: 40, freezingTemperature: -25 },
+            { percentage: 45, freezingTemperature: -30 },
+            { percentage: 50, freezingTemperature: -35 },
+            { percentage: 55, freezingTemperature: -45 },
+            { percentage: 60, freezingTemperature: -55 },
+            { percentage: 65, freezingTemperature: -60 },
+            { percentage: 70, freezingTemperature: -65 },
+          ];
           break;
         default:// WATER
-
-          //...
+          dataObj = [
+            { percentage: 0, freezingTemperature: 0 },
+            { percentage: 100, freezingTemperature: 0 },
+          ];
           break;
       }
-      //...
-      return 0;
+
+      if(percentage < dataObj[0].percentage){
+        result = interpolate.line({
+          x: percentage,
+          x1: 0,
+          y1: 0,
+          x2: dataObj[0].percentage,
+          y2: dataObj[0].freezingTemperature
+        });
+      }else if(percentage >= dataObj[0].percentage && percentage <= dataObj[dataObj.length-1].percentage){
+        dataObj.reduce(function(ePrevious, eCurrent, i, a){
+          console.log(ePrevious, eCurrent);
+          // Это выполнится для всех элементов кроме первого
+          if(ePrevious.percentage <= percentage && percentage <= eCurrent.percentage){
+            p1 = ePrevious.percentage;
+            p2 = eCurrent.percentage;
+            f1 = ePrevious.freezingTemperature;
+            f2 = eCurrent.freezingTemperature;
+          }
+          return ePrevious;
+        });
+        result = interpolate.line({
+          x: percentage,
+          x1: p1,
+          y1: f1,
+          x2: p2,
+          y2: f2
+        });
+      }else if(percentage > dataObj[dataObj.length-1].percentage){
+        result = 0;
+      }else{/* imposible */}
+      return result;
     },
     density(obj){
       let diagram = {}, result, t1, t2, numOfDataObj, d1, d2,
@@ -193,7 +322,6 @@ let LiquidParameters = (function() {
 
       // Out of percentage range:
       let p1, p2;
-      console.clear();
       if(
         (percentage < diagram.percentage[0]) ||
         (percentage > diagram.percentage[diagram.percentage.length-1])
