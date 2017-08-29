@@ -3,11 +3,33 @@
 ## Tasklist (4 of 6 are completed)
 
 - [x] **1. Interpolate**
-- [x] **2.1 Cooling Capacity** _(Q, kW)_ calc by Fiquid Flow _(Gw, m3/h)_...
+- [x] **2.1 Cooling Capacity** _(Q, kW)_ calc by Fiquid Flow _(Gw, m3/h)_
 - [ ] **2.2 Heating parameter** _(cp, kJ/kg.K)_ should be added as method `LiquidParameters.cp ({ liquidType, temperature, percentage })`
-![about heating coefficient](./_imgs/cp-MEG_01.jpg)
-- [x] **3. Liquid density** calc by Liquid Type and others... (should be refactored)
+
+### MEG Heating parameter
+
+![about heating coefficient](./_imgs/cp-MEG.jpg)
+
+### MPG Heating parameter
+
+![about heating coefficient](./_imgs/cp-MPG.png)
+
+- [x] **3. Liquid density** calc by Liquid Type and others... (code should be refactored)
+
+### MEG density
+
+![about density](./_imgs/density-MEG.PNG)
+
+### MPG density
+
+![about density](./_imgs/density-MPG.PNG)
+
 - [x] **4.1 Freezing Temperature** calc was added as method `LiquidParameters.freezingTemperature ({ liquidType, percentage })`
+
+### MEG density
+
+![about density](./_imgs/freezingTemperature-MEG-MPG.PNG)
+
 - [ ] **4.2 Freezing Temperature** should be able to be changed by user for percentage calc for required freezing temperature
 - [ ] **5. Chillers** calc for something brand for example
 
