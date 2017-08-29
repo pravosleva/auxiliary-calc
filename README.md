@@ -1,13 +1,16 @@
 # Auxiliary calc
 
-## Tasklist (3 of 6 are completed)
+## Tasklist (4 of 6 are completed)
 
-- [x] Interpolate.
-- [ ] **Q** calc by Fiquid Flow _(Gw)_...
-- [ ] _cp_ should be added as method LiquidParameters.cp ({ liquidType, temperature, percentage })
-- [x] **Liquid density** calc by Liquid Type and others... (should be refactored)
-- [x] _freezingTemperature_ was added as method LiquidParameters.freezingTemperature ({ liquidType, percentage })
-- [ ] **Chillers** (something brand for example).
+- [x] **1. Interpolate**
+- [x] **2.1 Cooling Capacity** _(Q)_ calc by Fiquid Flow _(Gw)_...
+- [ ] **2.2 Heating parameter** _(cp)_ should be added as method `LiquidParameters.cp ({ liquidType, temperature, percentage })`
+- [x] **3. Liquid density** calc by Liquid Type and others... (should be refactored)
+- [x] **4.1 Freezing Temperature** calc was added as method `LiquidParameters.freezingTemperature ({ liquidType, percentage })`
+- [ ] **4.2 Freezing Temperature** should be able to be changed by user for percentage calc for required freezing temperature
+- [ ] **5. Chillers** calc for something brand for example
+
+## Original ReadMe
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
