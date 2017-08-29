@@ -3,7 +3,7 @@
 ## Tasklist (4 of 6 are completed)
 
 - [x] **1. Interpolate**
-- [x] **2.1 Cooling Capacity** _(Q, kW)_ calc by Fiquid Flow _(Gw, m3/h)_
+- [x] **2.1 Cooling Capacity** _(Q, kW)_ calc by Liquid Flow _(Gw, m3/h)_
 - [ ] **2.2 Heating parameter** _(cp, kJ/kg.K)_ should be added as method `LiquidParameters.cp ({ liquidType, temperature, percentage })`
 
 ##### MEG Heating parameter
@@ -30,9 +30,9 @@ Set as const value = 4.19 kJ/kg.K
 
 ##### WATER density
 
-Should be set as 999.87-1000.00 kg/m3 from 0 to +4 C
+Should be set as 999.87-1000.00 kg/m3 from 0 to +4 C (as quadratic fit)
 
-Should be set as 1000.00-988.10 kg/m3 from +4 to +50 C
+Should be set as 1000.00-988.10 kg/m3 from +4 to +50 C (as quadratic fit)
 
 - [x] **4.1 Freezing Temperature** calc was added as method `LiquidParameters.freezingTemperature ({ liquidType, percentage })`
 
