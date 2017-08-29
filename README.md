@@ -10,9 +10,7 @@
 
 ![about heating coefficient](./_imgs/cp-MEG.jpg)
 
-#### MPG Heating parameter
-
-![about heating coefficient](./_imgs/cp-MPG.png)
+#### MPG Heating parameter (set as 2.483 kJ/kg.K)
 
 - [x] **3. Liquid density** calc by Liquid Type and others... (code should be refactored)
 

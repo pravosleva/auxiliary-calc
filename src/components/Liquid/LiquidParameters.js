@@ -38,7 +38,7 @@ let LiquidParameters = (function() {
           //...
           break;
         case 'MPG':
-          result = 3.7;// tmp value (+20 C 37 %)
+          result = 2.483;
 
           //...
           break;
