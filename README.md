@@ -31,6 +31,7 @@ Set as const value = 4.19 kJ/kg.K
 ##### WATER density
 
 Should be set as 999.87-1000.00 kg/m3 from 0 to +4 C
+
 Should be set as 1000.00-988.10 kg/m3 from +4 to +50 C
 
 - [x] **4.1 Freezing Temperature** calc was added as method `LiquidParameters.freezingTemperature ({ liquidType, percentage })`
