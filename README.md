@@ -10,7 +10,13 @@
 
 ![about MEG heating coefficient](./_imgs/cp-MEG.jpg)
 
-##### MPG Heating parameter (set as 2.483 kJ/kg.K)
+##### MPG Heating parameter
+
+Set as const value = 2.483 kJ/kg.K
+
+##### WATER Heating parameter
+
+Set as const value = 4.19 kJ/kg.K
 
 - [x] **3. Liquid density** calc by Liquid Type and others... (code should be refactored)
 
@@ -22,11 +28,20 @@
 
 ![about MPG density](./_imgs/density-MPG.PNG)
 
+##### WATER density
+
+Should be set as 999.87-1000.00 kg/m3 from 0 to +4 C
+Should be set as 1000.00-988.10 kg/m3 from +4 to +50 C
+
 - [x] **4.1 Freezing Temperature** calc was added as method `LiquidParameters.freezingTemperature ({ liquidType, percentage })`
 
-##### MEG freezing temperature
+##### MEG & MPG freezing temperature
 
-![about MEG freezing temperature](./_imgs/freezingTemperature-MEG-MPG.PNG)
+![about MEG & MPG freezing temperature](./_imgs/freezingTemperature-MEG-MPG.PNG)
+
+##### WATER freezing temperature
+
+Set as const value = 0.00 C
 
 - [ ] **4.2 Freezing Temperature** should be able to be changed by user for percentage calc for required freezing temperature
 - [ ] **5. Chillers** calc for something brand for example
