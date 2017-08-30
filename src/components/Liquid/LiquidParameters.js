@@ -333,7 +333,7 @@ let LiquidParameters = (function() {
         // If =last then last range:
         numOfDataObj = diagram.percentage.findIndex(function(e, i, a){ return (percentage === e) });
         if(numOfDataObj===-1){
-          report += `Not table percentage value`;
+          report = `Not table percentage value`;
           // Попали в промежуток между 2-мя табличными значениями percentage...
           // Need to detect { diagram, error, result, report }
           if(
@@ -342,7 +342,7 @@ let LiquidParameters = (function() {
           ){
             error = true;
             result = 1000;
-            report += `Out of main temperature range for ${liquidType}`;
+            report = `Out of main temperature range for ${liquidType}`;
           }
 
           p1 = diagram.percentage.find(function(e, i, a){

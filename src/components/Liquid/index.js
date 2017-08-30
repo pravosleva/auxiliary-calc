@@ -7,7 +7,7 @@ class Glycole extends Component {
   changeGlycoleFormState(propName, e) {
     //console.log(propName)
     //console.log(e)
-    let _getNumericValue = (val) => { return (val!=="" && !isNaN(val)) ? Number(val) : "" };
+    //let _getNumericValue = (val) => { return (val!=="" && !isNaN(val)) ? Number(val) : "" };
     const { obj } = this.props;
     let { liquidType, temperature, percentage } = obj.LiquidFormState;
     let diagram, t0, p0, freezingTemperature;
@@ -33,14 +33,14 @@ class Glycole extends Component {
         break;
       case 'temperature':
         freezingTemperature = LiquidParameters.freezingTemperature({ liquidType, percentage });
-        this.props.updateLiquidFormState({ liquidType, temperature:_getNumericValue(e.target.value), percentage, freezingTemperature });
+        this.props.updateLiquidFormState({ liquidType, temperature: this._getNumericValue(e.target.value), percentage, freezingTemperature });
         break;
       case 'percentage':
-        freezingTemperature = LiquidParameters.freezingTemperature({ liquidType, percentage: _getNumericValue(e.target.value) });
-        this.props.updateLiquidFormState({ liquidType, temperature, percentage:_getNumericValue(e.target.value), freezingTemperature });
+        freezingTemperature = LiquidParameters.freezingTemperature({ liquidType, percentage: this._getNumericValue(e.target.value) });
+        this.props.updateLiquidFormState({ liquidType, temperature, percentage: this._getNumericValue(e.target.value), freezingTemperature });
         break;
       case 'freezingTemperature':
-        freezingTemperature = _getNumericValue(e.target.value);
+        freezingTemperature = this._getNumericValue(e.target.value);
         //percentage = LiquidParameters.freezingTemperature({ liquidType, freezingTemperature });
         this.props.updateLiquidFormState({ liquidType, temperature, percentage, freezingTemperature });
         break;
@@ -75,7 +75,7 @@ class Glycole extends Component {
         <h1>Liquid</h1>
 
         <h2>Input data</h2>
-        <label>Glycole type</label>
+        <label>Liquid type</label>
         <div className='input-group'>
           <input className='form-control input-sm' value={liquidType} onChange={this.changeGlycoleFormState.bind(this, 'liquidType')} disabled />
           <span className="input-group-btn dropdown">
