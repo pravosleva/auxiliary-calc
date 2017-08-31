@@ -47,6 +47,10 @@ Set as const value = 0.00 C
 - [ ] **4.2 Freezing Temperature** should be able to be changed by user for percentage calc for required freezing temperature
 - [ ] **5. Chillers** calc for something brand for example
 
+## Demo
+
+[Link](http://selection4test.ru/projects/auxiliary-calc)
+
 ## Original ReadMe
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
