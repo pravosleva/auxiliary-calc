@@ -33,6 +33,46 @@ let interpolate = (function() {
                          x2: y2,
                          y2: interResult2 });
     },
+    byTableInside(obj){
+      let { x, y, tableAsDoubleArray } = obj;
+      /*
+        tableAsDoubleArray should be realized as:
+          head_y  | head_x  | head_x  | ..
+          head_y  | point   | point   | ..
+          head_y  | point   | point   | ..
+        See also this example for tableAsDoubleArray:
+          [
+            [ 0.0,   0.0,  10.0,  20.0],
+            [12.2, 3.977, 3.998, 4.019],
+            [16.0, 3.894, 3.915, 3.936],
+            [19.8, 3.852, 3.873, 3.894]
+          ]
+        BUT REMEMBER THAT:
+          Your point should be have place in particular rectangle
+          | | | | | |
+          | |********
+          | |*Inside*
+      */
+      let i1, i2, j1, j2;
+
+      for (i2 = 1; tableAsDoubleArray[i2][0] < y; i2++);
+      i1 = i2 - 1;
+
+      for (j2 = 1; tableAsDoubleArray[0][j2] < x; j2++);
+      j1 = j2 - 1;
+
+      return this.biLine ({x,
+                        y,
+                        x1: tableAsDoubleArray[0][j1],
+                        y1: tableAsDoubleArray[i1][0],
+                        x2: tableAsDoubleArray[0][j2],
+                        y2: tableAsDoubleArray[i2][0],
+                        q11: tableAsDoubleArray[i1][j1],
+                        q12: tableAsDoubleArray[i1][j2],
+                        q21: tableAsDoubleArray[i2][j1],
+                        q22: tableAsDoubleArray[i2][j2]
+                      });
+    },
   }
 })();
 

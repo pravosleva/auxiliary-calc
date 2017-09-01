@@ -1,41 +1,48 @@
 import interpolate from '../interpolate';
+//import getCpTest from './_cpTest';
+
+// interpolate test:
 //console.log(interpolate.line({x:0.5, x1:0, y1:1, x2:1, y2:2}));
+
+// _cpTest:
+//console.log ("LALALA:", getCpTest(5.0, 17.0));
 
 let LiquidParameters = (function() {
   return {
-    cp(obj){// Should be as function by liquidType & percentage & temp...
+    cp(obj){// Should be realized as function by liquidType & percentage & temp...
       let { liquidType, percentage, temperature } = obj,
         dataObj,
-        result;// kJ/kg.K
-      switch(liquidType){
+        error = false,
+        report = `Ok`,
+        result = 2.4;// kJ/kg.K
+      switch(liquidType){// Need to check for main ranges...
         case 'MEG':
-          result = 2.4;// tmp value (+20 C)
-          dataObj = [
-            {
-              percentage: 4.6,
-              temperatureDataObj: [
-                { temperature: 50, cp: 4.145 },
-                { temperature: 20, cp: 4.145 },
-                { temperature: 10, cp: 4.124 },
-                { temperature: 0, cp: 4.103 },
-              ]
-            },
-            {
-              percentage: 46.4,
-              temperatureDataObj: [
-                { temperature: 50, cp: 3.517 },
-                { temperature: 20, cp: 3.391 },
-                { temperature: 0, cp: 3.349 },
-                { temperature: -10, cp: 3.308 },
-                { temperature: -15, cp: 3.287 },
-                { temperature: -20, cp: 3.266 },
-                { temperature: -25, cp: 3.245 },
-                { temperature: -30, cp: 3.224 },
-              ]
-            }
-          ];
+          if(percentage < 4.6 || percentage > 19.8){// max val should be 46.4
+            error = true;
+            report = `MEG: Out of main percentage range - Main value was set = 2.4 kJ/kg.K for +20 C`;
+            result = 2.4;// tmp value (+20 C)
+          }else{
+            if(temperature < -30 || temperature > 50){
+              error = true;
+              report = `MEG: Out of main temperature range - Main value was set = 2.4 kJ/kg.K for +20 C`;
+              result = 2.4;// tmp value (+20 C)
+            }else{
+              dataObj = [
+                [0.0,   0.0,    10.0,   20.0,   50.0],
+                [4.6,   4.103,  4.124,  4.145,  4.145],
+                [8.4,   4.061,  4.061,  4.061,  4.103],
+                [12.2,  3.977,  3.998,  4.019,  4.061],
+                [16.0,  3.894,  3.915,  3.936,  4.019],
+                [19.8,  3.852,  3.873,  3.894,  3.977]
+              ];
 
-          //...
+              result = interpolate.byTableInside({
+                x: temperature,
+                y: percentage,
+                tableAsDoubleArray: dataObj
+              });
+            }
+          }
           break;
         case 'MPG':
           result = 2.483;
@@ -45,60 +52,10 @@ let LiquidParameters = (function() {
         default:// WATER
           result = 4.19;
 
-          dataObj = [
-            {
-              percentage: 0,
-              temperatureDataObj: [
-                { temperature: 20, cp: 4.19 },
-                { temperature: 0, cp: 4.18 },// need to change
-              ]
-            },
-            {
-              percentage: 100,
-              temperatureDataObj: [
-                { temperature: 20, cp: 4.19 },
-                { temperature: 0, cp: 4.18 },// need to change
-              ]
-            }
-          ];
-
           //...
           break;
       }
-      /*
-      if(percentage < dataObj[0].percentage){
-        result = dataObj[0].temperatureDataObj[dataObj[0].temperatureDataObj.length-1].cp;// lowest value
-      }else if(percentage >= dataObj[0].percentage && percentage <= dataObj[dataObj.length-1].percentage){
-        dataObj.reduce(function(ePrevious, eCurrent, i, a){
-          console.log(ePrevious, eCurrent);
-          // Это выполнится для всех элементов кроме первого
-          if(ePrevious.percentage <= percentage && percentage <= eCurrent.percentage){
-            p1 = ePrevious.percentage;
-            p2 = eCurrent.percentage;
-            t1DataObj = ePrevious.temperatureDataObj;
-            t2DataObj = eCurrent.temperatureDataObj;
-
-            if(temperature < t1DataObj[t1DataObj.length-1].temperature){
-              result = t1DataObj[t1DataObj.length-1].cp;// lowest value
-            }else if(temperature >= t1DataObj[t1DataObj.length-1].temperature && temperature <= t2DataObj[0].temperature){
-              result = ;
-            }else if(temperature > t2DataObj[0].temperature){
-              result = t2DataObj[0].cp;// highest value
-            }else{
-
-            }
-
-            t1 = ePrevious.freezingTemperature;
-            t2 = eCurrent.freezingTemperature;
-          }
-          return ePrevious;
-        });
-        //result =
-      }else if(percentage > dataObj[dataObj.length-1].percentage){
-        result = dataObj[dataObj.length-1].temperatureDataObj[dataObj[dataObj.length-1].temperatureDataObj.length-1].cp;// lowest value
-      }else{}
-      */
-      return { result };
+      return { result, error, report };
     },
     freezingTemperature(obj){
       // This function created to get freezingTemperature by Liquid type & %

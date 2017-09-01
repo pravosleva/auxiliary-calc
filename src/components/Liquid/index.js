@@ -63,11 +63,11 @@ class Glycole extends Component {
     //console.log({ cp, ro, Gm, liquidTemperatureIn, liquidTemperatureOut });
   }
   render() {
-    console.clear();
+    //console.clear();
     const { obj } = this.props;
     let { liquidType, temperature, percentage, freezingTemperature } = obj.LiquidFormState;
     let ro = LiquidParameters.density({liquidType, temperature, percentage}).result,
-      error = LiquidParameters.density({liquidType, temperature, percentage}).error,
+      densityError = LiquidParameters.density({liquidType, temperature, percentage}).error,
       densityReport = LiquidParameters.density({liquidType, temperature, percentage}).report,
       percentageRange = LiquidParameters.density({liquidType, temperature, percentage}).diagram.percentage;
     return (
@@ -119,7 +119,7 @@ class Glycole extends Component {
 
         <h2>Output data</h2>
         <strong>ro = {ro.toFixed(2)} kg/m3</strong><br />
-        <span className={error===true?'text-danger':'text-muted'}>
+        <span className={densityError===true?'text-danger':'text-muted'}>
           Density report: {densityReport}
         </span>
 
