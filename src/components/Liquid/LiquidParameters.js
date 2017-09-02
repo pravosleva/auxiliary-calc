@@ -14,26 +14,59 @@ let LiquidParameters = (function() {
         dataObj,
         error = false,
         report = `Ok`,
-        result = 2.4;// kJ/kg.K
+        result;//default kJ/kg.K
       switch(liquidType){// Need to check for main ranges...
         case 'MEG':
-          if(percentage < 4.6 || percentage > 19.8){// max val should be 46.4
+          if(percentage < 4.6){// max val should be 46.4
             error = true;
-            report = `Out of main percentage range. Liquid percentage value should be between 4.6 and 19.8 %. Was set as const value 2.4 kJ/kg.K`;
-            result = 2.4;// tmp value (+20 C)
+            //result = 4.1;// should be interpolated by temp for 4.6 %
+            result = interpolate.byTableInside({
+              x: temperature,
+              y: 4.6,
+              tableAsDoubleArray: [
+                [0.0,   -30.0,    -25.0,    -20.0,    -15.0,    -10.0,    -5.0,     0.0,    10.0,     20.0,   50.0],
+                [4.6,   4.10300,  4.10300,  4.10300,  4.10300,  4.10300,  4.10300,  4.103,  4.124,    4.145,  4.145],
+              ]
+            });
+            //...
+            report = `Out of main percentage range - Lower than 4.6 %. Liquid percentage value should be between 4.6 and 46.4 %. Interpolated by table for 4.6 %`;
+          }else if(percentage > 46.4){
+            error = true;
+            //result = 4.1;// should be interpolated by temp for 46.4 %
+            result = interpolate.byTableInside({
+              x: temperature,
+              y: 46.4,
+              tableAsDoubleArray: [
+                [0.0,   -30.0,    -25.0,    -20.0,    -15.0,    -10.0,    -5.0,     0.0,    10.0,     20.0,   50.0],
+                [46.4,  3.224,    3.245,    3.266,    3.287,    3.308,    3.32000,  3.349,  3.35500,  3.391,  3.517],
+              ]
+            });
+            //...
+            report = `Out of main percentage range - More than 46.4 %. Liquid percentage value should be between 4.6 and 46.4 %. Interpolated by table for 46.4 %`;
           }else{
             if(temperature < -30 || temperature > 50){
               error = true;
-              report = `Out of main temperature range. Liquid percentage value should be between -30 and +50 C. Was set as const value 2.4 kJ/kg.K`;
-              result = 2.4;// tmp value (+20 C)
+              result = 4.1;// tmp value (+20 C)
+              report = `Out of main temperature range. Liquid percentage value should be between -30 and +50 C. Was set as ${result.toFixed(2)} kJ/kg.K`;
             }else{
+              /*
+                Values with 5 symbols after point is approximate by eye
+                May be should be interpolated?..
+              */
               dataObj = [
-                [0.0,   0.0,    10.0,   20.0,   50.0],
-                [4.6,   4.103,  4.124,  4.145,  4.145],
-                [8.4,   4.061,  4.061,  4.061,  4.103],
-                [12.2,  3.977,  3.998,  4.019,  4.061],
-                [16.0,  3.894,  3.915,  3.936,  4.019],
-                [19.8,  3.852,  3.873,  3.894,  3.977]
+                [0.0,   -30.0,    -25.0,    -20.0,    -15.0,    -10.0,    -5.0,     0.0,    10.0,     20.0,   50.0],
+                [4.6,   4.10300,  4.10300,  4.10300,  4.10300,  4.10300,  4.10300,  4.103,  4.124,    4.145,  4.145],
+                [8.4,   4.06100,  4.06100,  4.06100,  4.06100,  4.06100,  4.06100,  4.061,  4.061,    4.061,  4.103],
+                [12.2,  3.97700,  3.97700,  3.97700,  3.97700,  3.97700,  3.97700,  3.977,  3.998,    4.019,  4.061],
+                [16.0,  3.89400,  3.89400,  3.89400,  3.89400,  3.89400,  3.894,    3.894,  3.915,    3.936,  4.019],
+                [19.8,  3.85200,  3.85200,  3.85200,  3.85200,  3.85200,  3.852,    3.852,  3.873,    3.894,  3.977],
+                [23.6,  3.76800,  3.76800,  3.76800,  3.76800,  3.768,    3.768,    3.768,  3.810,    3.852,  3.953],
+                [27.4,  3.66300,  3.66300,  3.66300,  3.663,    3.684,    3.69000,  3.726,  3.75000,  3.768,  3.852],
+                [31.2,  3.62200,  3.62200,  3.62200,  3.622,    3.642,    3.64200,  3.642,  3.73000,  3.726,  3.810],
+                [35.0,  3.51700,  3.51700,  3.517,    3.538,    3.559,    3.56900,  3.599,  3.56400,  3.642,  3.726],
+                [38.8,  3.53800,  3.538,    3.433,    3.454,    3.475,    3.50000,  3.517,  3.54000,  3.475,  3.684],
+                [42.6,  3.32800,  3.328,    3.349,    3.370,    3.391,    3.41000,  3.433,  3.45000,  3.475,  3.601],
+                [46.4,  3.224,    3.245,    3.266,    3.287,    3.308,    3.32000,  3.349,  3.35500,  3.391,  3.517],
               ];
 
               result = interpolate.byTableInside({
