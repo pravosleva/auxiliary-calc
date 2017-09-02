@@ -19,12 +19,12 @@ let LiquidParameters = (function() {
         case 'MEG':
           if(percentage < 4.6 || percentage > 19.8){// max val should be 46.4
             error = true;
-            report = `MEG: Out of main percentage range - Main value was set = 2.4 kJ/kg.K for +20 C`;
+            report = `Out of main percentage range. Liquid percentage value should be between 4.6 and 19.8 %. Was set as const value 2.4 kJ/kg.K`;
             result = 2.4;// tmp value (+20 C)
           }else{
             if(temperature < -30 || temperature > 50){
               error = true;
-              report = `MEG: Out of main temperature range - Main value was set = 2.4 kJ/kg.K for +20 C`;
+              report = `Out of main temperature range. Liquid percentage value should be between -30 and +50 C. Was set as const value 2.4 kJ/kg.K`;
               result = 2.4;// tmp value (+20 C)
             }else{
               dataObj = [
@@ -41,6 +41,7 @@ let LiquidParameters = (function() {
                 y: percentage,
                 tableAsDoubleArray: dataObj
               });
+              report += ` / Interpolate by table values result (inside the table)`;
             }
           }
           break;
@@ -54,7 +55,8 @@ let LiquidParameters = (function() {
 
           //...
           break;
-      }
+      };
+      report = `${liquidType} cp report: ${report}`;
       return { result, error, report };
     },
     freezingTemperature(obj){
@@ -108,7 +110,7 @@ let LiquidParameters = (function() {
         });
       }else if(percentage >= dataObj[0].percentage && percentage <= dataObj[dataObj.length-1].percentage){
         dataObj.reduce(function(ePrevious, eCurrent, i, a){
-          console.log(ePrevious, eCurrent);
+          //console.log(ePrevious, eCurrent);
           // Это выполнится для всех элементов кроме первого
           if(ePrevious.percentage <= percentage && percentage <= eCurrent.percentage){
             p1 = ePrevious.percentage;
@@ -287,9 +289,8 @@ let LiquidParameters = (function() {
         result = 1000;
         report = `Out of percentage range for ${percentage} %`;
       }else{
-        // If =last then last range:
         numOfDataObj = diagram.percentage.findIndex(function(e, i, a){ return (percentage === e) });
-        if(numOfDataObj===-1){
+        if(numOfDataObj===-1){// If =last then last range:
           report = `Not table percentage value`;
           // Попали в промежуток между 2-мя табличными значениями percentage...
           // Need to detect { diagram, error, result, report }
@@ -299,7 +300,7 @@ let LiquidParameters = (function() {
           ){
             error = true;
             result = 1000;
-            report = `Out of main temperature range for ${liquidType}`;
+            report = `Out of main temperature range`;
           }
 
           p1 = diagram.percentage.find(function(e, i, a){
@@ -350,7 +351,7 @@ let LiquidParameters = (function() {
             q21: d2,
             q22: d2
           });
-          report += ` / biLine interpolated between t1 = ${t1} and t2 = ${t2} & d1 = ${d1} and d2 = ${d2}`;
+          report += ` / biLine interpolate result between t1, p1 = { ${t1}, ${p1} } as x1, y1 for points ${d1}, ${d1} & t2, p2 = { ${t2}, ${p2} } as x2, y2 for points ${d2}, ${d2}`;
         }else{
           if(
             (temperature < diagram.temperature[0]) ||
@@ -360,7 +361,7 @@ let LiquidParameters = (function() {
           ){
             error = true;
             result = 1000;
-            report = `Out of temperature range for ${liquidType} ${percentage} % / Temp value should be between ${diagram.data[numOfDataObj].range.tMin} & ${diagram.data[numOfDataObj].range.tMax} C`
+            report = `Out of temperature range for ${percentage} % / Temp value should be between ${diagram.data[numOfDataObj].range.tMin} & ${diagram.data[numOfDataObj].range.tMax} C`
           }
 
           if(error===false){
@@ -391,7 +392,7 @@ let LiquidParameters = (function() {
               }
             }
 
-            report += ` / line interpolated between t1 = ${t1} and t2 = ${t2} & d1 = ${d1} and d2 = ${d2}`;
+            report += ` / Line interpolate result between t1= ${t1} and t2= ${t2} & d1= ${d1} and d2= ${d2}`;
             result = interpolate.line({
               x: temperature,
               x1: t1,
@@ -401,6 +402,7 @@ let LiquidParameters = (function() {
             });
           }
         }
+        /*
         console.group(`Local range`);
         console.table({
           temperature: `${t1} <> ${temperature} <> ${t2}`,
@@ -408,10 +410,12 @@ let LiquidParameters = (function() {
           percentage: `${p1} <> ${percentage} <> ${p2}`,
         });
         console.groupEnd(`Local range`);
+        */
       }
 
       // --- ---
 
+      report = `${liquidType} density report: ${report}`;
       return { diagram, error, result, report };
     }
   }

@@ -1,7 +1,6 @@
 export default (
   state = {
     QFormState: {
-      cp: 4.19,
       ro: 999.92,
       Gm: 42,
       liquidTemperatureIn: 12,

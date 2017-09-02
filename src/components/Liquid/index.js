@@ -53,14 +53,11 @@ class Glycole extends Component {
     // Need to update QFormState:
     const { obj } = this.props;
     let { liquidType, temperature, percentage } = obj.LiquidFormState;
-    let cp = LiquidParameters.cp({ liquidType, percentage, temperature }).result,//obj.QFormState.cp,
-      ro = LiquidParameters.density({ liquidType, temperature, percentage }).result,
+    let ro = LiquidParameters.density({ liquidType, temperature, percentage }).result,
       Gm = obj.QFormState.Gm,
       liquidTemperatureIn = obj.QFormState.liquidTemperatureIn,
       liquidTemperatureOut = obj.QFormState.liquidTemperatureOut;
-    this.props.updateQFormState({ cp, ro, Gm, liquidTemperatureIn, liquidTemperatureOut });
-    //console.log(obj.LiquidFormState);
-    //console.log({ cp, ro, Gm, liquidTemperatureIn, liquidTemperatureOut });
+    this.props.updateQFormState({ ro, Gm, liquidTemperatureIn, liquidTemperatureOut });
   }
   render() {
     //console.clear();
@@ -73,6 +70,7 @@ class Glycole extends Component {
     return (
       <div>
         <h1>Liquid</h1>
+        <hr />
 
         <h2>Input data</h2>
         <label>Liquid type</label>
@@ -119,9 +117,9 @@ class Glycole extends Component {
 
         <h2>Output data</h2>
         <strong>ro = {ro.toFixed(2)} kg/m3</strong><br />
-        <span className={densityError===true?'text-danger':'text-muted'}>
-          Density report: {densityReport}
-        </span>
+        <code className={densityError===true?'text-danger':'text-muted'}>
+          {densityReport}
+        </code>
 
       </div>
     );
