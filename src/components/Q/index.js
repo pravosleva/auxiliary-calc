@@ -77,7 +77,7 @@ class Q extends Component {
           {cpReport}
         </code>
         <div className='well well-sm text-muted' style={{marginTop:'10px'}}>
-          This Q value was set to localStorage as coolingCapacity. It can be used it in other projects.
+          This Q value was set to localStorage as coolingCapacity. It can be used in other projects.
         </div>
 
       </div>
