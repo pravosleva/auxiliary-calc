@@ -3,6 +3,12 @@ import LiquidParameters from '../Liquid/LiquidParameters';// For cp calc
 //css..
 
 class Q extends Component {
+  constructor(props){
+    super(props);
+    //this.state = {};
+    //this.axiosReqForClientlist = this.axiosReqForClientlist.bind(this);
+    //this.render = this.render.bind(this);
+  }
 
   _getNumericValue(val){ return (val!=="" && !isNaN(val)) ? Number(val) : "" }
   changeQFormState(propName, e) {
@@ -27,6 +33,11 @@ class Q extends Component {
       default: break;
     }
   }
+  _getValueFromLocalStorage(obj) {
+    let { propName, defaultValue } = obj;
+		let result = localStorage.getItem(propName) || defaultValue;
+		return result;
+  }
   render() {
     const { obj } = this.props;
     let { liquidType, temperature, percentage } = obj.LiquidFormState;
@@ -36,8 +47,12 @@ class Q extends Component {
       Gm = obj.QFormState.Gm,
       liquidTemperatureIn = obj.QFormState.liquidTemperatureIn,
       liquidTemperatureOut = obj.QFormState.liquidTemperatureOut;
-    //...
-    let Q = cp * Gm * ro * (liquidTemperatureIn-liquidTemperatureOut) / 3600;// to kW
+    let Q = cp * Gm * ro * (liquidTemperatureIn-liquidTemperatureOut) / 3600;
+    //console.log(this._getNumericValue(this._getValueFromLocalStorage({ propName:'coolingCapacity', defaultValue:0 })));
+
+    // For other progects in this site:
+    localStorage.setItem('coolingCapacity', Q);
+
     return (
       <div>
         <h1>Q by Liquid Flow</h1>
@@ -61,6 +76,9 @@ class Q extends Component {
         <code className={cpError===true?'text-danger':'text-muted'}>
           {cpReport}
         </code>
+        <div className='well well-sm text-muted' style={{marginTop:'10px'}}>
+          This Q value was set to localStorage as coolingCapacity. It can be used it in other projects.
+        </div>
 
       </div>
     );

@@ -4,11 +4,12 @@
 
 [Link](http://selection4test.ru/projects/auxiliary-calc)
 
-## Tasklist (4 of 6 are completed)
+## Tasklist (5 of 7 are completed)
 
-- [x] **1. Interpolate**
+- [x] **1. Interpolate** (About biLine)[https://ru.wikipedia.org/wiki/%D0%91%D0%B8%D0%BB%D0%B8%D0%BD%D0%B5%D0%B9%D0%BD%D0%B0%D1%8F_%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D0%BF%D0%BE%D0%BB%D1%8F%D1%86%D0%B8%D1%8F]
 - [x] **2.1 Cooling Capacity** _(Q, kW)_ calc by Liquid Flow _(Gw, m3/h)_
-- [ ] **2.2 Heating parameter** _(cp, kJ/kg.K)_ should be added as method `LiquidParameters.cp ({ liquidType, temperature, percentage })`
+- [x] **2.2 The current Q value should be set to localStorage** as _coolingCapacity_ for ability to use this calculated value in other projects
+- [ ] **2.3 Heating parameter** _(cp, kJ/kg.K)_ should be added as method `LiquidParameters.cp ({ liquidType, temperature, percentage })`
 
 ##### MEG Heating parameter
 
