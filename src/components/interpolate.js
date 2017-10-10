@@ -52,6 +52,7 @@ let interpolate = (function() {
           ]
         BUT REMEMBER THAT:
           Your point should be have place in particular rectangle
+          the first row & column is table headers (not values)
           | | | | | |
           | |********
           | |*Inside*

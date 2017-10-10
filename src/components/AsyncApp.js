@@ -25,6 +25,14 @@ class AsyncApp extends Component {
           <div className='col-lg-4 col-md-4 col-sm-6 col-xs-12'>
             <Liquid {...this.props} />
           </div>
+          <div className='col-lg-4 col-md-4 col-sm-6 col-xs-12'>
+            <h1>Something else</h1>
+            <hr />
+            <div className='alert alert-warning' style={{marginTop:'10px'}}>
+              <a href="#" className="close" data-dismiss="alert" aria-label="close">&times;</a>
+              In process...
+            </div>
+          </div>
         </div>
       </div>
     );

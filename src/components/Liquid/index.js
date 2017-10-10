@@ -117,9 +117,11 @@ class Glycole extends Component {
 
         <h2>Output data</h2>
         <strong>ro = {ro.toFixed(2)} kg/m3</strong><br />
-        <code className={densityError===true?'text-danger':'text-muted'}>
-          {densityReport}
-        </code>
+        <div className='well well-sm text-muted' style={{marginTop:'10px'}}>
+          <code className={densityError===true?'text-danger':'text-muted'}>
+            {densityReport}
+          </code>
+        </div>
 
       </div>
     );

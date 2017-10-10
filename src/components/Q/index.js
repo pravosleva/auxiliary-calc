@@ -73,10 +73,10 @@ class Q extends Component {
 
         <h2>Output data</h2>
         <strong>Q = {Q.toFixed(2)} kW</strong><br />
-        <code className={cpError===true?'text-danger':'text-muted'}>
-          {cpReport}
-        </code>
         <div className='well well-sm text-muted' style={{marginTop:'10px'}}>
+          <code className={cpError===true?'text-danger':'text-muted'}>
+            {cpReport}
+          </code><br />
           This Q value was set to localStorage as coolingCapacity. It can be used in other projects.
         </div>
 
