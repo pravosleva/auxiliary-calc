@@ -79,8 +79,25 @@ let LiquidParameters = (function() {
           }
           break;
         case 'MPG':
-          result = 2.483;
-
+          if(percentage >= 0.0 && percentage < 45.0){
+            dataObj = [
+              [0.0,     -30,      -20.0,    -10.0,    0.0,     20.0,  40.0,    60.0,    80.0,    100.0],
+              [0.0,     4.19,     4.19,     4.19,     4.19,    4.19,  4.19,    4.19,    4.19,    4.19],
+              [25.0,    3.93000,  3.93000,  3.93,     3.95,    3.98,  4.00,    4.03,    4.05,    4.08],
+              [37.0,    3.68000,  3.68,     3.70000,  3.72,    3.77,  3.82,    3.88,    3.94,    4.00],
+              [45.0,    3.49000,  3.49,     3.52,     3.56,    3.62,  3.69,    3.76,    3.82,    3.89],
+            ];
+            result = interpolate.byTableInside({
+              x: temperature,
+              y: percentage,
+              tableAsDoubleArray: dataObj
+            });
+            report += ` / Interpolate by table values result (inside the table), cp= ${result.toFixed(2)} kJ/kg.K`;
+          }else{// more than 45.0%
+            result = 3.8;
+            report = `Out of main percentage range. Liquid percentage value should be between 0 and 45 %. Was set as ${result.toFixed(2)} kJ/kg.K`;
+          }
+          
           //...
           break;
         default:// WATER
