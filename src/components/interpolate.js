@@ -79,4 +79,5 @@ let interpolate = (function() {
   }
 })();
 
-export default interpolate;
+//export default interpolate;
+module.exports = interpolate;
