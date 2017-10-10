@@ -72,8 +72,8 @@ class Q extends Component {
         <input className='form-control input-sm' value={liquidTemperatureOut} onChange={this.changeQFormState.bind(this, 'liquidTemperatureOut')} />
 
         <h2>Output data</h2>
-        <strong>Q = {Q.toFixed(2)} kW</strong><br />
         <div className='well well-sm text-muted' style={{marginTop:'10px'}}>
+          <strong>Q = {Q.toFixed(2)} kW</strong><br />
           <code className={cpError===true?'text-danger':'text-muted'}>
             {cpReport}
           </code><br />

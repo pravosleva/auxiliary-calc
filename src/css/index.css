@@ -17,3 +17,8 @@ label {
   margin-top: 5px !important;
   margin-bottom: 3px !important;;
 }
+
+.alert-warning {
+  border-color: #cfb683;
+}
+.well { border-color: gray; }

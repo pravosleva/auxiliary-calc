@@ -116,8 +116,8 @@ class Glycole extends Component {
         <input disabled={true} className='form-control input-sm' value={freezingTemperature.toFixed(2)} onChange={this.changeGlycoleFormState.bind(this, 'freezingTemperature')} />
 
         <h2>Output data</h2>
-        <strong>ro = {ro.toFixed(2)} kg/m3</strong><br />
         <div className='well well-sm text-muted' style={{marginTop:'10px'}}>
+          <strong>ro = {ro.toFixed(2)} kg/m3</strong><br />
           <code className={densityError===true?'text-danger':'text-muted'}>
             {densityReport}
           </code>
