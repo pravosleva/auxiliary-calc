@@ -1,5 +1,11 @@
 # Auxiliary calc
 
+## Test
+
+```
+npm run test2
+```
+
 ## Demo
 
 [Link](http://selection4test.ru/projects/auxiliary-calc)
@@ -17,7 +23,7 @@
 
 ##### MPG Heating parameter (not completed)
 
-_Table was added._
+Table was taken from [here](http://himtermo.ru/teplonositeli/teplofiz_svoystva_vod_rastv_propylen/)
 
 ##### WATER Heating parameter (not completed)
 
