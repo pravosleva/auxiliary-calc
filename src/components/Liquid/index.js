@@ -53,17 +53,17 @@ class Glycole extends Component {
     // Need to update QFormState:
     const { obj } = this.props;
     let { liquidType, temperature, percentage } = obj.LiquidFormState;
-    let ro = LiquidParameters.density({ liquidType, temperature, percentage }).result,
-      Gm = obj.QFormState.Gm,
+    let density = LiquidParameters.density({ liquidType, temperature, percentage }).result,
+      volumetricFlowRate = obj.QFormState.volumetricFlowRate,
       liquidTemperatureIn = obj.QFormState.liquidTemperatureIn,
       liquidTemperatureOut = obj.QFormState.liquidTemperatureOut;
-    this.props.updateQFormState({ ro, Gm, liquidTemperatureIn, liquidTemperatureOut });
+    this.props.updateQFormState({ density, volumetricFlowRate, liquidTemperatureIn, liquidTemperatureOut });
   }
   render() {
     //console.clear();
     const { obj } = this.props;
     let { liquidType, temperature, percentage, freezingTemperature } = obj.LiquidFormState;
-    let ro = LiquidParameters.density({liquidType, temperature, percentage}).result,
+    let density = LiquidParameters.density({liquidType, temperature, percentage}).result,
       densityError = LiquidParameters.density({liquidType, temperature, percentage}).error,
       densityReport = LiquidParameters.density({liquidType, temperature, percentage}).report,
       percentageRange = LiquidParameters.density({liquidType, temperature, percentage}).diagram.percentage;
@@ -117,10 +117,15 @@ class Glycole extends Component {
 
         <h2>Output data</h2>
         <div className='well well-sm text-muted' style={{marginTop:'10px'}}>
-          <strong>ro = {ro.toFixed(2)} kg/m3</strong><br />
-          <code className={densityError===true?'text-danger':'text-muted'}>
-            {densityReport}
-          </code>
+          <p>
+            Liquid density for the conditions
+            <pre>density = {density.toFixed(2)} kg/m3</pre>
+          </p>
+          <p>
+            <code className={densityError===true?'text-danger':'text-muted'}>
+              {densityReport}
+            </code>
+          </p>
         </div>
 
       </div>

@@ -22,3 +22,5 @@ label {
   border-color: #cfb683;
 }
 .well { border-color: gray; }
+
+pre { margin-top: 10px; margin-bottom: 10px; }

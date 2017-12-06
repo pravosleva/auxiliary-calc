@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../css/index.css';
 import Q from './Q';
 import Liquid from './Liquid';
+import Tank from './Tank';
 
 /*
 *                             COMPONENT STRUCTURE
@@ -26,13 +27,20 @@ class AsyncApp extends Component {
             <Liquid {...this.props} />
           </div>
           <div className='col-lg-4 col-md-4 col-sm-6 col-xs-12'>
+            <Tank {...this.props} />
+          </div>
+          {/*
+          <div className='col-lg-4 col-md-4 col-sm-6 col-xs-12'>
+
             <h1>Something else</h1>
             <hr />
             <div className='alert alert-warning' style={{marginTop:'10px'}}>
               <a href="#" className="close" data-dismiss="alert" aria-label="close">&times;</a>
               In process...
             </div>
+
           </div>
+          */}
         </div>
       </div>
     );

@@ -10,24 +10,24 @@ npm run test2
 
 [Link](http://selection4test.ru/projects/auxiliary-calc)
 
-## Tasklist (6 of 8 are completed)
+## Tasklist (8 of 9 are completed)
 
 - [x] **1. Interpolate** See more about [biLine](https://ru.wikipedia.org/wiki/%D0%91%D0%B8%D0%BB%D0%B8%D0%BD%D0%B5%D0%B9%D0%BD%D0%B0%D1%8F_%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D0%BF%D0%BE%D0%BB%D1%8F%D1%86%D0%B8%D1%8F)
 - [x] **2.1 Cooling Capacity** _(Q, kW)_ calc by Liquid Flow _(Gw, m3/h)_
 - [x] **2.2 The current Q value should be set to localStorage** as _coolingCapacity_ for ability to use this calculated value in other projects
 - [x] **2.3 Heating parameter** _(cp, kJ/kg.K)_ should be added as method `LiquidParameters.cp ({ liquidType, temperature, percentage })`
 
-##### MEG Heating parameter (completed)
+##### MEG Heating parameter
 
 ![about MEG heating coefficient](./_imgs/cp-MEG.jpg)
 
-##### MPG Heating parameter (not completed)
+##### MPG Heating parameter
 
 Table was taken from [here](http://himtermo.ru/teplonositeli/teplofiz_svoystva_vod_rastv_propylen/)
 
-##### WATER Heating parameter (not completed)
+##### WATER Heating parameter
 
-Set as const value = 4.19 kJ/kg.K
+Was set as const value = 4.19 kJ/kg.K
 
 - [x] **3. Liquid density** calc by Liquid Type and others... (code should be refactored)
 
@@ -55,8 +55,9 @@ Should be set as 1000.00-988.10 kg/m3 from +4 to +50 C (as quadratic fit)
 
 Set as const value = 0.00 C
 
-- [ ] **4.2 Freezing Temperature** should be able to be changed by user for percentage calc for required freezing temperature
+- [x] **4.2 Freezing Temperature** should be able to be changed by user for percentage calc for required freezing temperature
 - [ ] **5. Chillers** calc for something brand for example
+- [x] **6. Tank volume** should be calculated by some input parameters. [Read more about it on page 80](http://yktstroy.ru/wp-content/uploads/2013/09/R_NOSTROI_2.15.4-2011.pdf).
 
 ## Original ReadMe
 

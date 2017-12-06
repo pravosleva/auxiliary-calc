@@ -18,6 +18,7 @@ const render = () => {
       obj = {store.getState()}
       updateQFormState = {(fs) => store.dispatch({ type: 'UPDATE_Q_FORM_STATE', QFormState: fs })}
       updateLiquidFormState = {(fs) => store.dispatch({ type: 'UPDATE_LIQUID_FORM_STATE', LiquidFormState: fs })}
+      updateTankFormState = {(fs) => store.dispatch({ type: 'UPDATE_TANK_FORM_STATE', TankFormState: fs })}
     />,
     rootEl
   );

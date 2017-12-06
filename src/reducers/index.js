@@ -1,8 +1,8 @@
 export default (
   state = {
     QFormState: {
-      ro: 999.92,
-      Gm: 42,
+      density: 999.92,
+      volumetricFlowRate: 42,
       liquidTemperatureIn: 12,
       liquidTemperatureOut: 7,
     },
@@ -11,6 +11,11 @@ export default (
       percentage: 100,
       temperature: 7,
       freezingTemperature: 0,
+    },
+    TankFormState: {
+      workTimeCoefficient: 0.75,// b
+      operatingModeTime: 0.5,// tau
+      totalLiquidDuctSystemVolume: 0,
     }
   },
   action
@@ -22,6 +27,9 @@ export default (
       return state;
     case 'UPDATE_LIQUID_FORM_STATE':
       state.LiquidFormState = action.LiquidFormState;
+      return state;
+    case 'UPDATE_TANK_FORM_STATE':
+      state.TankFormState = action.TankFormState;
       return state;
     default: return state;
   }
