@@ -54,7 +54,10 @@ class Tank extends Component {
     //console.info( ( 703.96 * 3600 *((1 - 0.75 ) * 0.5 ) / ( 4.19 * 999.9 * ( liquidTemperatureIn - liquidTemperatureOut ) ) - totalLiquidDuctSystemVolume ) );
     let Vt = ( Q * (1 - workTimeCoefficient) * operatingModeTime / ( cp * density * ( liquidTemperatureIn - liquidTemperatureOut ) ) ) - totalLiquidDuctSystemVolume,
       Vt_l = Vt * density;// to liters
-
+    if(Vt > 0){ /* Ok */ } else {
+      Vt = 0;
+      Vt_l = 0;
+    }
     //console.log(this._getNumericValue(this._getValueFromLocalStorage({ propName:'coolingCapacity', defaultValue:0 })));
 
     // For other progects in this site:
@@ -80,7 +83,7 @@ class Tank extends Component {
         <input className='form-control input-sm' value={workTimeCoefficient} onChange={this.changeTankFormState.bind(this, 'workTimeCoefficient')} />
         <label>Operating mode time Start-Finish, h</label>
         <input className='form-control input-sm' value={operatingModeTime} onChange={this.changeTankFormState.bind(this, 'operatingModeTime')} />
-        <label>V liquid duct system, m3</label>
+        <label className={totalLiquidDuctSystemVolume > 0 ? '' : 'text-danger'}>V liquid duct system, m3</label>
         <input className='form-control input-sm' value={totalLiquidDuctSystemVolume} onChange={this.changeTankFormState.bind(this, 'totalLiquidDuctSystemVolume')} />
 
         <h2>Output data</h2>

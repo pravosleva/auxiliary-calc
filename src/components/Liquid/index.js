@@ -23,7 +23,8 @@ class Glycole extends Component {
         //let numOfDataObj = 0;
         //diagram.percentage.map(function(e, i){ if(percentage === e){ numOfDataObj = i }; return false; });
         //t0 = diagram.data[numOfDataObj].range.tMin;
-        t0 = 7;
+        //t0 = 7;
+        t0 = temperature;
         //console.log(diagram.percentage);
         p0 = diagram.percentage[0];
         freezingTemperature = LiquidParameters.freezingTemperature({ liquidType, percentage: p0 });
@@ -110,7 +111,7 @@ class Glycole extends Component {
         <input disabled={liquidType==='WATER'?true:false} className='form-control input-sm' value={percentage} onChange={this.changeGlycoleFormState.bind(this, 'percentage')} />
 
         <label>Liquid Temperature, C</label>
-        <input className='form-control input-sm' value={temperature} onChange={this.changeGlycoleFormState.bind(this, 'temperature')} />
+        <input disabled={true} className='form-control input-sm' value={temperature} onChange={this.changeGlycoleFormState.bind(this, 'temperature')} />
 
         <label>Freezing Temperature, C</label>
         <input disabled={true} className='form-control input-sm' value={freezingTemperature.toFixed(2)} onChange={this.changeGlycoleFormState.bind(this, 'freezingTemperature')} />

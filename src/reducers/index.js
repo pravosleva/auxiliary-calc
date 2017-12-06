@@ -9,7 +9,7 @@ export default (
     LiquidFormState: {
       liquidType: 'WATER',
       percentage: 100,
-      temperature: 7,
+      temperature: 9.5,
       freezingTemperature: 0,
     },
     TankFormState: {

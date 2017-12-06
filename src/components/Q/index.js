@@ -8,15 +8,30 @@ class Q extends Component {
     //this.state = {};
     //this.axiosReqForClientlist = this.axiosReqForClientlist.bind(this);
     //this.render = this.render.bind(this);
+    this._getNumericValue = this._getNumericValue.bind(this);
   }
 
   _getNumericValue(val){ return (val!=="" && !isNaN(val)) ? Number(val) : "" }
   changeQFormState(propName, e) {
+    let _changeTemperatureInLiquidFormState = (tin, tout) => {
+      let {
+        liquidType,
+        percentage,
+        temperature,
+        freezingTemperature
+      } = obj.LiquidFormState;
+      temperature = (tin + tout)/2;
+      this.props.updateLiquidFormState({ liquidType, percentage, temperature, freezingTemperature });
+    };
     const { obj } = this.props;
-    let density = obj.QFormState.density,
-      volumetricFlowRate = obj.QFormState.volumetricFlowRate,
-      liquidTemperatureIn = obj.QFormState.liquidTemperatureIn,
-      liquidTemperatureOut = obj.QFormState.liquidTemperatureOut;
+    let {
+      density,
+      volumetricFlowRate,
+      liquidTemperatureIn,
+      liquidTemperatureOut
+    } = obj.QFormState;
+
+    //console.log(workTimeCoefficient, operatingModeTime, totalLiquidDuctSystemVolume);
     switch(propName){
       case 'density':
         this.props.updateQFormState({ density: e.target.value, volumetricFlowRate, liquidTemperatureIn, liquidTemperatureOut });
@@ -26,9 +41,11 @@ class Q extends Component {
         break;
       case 'liquidTemperatureIn':
         this.props.updateQFormState({ density, volumetricFlowRate, liquidTemperatureIn: e.target.value, liquidTemperatureOut });
+        _changeTemperatureInLiquidFormState(this._getNumericValue(e.target.value), this._getNumericValue(liquidTemperatureOut));
         break;
       case 'liquidTemperatureOut':
         this.props.updateQFormState({ density, volumetricFlowRate, liquidTemperatureIn, liquidTemperatureOut: e.target.value });
+        _changeTemperatureInLiquidFormState(this._getNumericValue(liquidTemperatureIn), this._getNumericValue(e.target.value));
         break;
       default: break;
     }

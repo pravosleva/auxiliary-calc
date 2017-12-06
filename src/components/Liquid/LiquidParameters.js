@@ -29,7 +29,7 @@ let LiquidParameters = (function() {
               ]
             });
             //...
-            report = `Out of main percentage range - Lower than 4.6 %. Liquid percentage value should be between 4.6 and 46.4 %. Interpolated by table for 4.6 %`;
+            report = `Out of main percentage range - Lower than 4.6 %. Liquid percentage should have value between 4.6 and 46.4 %. Interpolated by table for 4.6 %`;
           }else if(percentage > 46.4){
             error = true;
             //result = 4.1;// should be interpolated by temp for 46.4 %
@@ -42,12 +42,12 @@ let LiquidParameters = (function() {
               ]
             });
             //...
-            report = `Out of main percentage range - More than 46.4 %. Liquid percentage value should be between 4.6 and 46.4 %. Interpolated by table for 46.4 %`;
+            report = `Out of main percentage range - More than 46.4 %. Liquid percentage should have value between 4.6 and 46.4 %. Interpolated by table for 46.4 %`;
           }else{
             if(temperature < -30 || temperature > 50){
               error = true;
               result = 4.1;// tmp value (+20 C)
-              report = `Out of main temperature range. Liquid percentage value should be between -30 and +50 C. Was set as ${result.toFixed(2)} kJ/kg.K`;
+              report = `Out of main temperature range. Liquid percentage should have value between -30 and +50 C. Was set as ${result.toFixed(2)} kJ/kg.K`;
             }else{
               /*
                 Values with 5 symbols after point is approximate by eye
@@ -74,7 +74,7 @@ let LiquidParameters = (function() {
                 y: percentage,
                 tableAsDoubleArray: dataObj
               });
-              report += ` / Interpolate by table values result (inside the table)`;
+              report += ` / Interpolated by table values`;
             }
           }
           break;
@@ -95,9 +95,9 @@ let LiquidParameters = (function() {
             report += ` / Interpolate by table values result (inside the table), cp= ${result.toFixed(2)} kJ/kg.K`;
           }else{// more than 45.0%
             result = 3.8;
-            report = `Out of main percentage range. Liquid percentage value should be between 0 and 45 %. Was set as ${result.toFixed(2)} kJ/kg.K`;
+            report = `Out of main percentage range. Liquid percentage should have value between 0 and 45 %. Was set as ${result.toFixed(2)} kJ/kg.K`;
           }
-          
+
           //...
           break;
         default:// WATER
