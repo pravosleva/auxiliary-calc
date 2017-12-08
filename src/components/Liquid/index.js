@@ -118,15 +118,11 @@ class Glycole extends Component {
 
         <h2>Output data</h2>
         <div className='well well-sm text-muted' style={{marginTop:'10px'}}>
-          <p>
-            Liquid density for the conditions
-            <pre>density = {density.toFixed(2)} kg/m3</pre>
-          </p>
-          <p>
-            <code className={densityError===true?'text-danger':'text-muted'}>
-              {densityReport}
-            </code>
-          </p>
+          Liquid density for the conditions
+          <pre>density = {density.toFixed(2)} kg/m3</pre>
+          <code className={densityError===true?'text-danger':'text-muted'}>
+            {densityReport}
+          </code>
         </div>
 
       </div>

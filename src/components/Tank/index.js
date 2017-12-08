@@ -47,7 +47,7 @@ class Tank extends Component {
       volumetricFlowRate = obj.QFormState.volumetricFlowRate,
       liquidTemperatureIn = obj.QFormState.liquidTemperatureIn,
       liquidTemperatureOut = obj.QFormState.liquidTemperatureOut;
-
+    //console.log(liquidTemperatureIn, liquidTemperatureOut);
     let Q = cp * volumetricFlowRate * density * (liquidTemperatureIn-liquidTemperatureOut) / 3600;// kW
     Q = Q * 3600;// to kJ/h
     //console.log(density, cp, Q *((1 - workTimeCoefficient ) * 0.5 ), ( cp * density * ( liquidTemperatureIn - liquidTemperatureOut ) ), totalLiquidDuctSystemVolume );
@@ -88,22 +88,19 @@ class Tank extends Component {
 
         <h2>Output data</h2>
         <div className='well well-sm text-muted' style={{marginTop:'10px'}}>
-          <p>
-            Required tank volume for the conditions
-            <pre>
-              Vt = {Vt.toFixed(2)} m3 = {Vt_l.toFixed(2)} liters
-            </pre>
-            Lfv = {volumetricFlowRate} m3/h = {(volumetricFlowRate * density / 3600).toFixed(2)} kg/s
-          </p>
-          <p>
-            See also recommended operating mode time (tau) values by Q = {Q.toFixed(2)} kJ/h<br />
-            tau = {recommendedTau().toFixed(2)}
-            {/*<ul>
-              <li>tau = 0.25 h for Q &#8804; 188.5 kJ/h</li>
-              <li>tau = 0.35 h for 188.5 kJ/h (0.05 kW) &#8804; Q &#8804; 754.2 kJ/h (0.2 kW)</li>
-              <li>tau = 0.50 h for Q &#8805; 754.2 kJ/h (0.2 kW)</li>
-            </ul>*/}
-          </p>
+          Required tank volume for the conditions
+          <pre>
+            Vt = {Vt.toFixed(2)} m3 = {Vt_l.toFixed(2)} liters
+          </pre>
+          Lfv = {volumetricFlowRate} m3/h = {(volumetricFlowRate * density / 3600).toFixed(2)} kg/s
+
+          See also recommended operating mode time (tau) values by Q = {Q.toFixed(2)} kJ/h<br />
+          tau = {recommendedTau().toFixed(2)}
+          {/*<ul>
+            <li>tau = 0.25 h for Q &#8804; 188.5 kJ/h</li>
+            <li>tau = 0.35 h for 188.5 kJ/h (0.05 kW) &#8804; Q &#8804; 754.2 kJ/h (0.2 kW)</li>
+            <li>tau = 0.50 h for Q &#8805; 754.2 kJ/h (0.2 kW)</li>
+          </ul>*/}
         </div>
 
       </div>

@@ -34,17 +34,17 @@ class Q extends Component {
     //console.log(workTimeCoefficient, operatingModeTime, totalLiquidDuctSystemVolume);
     switch(propName){
       case 'density':
-        this.props.updateQFormState({ density: e.target.value, volumetricFlowRate, liquidTemperatureIn, liquidTemperatureOut });
+        this.props.updateQFormState({ density: this._getNumericValue(e.target.value), volumetricFlowRate, liquidTemperatureIn, liquidTemperatureOut });
         break;
       case 'volumetricFlowRate':
-        this.props.updateQFormState({ density, volumetricFlowRate: e.target.value, liquidTemperatureIn, liquidTemperatureOut });
+        this.props.updateQFormState({ density, volumetricFlowRate: this._getNumericValue(e.target.value), liquidTemperatureIn, liquidTemperatureOut });
         break;
       case 'liquidTemperatureIn':
-        this.props.updateQFormState({ density, volumetricFlowRate, liquidTemperatureIn: e.target.value, liquidTemperatureOut });
-        _changeTemperatureInLiquidFormState(this._getNumericValue(e.target.value), this._getNumericValue(liquidTemperatureOut));
+        this.props.updateQFormState({ density, volumetricFlowRate, liquidTemperatureIn: this._getNumericValue(e.target.value), liquidTemperatureOut });
+        _changeTemperatureInLiquidFormState(this._getNumericValue(e.target.value), liquidTemperatureOut);
         break;
       case 'liquidTemperatureOut':
-        this.props.updateQFormState({ density, volumetricFlowRate, liquidTemperatureIn, liquidTemperatureOut: e.target.value });
+        this.props.updateQFormState({ density, volumetricFlowRate, liquidTemperatureIn, liquidTemperatureOut: this._getNumericValue(e.target.value) });
         _changeTemperatureInLiquidFormState(this._getNumericValue(liquidTemperatureIn), this._getNumericValue(e.target.value));
         break;
       default: break;
@@ -90,18 +90,15 @@ class Q extends Component {
 
         <h2>Output data</h2>
         <div className='well well-sm text-muted' style={{marginTop:'10px'}}>
-          <p>
-            Required Cooling Capacity
-            <pre>
-              Q = {Q.toFixed(2)} kW
-            </pre>
-            This Q value was set to localStorage as coolingCapacity. It can be used in other projects.
-          </p>
-          <p>
-            <code className={cpError===true?'text-danger':'text-muted'}>
-              {cpReport}
-            </code>
-          </p>
+          Required Cooling Capacity
+          <pre>
+            Q = {Q.toFixed(2)} kW
+          </pre>
+          This Q value was set to localStorage as coolingCapacity. It can be used in other projects.
+          <br />
+          <code className={cpError===true?'text-danger':'text-muted'}>
+            {cpReport}
+          </code>
         </div>
 
       </div>
