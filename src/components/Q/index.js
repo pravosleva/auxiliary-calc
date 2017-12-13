@@ -60,7 +60,7 @@ class Q extends Component {
     let { liquidType, temperature, percentage } = obj.LiquidFormState;
     let cpObj = LiquidParameters.cp({ liquidType, percentage, temperature }),
       cp = cpObj.result, cpError = cpObj.error, cpReport = cpObj.report,
-      density = obj.QFormState.density,
+      density = LiquidParameters.density({ liquidType, temperature, percentage }).result,
       volumetricFlowRate = obj.QFormState.volumetricFlowRate,
       liquidTemperatureIn = obj.QFormState.liquidTemperatureIn,
       liquidTemperatureOut = obj.QFormState.liquidTemperatureOut;
