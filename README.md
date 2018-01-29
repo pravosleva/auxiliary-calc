@@ -8,6 +8,7 @@ npm run test2
 
 ## Demo
 
+![about MEG density](./_imgs/aux-calc.gif)
 [Link](http://selection4test.ru/projects/auxiliary-calc)
 
 ## Tasklist (8 of 9 are completed)
