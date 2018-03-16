@@ -37,7 +37,7 @@ class Q extends Component {
         this.props.updateQFormState({ density: this._getNumericValue(e.target.value), volumetricFlowRate, liquidTemperatureIn, liquidTemperatureOut });
         break;
       case 'volumetricFlowRate':
-        this.props.updateQFormState({ density, volumetricFlowRate: this._getNumericValue(e.target.value), liquidTemperatureIn, liquidTemperatureOut });
+        this.props.updateQFormState({ density, volumetricFlowRate: e.target.value, liquidTemperatureIn, liquidTemperatureOut });
         break;
       case 'liquidTemperatureIn':
         this.props.updateQFormState({ density, volumetricFlowRate, liquidTemperatureIn: this._getNumericValue(e.target.value), liquidTemperatureOut });
@@ -81,7 +81,7 @@ class Q extends Component {
         {/*<label className='text-muted pull-right'>density = {density.toFixed(2)} kg/m3</label>*/}
         {/*<input disabled className='form-control input-sm' value={density.toFixed(2)} />
         <br />*/}
-        <label>Volumetric flow rate, m3/h</label>
+        <label>Volumetric flow rate, m3/h <span style={{color: 'lightgray'}}>[ = {(volumetricFlowRate*1000/3600).toFixed(2)} l/sec ]</span></label>
         <input className='form-control input-sm' value={volumetricFlowRate} onChange={this.changeQFormState.bind(this, 'volumetricFlowRate')} />
         <label>Liquid Temperature in, C</label>
         <input className='form-control input-sm' value={liquidTemperatureIn} onChange={this.changeQFormState.bind(this, 'liquidTemperatureIn')} />
