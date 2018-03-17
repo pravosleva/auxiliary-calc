@@ -60,6 +60,13 @@ class Glycole extends Component {
       liquidTemperatureOut = obj.QFormState.liquidTemperatureOut;
     this.props.updateQFormState({ density, volumetricFlowRate, liquidTemperatureIn, liquidTemperatureOut });
   }
+  getLiquidName(optionName) {
+    switch (optionName) {
+      case 'MEG': return 'ETHYLENE GLYCOLE';
+      case 'MPG': return 'PROPYLENE GLYCOLE';
+      default: return 'WATER';
+    }
+  }
   render() {
     //console.clear();
     const { obj } = this.props;
@@ -76,7 +83,7 @@ class Glycole extends Component {
         <h2>Input data</h2>
         <label>Liquid type</label>
         <div className='input-group'>
-          <input className='form-control input-sm' value={liquidType} onChange={this.changeGlycoleFormState.bind(this, 'liquidType')} disabled />
+          <input className='form-control input-sm' value={this.getLiquidName(liquidType)} onChange={this.changeGlycoleFormState.bind(this, 'liquidType')} disabled />
           <span className="input-group-btn dropdown">
             <button className="btn btn-sm btn-secondary dropdown-toggle btn-default" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span>{liquidType}</span>&nbsp;&nbsp;<span className="caret"></span>
@@ -117,9 +124,9 @@ class Glycole extends Component {
         <input disabled={true} className='form-control input-sm' value={freezingTemperature.toFixed(2)} onChange={this.changeGlycoleFormState.bind(this, 'freezingTemperature')} />
 
         <h2>Output data</h2>
+        <blockquote>density = {density.toFixed(2)} kg/m<sup>3</sup></blockquote>
         <div className='well well-sm text-muted' style={{marginTop:'10px'}}>
-          Liquid density for the conditions
-          <pre>density = {density.toFixed(2)} kg/m3</pre>
+
           <code className={densityError===true?'text-danger':'text-muted'}>
             {densityReport}
           </code>

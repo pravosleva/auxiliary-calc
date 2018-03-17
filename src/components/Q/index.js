@@ -89,11 +89,11 @@ class Q extends Component {
         <input className='form-control input-sm' value={liquidTemperatureOut} onChange={this.changeQFormState.bind(this, 'liquidTemperatureOut')} />
 
         <h2>Output data</h2>
+        <blockquote>
+          Q = {Q.toFixed(2)} kW
+        </blockquote>
         <div className='well well-sm text-muted' style={{marginTop:'10px'}}>
-          Required Cooling Capacity
-          <pre>
-            Q = {Q.toFixed(2)} kW
-          </pre>
+          
           This Q value was set to localStorage as coolingCapacity. It can be used in other projects.
           <br />
           <code className={cpError===true?'text-danger':'text-muted'}>

@@ -87,13 +87,13 @@ class Tank extends Component {
         <input className='form-control input-sm' value={totalLiquidDuctSystemVolume} onChange={this.changeTankFormState.bind(this, 'totalLiquidDuctSystemVolume')} />
 
         <h2>Output data</h2>
+        <blockquote>
+          Vt = {Vt.toFixed(2)} m3 = {Vt_l.toFixed(2)} liters
+        </blockquote>
         <div className='well well-sm text-muted' style={{marginTop:'10px'}}>
-          Required tank volume for the conditions
-          <pre>
-            Vt = {Vt.toFixed(2)} m3 = {Vt_l.toFixed(2)} liters
-          </pre>
-          Lfv = {volumetricFlowRate} m3/h = {(volumetricFlowRate * density / 3600).toFixed(2)} kg/s
 
+          Lfv = {volumetricFlowRate} m3/h = {(volumetricFlowRate * density / 3600).toFixed(2)} kg/s
+          <br />
           See also recommended operating mode time (tau) values by Q = {Q.toFixed(2)} kJ/h<br />
           tau = {recommendedTau().toFixed(2)}
           {/*<ul>

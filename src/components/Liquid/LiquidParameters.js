@@ -113,132 +113,33 @@ let LiquidParameters = (function() {
       // This function created to get freezingTemperature by Liquid type & %
       let { liquidType, percentage } = obj,
         dataObj = [],
-        result,
-        p1, p2, f1, f2;
+        result;
       switch(liquidType){
         case 'MEG':
           dataObj = [
-            /*
-            //{ percentage: 0.0, freezingTemperature: 0.0 },
-            { percentage: 26.4, freezingTemperature: -10.0 },
-            { percentage: 27.2, freezingTemperature: -12.0 },
-            { percentage: 29.6, freezingTemperature: -14.0 },
-            { percentage: 32.0, freezingTemperature: -16.0 },
-            { percentage: 34.2, freezingTemperature: -18.0 },
-            { percentage: 36.4, freezingTemperature: -20.0 },
-            { percentage: 38.4, freezingTemperature: -22.0 },
-            { percentage: 40.4, freezingTemperature: -24.0 },
-            { percentage: 42.2, freezingTemperature: -26.0 },
-            { percentage: 44.0, freezingTemperature: -28.0 },
-            { percentage: 45.6, freezingTemperature: -30.0 },
-            { percentage: 47.0, freezingTemperature: -32.0 },
-            { percentage: 48.2, freezingTemperature: -34.0 },
-            { percentage: 49.6, freezingTemperature: -36.0 },
-            { percentage: 51.0, freezingTemperature: -38.0 },
-            { percentage: 52.6, freezingTemperature: -40.0 },
-            { percentage: 53.6, freezingTemperature: -42.0 },
-            { percentage: 54.6, freezingTemperature: -44.0 },
-            { percentage: 55.6, freezingTemperature: -46.0 },
-            { percentage: 56.8, freezingTemperature: -48.0 },
-            { percentage: 58.0, freezingTemperature: -50.0 },
-            { percentage: 59.1, freezingTemperature: -52.0 },
-            { percentage: 60.2, freezingTemperature: -54.0 },
-            { percentage: 61.2, freezingTemperature: -56.0 },
-            { percentage: 62.2, freezingTemperature: -58.0 },
-            { percentage: 63.1, freezingTemperature: -60.0 },
-            { percentage: 64.0, freezingTemperature: -62.0 },
-            { percentage: 64.8, freezingTemperature: -64.0 },
-            { percentage: 65.3, freezingTemperature: -65.0 },
-            { percentage: 65.6, freezingTemperature: -66.0 },
-            { percentage: 66.0, freezingTemperature: -67.0 },
-            { percentage: 66.3, freezingTemperature: -68.0 },
-            { percentage: 68.5, freezingTemperature: -66.0 },
-            { percentage: 69.6, freezingTemperature: -64.0 },
-            { percentage: 70.8, freezingTemperature: -62.0 },
-            { percentage: 73.3, freezingTemperature: -58.0 },
-            { percentage: 74.5, freezingTemperature: -56.0 },
-            { percentage: 75.8, freezingTemperature: -54.0 },
-            { percentage: 77.0, freezingTemperature: -52.0 },
-            { percentage: 78.4, freezingTemperature: -50.0 },
-            { percentage: 79.6, freezingTemperature: -48.0 },
-            { percentage: 81.2, freezingTemperature: -46.0 },
-            { percentage: 82.5, freezingTemperature: -44.0 },
-            { percentage: 83.9, freezingTemperature: -42.0 },
-            { percentage: 85.4, freezingTemperature: -40.0 },
-            { percentage: 86.9, freezingTemperature: -38.0 },
-            { percentage: 88.4, freezingTemperature: -36.0 },
-            { percentage: 90.0, freezingTemperature: -30.0 },
-            { percentage: 91.5, freezingTemperature: -36.0 },
-            { percentage: 93.0, freezingTemperature: -34.0 },
-            { percentage: 94.4, freezingTemperature: -32.0 },
-            { percentage: 95.0, freezingTemperature: -28.0 },
-            { percentage: 95.5, freezingTemperature: -27.0 },
-            { percentage: 96.5, freezingTemperature: -24.0 },
-            { percentage: 97.0, freezingTemperature: -22.0 },
-            //{ percentage: 100.0, freezingTemperature: 0.0 },
-            */
-            { percentage: 30, freezingTemperature: -15 },
-            { percentage: 35, freezingTemperature: -20 },
-            { percentage: 40, freezingTemperature: -25 },
-            { percentage: 45, freezingTemperature: -30 },
-            { percentage: 50, freezingTemperature: -35 },
-            { percentage: 55, freezingTemperature: -43 },
-            { percentage: 60, freezingTemperature: -50 },
-            { percentage: 65, freezingTemperature: -60 },
-            { percentage: 70, freezingTemperature: -70 },
-          ];
+            [0.0, 26.4, 27.2, 29.6, 32.0, 34.2, 36.2, 38.4, 40.4, 42.2, 44.0, 45.6, 47.0, 48.2, 49.6, 51.0, 52.6, 53.6, 54.6, 55.6, 56.8, 58.0, 59.1, 60.2, 61.2, 62.2, 63.1, 64.0, 64.8, 65.3, 65.6, 66.0, 66.3, 68.5, 69.6, 70.8, 73.3, 74.5, 75.8, 77.0, 78.4, 79.6, 81.2, 82.5, 83.9, 85.4, 86.9, 88.4, 90.0, 91.5, 93.0, 94.4, 95.0, 95.5, 96.5, 97.0  ],
+            [1, -10.0,-12.0,-14.0,-16.0,-18.0,-20.0,-22.0,-24.0,-26.0,-28.0,-30.0,-32.0,-34.0,-36.0,-38.0,-40.0,-42.0,-44.0,-46.0,-48.0,-50.0,-52.0,-54.0,-56.0,-58.0,-60.0,-62.0,-64.0,-65.0,-66.0,-67.0,-68.0,-66.0,-64.0,-62.0,-58.0,-56.0,-54.0,-52.0,-50.0,-48.0,-46.0,-44.0,-42.0,-40.0,-38.0,-36.0,-30.0,-36.0,-34.0,-32.0,-28.0,-27.0,-24.0,-22.0 ],
+          ]
           break;
         case 'MPG':
           dataObj = [
-            { percentage: 30, freezingTemperature: -13 },
-            { percentage: 35, freezingTemperature: -20 },
-            { percentage: 40, freezingTemperature: -25 },
-            { percentage: 45, freezingTemperature: -30 },
-            { percentage: 50, freezingTemperature: -35 },
-            { percentage: 55, freezingTemperature: -45 },
-            { percentage: 60, freezingTemperature: -55 },
-            { percentage: 65, freezingTemperature: -60 },
-            { percentage: 70, freezingTemperature: -65 },
+            [0.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0, 65.0, 70.0],
+            [1, -13.0,-20.0,-25.0,-30.0,-35.0,-45.0,-55.0,-60.0,-65.0]
           ];
           break;
         default:// WATER
           dataObj = [
-            { percentage: 0, freezingTemperature: 0 },
-            { percentage: 100, freezingTemperature: 0 },
+            [0.0, 100.0],
+            [1, 0.0]
           ];
           break;
       }
 
-      if(percentage < dataObj[0].percentage){
-        result = interpolate.line({
-          x: percentage,
-          x1: 0,
-          y1: 0,
-          x2: dataObj[0].percentage,
-          y2: dataObj[0].freezingTemperature
-        });
-      }else if(percentage >= dataObj[0].percentage && percentage <= dataObj[dataObj.length-1].percentage){
-        dataObj.reduce(function(ePrevious, eCurrent, i, a){
-          //console.log(ePrevious, eCurrent);
-          // Это выполнится для всех элементов кроме первого
-          if(ePrevious.percentage <= percentage && percentage <= eCurrent.percentage){
-            p1 = ePrevious.percentage;
-            p2 = eCurrent.percentage;
-            f1 = ePrevious.freezingTemperature;
-            f2 = eCurrent.freezingTemperature;
-          }
-          return ePrevious;
-        });
-        result = interpolate.line({
-          x: percentage,
-          x1: p1,
-          y1: f1,
-          x2: p2,
-          y2: f2
-        });
-      }else if(percentage > dataObj[dataObj.length-1].percentage){
-        result = 0;
-      }else{/* imposible */}
+      result = interpolate.byTableInside({
+        x: percentage,
+        y: 1, // one line only=)
+        tableAsDoubleArray: dataObj
+      });
       return result;
     },
     density(obj){
