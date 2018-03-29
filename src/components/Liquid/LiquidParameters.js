@@ -9,6 +9,79 @@ import interpolate from '../interpolate';
 
 let LiquidParameters = (function() {
   return {
+    getRe (arg) {
+      let { flow, diameter, kinematicViscosity } = arg,
+        v = flow/3600/1/(Math.PI*Math.pow(diameter, 2)/4);
+      return { result: v*diameter/kinematicViscosity*1000000, v };
+    },
+    getKinematicViscosity (arg) {
+      let { liquidType, percentage, temperature } = arg,
+        result, msg;
+      switch (liquidType) {
+        case 'MEG':
+          result = interpolate.byTableInside({
+            x: temperature,
+            y: percentage,
+            tableAsDoubleArray: [
+              [0.0,   -40.0,              -20.0,              -10.0,              0.0,        20.0,   40.0,   60.0,   80.0,   100.0],
+              [0.0,   1.789,              1.789,              1.789,              1.789,      1.006,  0.659,  0.478,  0.365,  0.295],
+              [20.0,  5.000,              5.0000,             5.0,                3,          1.6,    1.0,    0.7,    0.52,   0.41],
+              [34.0,  11.000,             11.0,               10.000,             4.6,        2.2,    1.5,    0.98,   0.68,   0.51],
+              [52.0,  100.0,              25.0,               24.000,             9.5,        4.5,    2.4,    1.5,    1.0,    0.7],
+            ]
+          });
+          if (percentage > 45.0 || percentage < 25.0) {
+            msg = `Кинематическая вязкость может быть расчитана корректно для ${liquidType} 20% .. 52%`;
+          } else {
+            msg = `Kinematic Viscosity ${liquidType} ${percentage}% t = ${temperature} C`;
+          }
+          break;
+        case 'MPG':
+          result = interpolate.byTableInside({
+            x: temperature,
+            y: percentage,
+            tableAsDoubleArray: [
+              [0.0,   -30.0,  -20.0,  -10.0,  0.0,    20.0,   40.0,   60.0,   80.0,   100.0],
+              [0.0,   1.789,  1.789,  1.789,  1.789,  1.006,  0.659,  0.478,  0.365,  0.295],
+              [25.0,  9.900,  9.900,  9.9,    6.0,    2.8,    1.4,    0.9,    0.68,   0.52],
+              [37.0,  45.000, 45.0,   44.000, 12.0,   4.4,    2.2,    1.3,    0.9,    0.7],
+              [45.0,  150.0,  70.0,   30.0,   18.0,   6.0,    2.9,    1.6,    1.1,    0.82],
+            ]
+          });
+          if (percentage > 45.0 || percentage < 25.0) {
+            msg = `Кинематическая вязкость может быть расчитана корректно для ${liquidType} 25% .. 45%`;
+          } else {
+            msg = `Kinematic Viscosity ${liquidType} ${percentage}% t = ${temperature} C`;
+          }
+          break;
+        default: // WATER
+          result = interpolate.byTableInside({
+            x: temperature,
+            y: 1,
+            tableAsDoubleArray: [
+              [0.0, 0.0,    20.0,    40.0,    60.0,    80.0,    100.0,    120.0,  140.0,  160.0,  180.0,  200.0,  220.0,  240.0,  260.0,  280.0,  300.0],
+              [1,   1.789,  1.006,   0.659,   0.478,   0.365,   0.295,    0.252,  0.217,  0.191,  0.173,  0.158,  0.148,  0.141,  0.135,  0.131,  0.128],
+            ]
+          });
+          msg = `${liquidType} Kinematic Viscosity calculated`;
+      }
+      return { result, msg };
+    },
+    getTubePressureDrop (arg) {
+      let { Re, tubeLength, tubeDiameter, density, v } = arg,
+        f,
+        pd;
+      if(Re < 2100){
+        f = 64/Re
+      }else{
+        f = 1.325/Math.pow(Math.log((0.000001527/(3.7*tubeDiameter/1000))+(5.74/Math.pow(Re, 0.9))), 2)
+      };
+      pd = f*tubeLength/(tubeDiameter)*1/2*density*Math.pow(v, 2);
+      return {
+        kPa: pd/1000,
+        bar: pd/100000,
+      }
+    },
     cp(obj){// Should be realized as function by liquidType & percentage & temp...
       let { liquidType, percentage, temperature } = obj,
         dataObj,
@@ -95,7 +168,7 @@ let LiquidParameters = (function() {
             report += ` / Interpolate by table values result (inside the table), cp= ${result.toFixed(2)} kJ/kg.K`;
           }else{// more than 45.0%
             result = 3.8;
-            report = `Out of main percentage range. Liquid percentage should have value between 0 and 45 %. Was set as ${result.toFixed(2)} kJ/kg.K`;
+            report = `Out of percentage table range! Liquid percentage should have value between 0 and 45 %. Was set as ${result.toFixed(2)} kJ/kg.K`;
           }
 
           //...
@@ -117,20 +190,20 @@ let LiquidParameters = (function() {
       switch(liquidType){
         case 'MEG':
           dataObj = [
-            [0.0, 26.4, 27.2, 29.6, 32.0, 34.2, 36.2, 38.4, 40.4, 42.2, 44.0, 45.6, 47.0, 48.2, 49.6, 51.0, 52.6, 53.6, 54.6, 55.6, 56.8, 58.0, 59.1, 60.2, 61.2, 62.2, 63.1, 64.0, 64.8, 65.3, 65.6, 66.0, 66.3, 68.5, 69.6, 70.8, 73.3, 74.5, 75.8, 77.0, 78.4, 79.6, 81.2, 82.5, 83.9, 85.4, 86.9, 88.4, 90.0, 91.5, 93.0, 94.4, 95.0, 95.5, 96.5, 97.0  ],
-            [1, -10.0,-12.0,-14.0,-16.0,-18.0,-20.0,-22.0,-24.0,-26.0,-28.0,-30.0,-32.0,-34.0,-36.0,-38.0,-40.0,-42.0,-44.0,-46.0,-48.0,-50.0,-52.0,-54.0,-56.0,-58.0,-60.0,-62.0,-64.0,-65.0,-66.0,-67.0,-68.0,-66.0,-64.0,-62.0,-58.0,-56.0,-54.0,-52.0,-50.0,-48.0,-46.0,-44.0,-42.0,-40.0,-38.0,-36.0,-30.0,-36.0,-34.0,-32.0,-28.0,-27.0,-24.0,-22.0 ],
+            [0.0, 0.0,  26.4, 27.2, 29.6, 32.0, 34.2, 36.2, 38.4, 40.4, 42.2, 44.0, 45.6, 47.0, 48.2, 49.6, 51.0, 52.6, 53.6, 54.6, 55.6, 56.8, 58.0, 59.1, 60.2, 61.2, 62.2, 63.1, 64.0, 64.8, 65.3, 65.6, 66.0, 66.3, 68.5, 69.6, 70.8, 73.3, 74.5, 75.8, 77.0, 78.4, 79.6, 81.2, 82.5, 83.9, 85.4, 86.9, 88.4, 90.0, 91.5, 93.0, 94.4, 95.0, 95.5, 96.5, 97.0  ],
+            [1,   0.0,  -10.0,-12.0,-14.0,-16.0,-18.0,-20.0,-22.0,-24.0,-26.0,-28.0,-30.0,-32.0,-34.0,-36.0,-38.0,-40.0,-42.0,-44.0,-46.0,-48.0,-50.0,-52.0,-54.0,-56.0,-58.0,-60.0,-62.0,-64.0,-65.0,-66.0,-67.0,-68.0,-66.0,-64.0,-62.0,-58.0,-56.0,-54.0,-52.0,-50.0,-48.0,-46.0,-44.0,-42.0,-40.0,-38.0,-36.0,-30.0,-36.0,-34.0,-32.0,-28.0,-27.0,-24.0,-22.0 ],
           ]
           break;
         case 'MPG':
           dataObj = [
-            [0.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0, 65.0, 70.0],
-            [1, -13.0,-20.0,-25.0,-30.0,-35.0,-45.0,-55.0,-60.0,-65.0]
+            [0.0, 0.0,  30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0, 65.0, 70.0],
+            [1,   0.0,  -13.0,-20.0,-25.0,-30.0,-35.0,-45.0,-55.0,-60.0,-65.0]
           ];
           break;
         default:// WATER
           dataObj = [
-            [0.0, 100.0],
-            [1, 0.0]
+            [0.0, 0.0,  100.0],
+            [1,   0.0,  0.0]
           ];
           break;
       }

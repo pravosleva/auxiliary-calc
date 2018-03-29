@@ -3,6 +3,7 @@ import '../css/index.css';
 import Q from './Q';
 import Liquid from './Liquid';
 import Tank from './Tank';
+import TubePressureDrop from './TubePressureDrop';
 
 /*
 *                             COMPONENT STRUCTURE
@@ -20,15 +21,19 @@ class AsyncApp extends Component {
     return (
       <div className='container'>
         <div className='row'>
-          <div className='col-lg-4 col-md-4 col-sm-6 col-xs-12'>
-            <Q {...this.props} />
-          </div>
+
           <div className='col-lg-4 col-md-4 col-sm-6 col-xs-12'>
             <Liquid {...this.props} />
           </div>
+
+          <div className='col-lg-4 col-md-4 col-sm-6 col-xs-12'>
+            <Q {...this.props} />
+          </div>
+
           <div className='col-lg-4 col-md-4 col-sm-6 col-xs-12'>
             <Tank {...this.props} />
           </div>
+
           {/*
           <div className='col-lg-4 col-md-4 col-sm-6 col-xs-12'>
 
@@ -41,6 +46,11 @@ class AsyncApp extends Component {
 
           </div>
           */}
+        </div>
+        <div className='row'>
+          <div className='col-lg-4 col-md-4 col-sm-6 col-xs-12'>
+            <TubePressureDrop {...this.props} />
+          </div>
         </div>
       </div>
     );
