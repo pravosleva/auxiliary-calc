@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import LiquidParameters from '../Liquid/LiquidParameters';// For cp calc
 //import interpolate from '../interpolate';
 
+import Switch from 'rc-switch';
+import '../../css/rc-switch-custom.css';
+
 class TubePressureDrop extends Component {
   constructor(props){
     super(props);
@@ -14,26 +17,49 @@ class TubePressureDrop extends Component {
   changeTubePressureDropFormState(propName, e) {
     //console.log(`${e.target.value} selected`);
     const { obj } = this.props;
-    let { tubeDiameter, tubeLength, diameterOptions } = obj.TubePressureDropFormState;
+    let {
+      tubeDiameter, tubeLength, diameterOptions,
+      PHE_dPw_kPa, PHE_dPw_mAq, Evap_dPw_kPa, Evap_dPw_mAq, free_dPw_kPa, free_dPw_mAq,
+      enableDuctSystem_switcher,
+    } = obj.TubePressureDropFormState;
     switch(propName){
-      case 'tubeDiameter':
-        this.props.updateTubePressureDropFormState({ tubeDiameter: Number(e.target.value), tubeLength, diameterOptions });
-
-        //let { workTimeCoefficient, operatingModeTime, totalLiquidDuctSystemVolume } = obj.TankFormState,
-        //  liquidVolumeInTubes = (Math.PI*(tubeDiameter/2)*tubeLength)*2; // x2 - т.к. туда и обратно
-        //this.props.updateTankFormState({ workTimeCoefficient, operatingModeTime, totalLiquidDuctSystemVolume: liquidVolumeInTubes });
-
+      case 'tubeDiameter': tubeDiameter = Number(e.target.value); break;
+      case 'tubeLength': tubeLength = e.target.value; break;
+      case 'PHE_dPw_kPa':
+        PHE_dPw_kPa = e.target.value;
+        PHE_dPw_mAq = Number(e.target.value)*0.1019716;
         break;
-      case 'tubeLength':
-        this.props.updateTubePressureDropFormState({ tubeDiameter, tubeLength: e.target.value, diameterOptions });
-        //...
+      case 'PHE_dPw_mAq':
+        PHE_dPw_mAq = e.target.value;
+        PHE_dPw_kPa = Number(e.target.value)/0.1019716;
+        break;
+      case 'Evap_dPw_kPa':
+        Evap_dPw_kPa = e.target.value;
+        Evap_dPw_mAq = Number(e.target.value)*0.1019716;
+        break;
+      case 'Evap_dPw_mAq':
+        Evap_dPw_mAq = e.target.value;
+        Evap_dPw_kPa = Number(e.target.value)/0.1019716;
+        break;
+      case 'free_dPw_kPa':
+        free_dPw_kPa = e.target.value;
+        free_dPw_mAq = Number(e.target.value)*0.1019716;
+        break;
+      case 'free_dPw_mAq':
+        free_dPw_mAq = e.target.value;
+        free_dPw_kPa = Number(e.target.value)/0.1019716;
         break;
       default: break;
     }
+    this.props.updateTubePressureDropFormState({
+      tubeDiameter, tubeLength, diameterOptions,
+      PHE_dPw_kPa, PHE_dPw_mAq, Evap_dPw_kPa, Evap_dPw_mAq, free_dPw_kPa, free_dPw_mAq,
+      enableDuctSystem_switcher,
+    });
   }
   setLiquidVolumeToTankSection () {
     const { obj } = this.props;
-    let { tubeDiameter, tubeLength, diameterOptions } = obj.TubePressureDropFormState;
+    let { tubeDiameter, tubeLength, diameterOptions, PHE_dPw_kPa, PHE_dPw_mAq, Evap_dPw_kPa, Evap_dPw_mAq, free_dPw_kPa, free_dPw_mAq, enableDuctSystem_switcher } = obj.TubePressureDropFormState;
     let { workTimeCoefficient, operatingModeTime, totalLiquidDuctSystemVolume } = obj.TankFormState,
       liquidVolumeInTubes = (Math.PI*(tubeDiameter/2)*tubeLength)*2; // x2 - т.к. туда и обратно
     this.props.updateTankFormState({ workTimeCoefficient, operatingModeTime, totalLiquidDuctSystemVolume: liquidVolumeInTubes });
@@ -43,7 +69,7 @@ class TubePressureDrop extends Component {
     myPromise.then(() => {
       const { obj } = this.props;
       let { liquidType, temperature, percentage } = obj.LiquidFormState,
-        { tubeDiameter, tubeLength, diameterOptions } = obj.TubePressureDropFormState,
+        { tubeDiameter, tubeLength, diameterOptions, PHE_dPw_kPa, PHE_dPw_mAq, Evap_dPw_kPa, Evap_dPw_mAq, free_dPw_kPa, free_dPw_mAq, enableDuctSystem_switcher } = obj.TubePressureDropFormState,
         volumetricFlowRate = obj.QFormState.volumetricFlowRate,
         kinematicViscosity = LiquidParameters.getKinematicViscosity({ liquidType, percentage, temperature }).result;
       for(let i=0, max=diameterOptions.length; i<max; i++){
@@ -61,12 +87,16 @@ class TubePressureDrop extends Component {
         }
       }
 
-      this.props.updateTubePressureDropFormState({ tubeDiameter, tubeLength, diameterOptions });
+      this.props.updateTubePressureDropFormState({ tubeDiameter, tubeLength, diameterOptions, PHE_dPw_kPa, PHE_dPw_mAq, Evap_dPw_kPa, Evap_dPw_mAq, free_dPw_kPa, free_dPw_mAq, enableDuctSystem_switcher });
     })
     .then(() => {
       const { obj } = this.props;
       let { workTimeCoefficient, operatingModeTime, totalLiquidDuctSystemVolume } = obj.TankFormState,
-        { tubeDiameter, tubeLength, diameterOptions } = obj.TubePressureDropFormState,
+        {
+          tubeDiameter, tubeLength, diameterOptions,
+          //PHE_dPw_kPa, PHE_dPw_mAq, Evap_dPw_kPa, Evap_dPw_mAq,
+          //enableDuctSystem_switcher,
+        } = obj.TubePressureDropFormState,
         liquidVolumeInTubes = (Math.PI*(tubeDiameter/2)*tubeLength)*2; // x2 - т.к. туда и обратно
       this.props.updateTankFormState({ workTimeCoefficient, operatingModeTime, totalLiquidDuctSystemVolume: liquidVolumeInTubes });
     })
@@ -75,11 +105,16 @@ class TubePressureDrop extends Component {
     })
     .catch((err) => {alert(err)})
   }
-
+  enableDuctSystem (ev) {
+    let { TubePressureDropFormState } = this.props.obj;
+    TubePressureDropFormState.enableDuctSystem_switcher = !TubePressureDropFormState.enableDuctSystem_switcher;
+    this.props.updateTubePressureDropFormState( TubePressureDropFormState );
+  }
   render() {
     const { obj } = this.props;
     let { liquidType, temperature, percentage } = obj.LiquidFormState;
-    let { tubeDiameter, tubeLength, diameterOptions } = obj.TubePressureDropFormState;
+    //let { liquidTemperatureIn, liquidTemperatureOut } = obj.QFormState;
+    let { tubeDiameter, tubeLength, diameterOptions, PHE_dPw_kPa, PHE_dPw_mAq, Evap_dPw_kPa, Evap_dPw_mAq, free_dPw_kPa, free_dPw_mAq, enableDuctSystem_switcher } = obj.TubePressureDropFormState;
     let cpObj = LiquidParameters.cp({ liquidType, percentage, temperature }),
       cp = cpObj.result, cpError = cpObj.error, cpReport = cpObj.report,
       density = obj.QFormState.density,
@@ -95,7 +130,7 @@ class TubePressureDrop extends Component {
         kinematicViscosity,
       }).result,
       v = LiquidParameters.getRe({ diameter: tubeDiameter, flow: volumetricFlowRate, kinematicViscosity }).v,
-      pressureDrop = LiquidParameters.getTubePressureDrop({
+      ductSystemPressureDrop = LiquidParameters.getTubePressureDrop({
         Re, tubeLength, tubeDiameter, density, v
       });
     //console.log(Re, v)
@@ -142,22 +177,80 @@ class TubePressureDrop extends Component {
 
         </div>
         <label>Tube Length, m</label>
-        <input className='form-control input-sm' value={tubeLength} onChange={this.changeTubePressureDropFormState.bind(this, 'tubeLength')} />
+        <div className='input-group'>
+          <input type='number' style={{MozAppearance:'textfield'}} className='form-control input-sm' value={tubeLength} onChange={this.changeTubePressureDropFormState.bind(this, 'tubeLength')} />
+          <span className='input-group-btn'>
+            <button onClick={this.setLiquidVolumeToTankSection} className='btn btn-sm btn-primary'
+              style={{marginBottom: '0px'}}>Set Duct System Vol. to Tank section</button>
+          </span>
+        </div>
 
-        <h2>Output data</h2>
+        <h2>Output data*</h2>
         <blockquote>
-          <span className={v>3?'text-danger':''}>dPw = {pressureDrop.kPa.toFixed(1)} kPa = {pressureDrop.bar.toFixed(0)} bar</span>
+          <span className={v>3?'text-danger':''}>dPw = {ductSystemPressureDrop.kPa.toFixed(1)} kPa x2 = {(ductSystemPressureDrop.kPa*2).toFixed(0)} kPa<br />
+          = {(ductSystemPressureDrop.kPa*2*0.1019716).toFixed(1)} mAq <span style={{color: 'lightgray'}}>= {(ductSystemPressureDrop.bar*2).toFixed(0)} bar</span></span><br/>
         </blockquote>
         <div className='well well-sm text-muted' style={{marginTop:'10px'}}>
           Re = {Re.toFixed(1)}<br />
           <span style={{color: v>3?'tomato':'inherit'}}>v = {v.toFixed(1)} m/s</span><br />
           kV = {kinematicViscosity.toFixed(2)} <span style={{opacity: '.5'}}>x10<sup>-6</sup></span> m<sup>2</sup>/s<br />
           <code className='text-muted'>{about_kinematicViscosity}</code><br />
-
-          <button onClick={this.setLiquidVolumeToTankSection} className='btn btn-sm btn-default'
-            style={{marginTop: '10px', marginBottom: '5px'}}>Set Luquid Volume in tubes</button>
         </div>
 
+        <h2>Additional</h2>
+        <label>Duct System {enableDuctSystem_switcher ? `enabled` : `disabled`}</label>
+        <br />
+        <center>
+          <Switch
+            id={"_nothing"}
+            onChange={this.enableDuctSystem.bind(this)}
+            checked={enableDuctSystem_switcher}
+            checkedChildren={'ON'}
+            unCheckedChildren={'OFF'}
+
+          />
+        </center>
+        <div className='row'>
+          <div className='col-lg-6 col-md-6 col-sm-6 col-xs-6'>
+            <label>PHE, kPa</label>
+            <input type='number' style={{MozAppearance:'textfield'}} className='form-control input-sm' value={PHE_dPw_kPa} onChange={this.changeTubePressureDropFormState.bind(this, 'PHE_dPw_kPa')} />
+          </div>
+          <div className='col-lg-6 col-md-6 col-sm-6 col-xs-6'>
+            <label>PHE, mAq</label>
+            <input type='number' style={{MozAppearance:'textfield'}} className='form-control input-sm' value={PHE_dPw_mAq} onChange={this.changeTubePressureDropFormState.bind(this, 'PHE_dPw_mAq')} />
+          </div>
+        </div>
+        <div className='row'>
+          <div className='col-lg-6 col-md-6 col-sm-6 col-xs-6'>
+            <label>Evap, kPa</label>
+            <input type='number' style={{MozAppearance:'textfield'}} className='form-control input-sm' value={Evap_dPw_kPa} onChange={this.changeTubePressureDropFormState.bind(this, 'Evap_dPw_kPa')} />
+          </div>
+          <div className='col-lg-6 col-md-6 col-sm-6 col-xs-6'>
+            <label>Evap, mAq</label>
+            <input type='number' style={{MozAppearance:'textfield'}} className='form-control input-sm' value={Evap_dPw_mAq} onChange={this.changeTubePressureDropFormState.bind(this, 'Evap_dPw_mAq')} />
+          </div>
+        </div>
+        <div className='row'>
+          <div className='col-lg-6 col-md-6 col-sm-6 col-xs-6'>
+            <label>Free, kPa</label>
+            <input type='number' style={{MozAppearance:'textfield'}} className='form-control input-sm' value={free_dPw_kPa} onChange={this.changeTubePressureDropFormState.bind(this, 'free_dPw_kPa')} />
+          </div>
+          <div className='col-lg-6 col-md-6 col-sm-6 col-xs-6'>
+            <label>Free, mAq</label>
+            <input type='number' style={{MozAppearance:'textfield'}} className='form-control input-sm' value={free_dPw_mAq} onChange={this.changeTubePressureDropFormState.bind(this, 'free_dPw_mAq')} />
+          </div>
+        </div>
+        <label>Description</label>
+        <div className='well well-sm text-muted' style={{marginTop:'0px'}}>
+          PHE - Plate Heat Exchanger<br/>
+          Evap - User Evaporator<br />
+          Free - Additional free pressure drop<br />
+          So, dPw <b>total</b> = {enableDuctSystem_switcher ? `Duct System* + ` : null}PHE + Evap + Free
+        </div>
+        <blockquote>
+          dPw <b>total</b> = {((enableDuctSystem_switcher ? Number(ductSystemPressureDrop.kPa)*2 : 0.0) +Number(PHE_dPw_kPa)+Number(Evap_dPw_kPa)+Number(free_dPw_kPa)).toFixed(0)} kPa<br/>
+          = {enableDuctSystem_switcher ? `${(ductSystemPressureDrop.kPa*2*0.1019716).toFixed(1)} + ` : null}{Number(PHE_dPw_mAq).toFixed(1)} + {Number(Evap_dPw_mAq).toFixed(1)} + {Number(free_dPw_mAq).toFixed(1)} = {( (enableDuctSystem_switcher ? Number(ductSystemPressureDrop.kPa*2*0.1019716) : 0.0)+Number(PHE_dPw_mAq)+Number(Evap_dPw_mAq)+Number(free_dPw_mAq)).toFixed(1)} mAq
+        </blockquote>
 
       </div>
     );

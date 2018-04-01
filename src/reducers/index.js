@@ -42,6 +42,13 @@ export default (
         { value: 0.080, label: '80 mm' },
         { value: 0.100, label: '100 mm' },
       ],
+      PHE_dPw_kPa: 0.0,
+      PHE_dPw_mAq: 0.0,
+      Evap_dPw_kPa: 0.0,
+      Evap_dPw_mAq: 0.0,
+      enableDuctSystem_switcher: false,
+      free_dPw_kPa: 0.0,
+      free_dPw_mAq: 0.0,
     }
   },
   action

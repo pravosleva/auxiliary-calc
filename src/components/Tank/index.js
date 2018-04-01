@@ -80,11 +80,11 @@ class Tank extends Component {
 
         <h2>Input data</h2>
         <label>Work time coeff, dimensionless</label>
-        <input className='form-control input-sm' value={workTimeCoefficient} onChange={this.changeTankFormState.bind(this, 'workTimeCoefficient')} />
+        <input type='number' style={{MozAppearance:'textfield'}} className='form-control input-sm' value={workTimeCoefficient} onChange={this.changeTankFormState.bind(this, 'workTimeCoefficient')} />
         <label>Operating mode time Start-Finish, h</label>
-        <input className='form-control input-sm' value={operatingModeTime} onChange={this.changeTankFormState.bind(this, 'operatingModeTime')} />
+        <input type='number' style={{MozAppearance:'textfield'}} className='form-control input-sm' value={operatingModeTime} onChange={this.changeTankFormState.bind(this, 'operatingModeTime')} />
         <label className={totalLiquidDuctSystemVolume > 0 ? '' : 'text-danger'}>V liquid duct system, m3</label>
-        <input className='form-control input-sm' value={totalLiquidDuctSystemVolume} onChange={this.changeTankFormState.bind(this, 'totalLiquidDuctSystemVolume')} />
+        <input type='number' style={{MozAppearance:'textfield'}} className='form-control input-sm' value={totalLiquidDuctSystemVolume} onChange={this.changeTankFormState.bind(this, 'totalLiquidDuctSystemVolume')} />
 
         <h2>Output data</h2>
         <blockquote>

@@ -19,7 +19,7 @@ import TubePressureDrop from './TubePressureDrop';
 class AsyncApp extends Component {
   render() {
     return (
-      <div className='container'>
+      <div className='container' style={{marginBottom:'35px'}}>
         <div className='row'>
 
           <div className='col-lg-4 col-md-4 col-sm-6 col-xs-12'>

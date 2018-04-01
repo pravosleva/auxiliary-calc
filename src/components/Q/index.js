@@ -82,18 +82,24 @@ class Q extends Component {
         {/*<input disabled className='form-control input-sm' value={density.toFixed(2)} />
         <br />*/}
         <label>Volumetric flow rate, m3/h <span style={{color: 'lightgray'}}>[ = {(volumetricFlowRate*1000/3600).toFixed(2)} l/sec ]</span></label>
-        <input className='form-control input-sm' value={volumetricFlowRate} onChange={this.changeQFormState.bind(this, 'volumetricFlowRate')} />
-        <label>Liquid Temperature in, C</label>
-        <input className='form-control input-sm' value={liquidTemperatureIn} onChange={this.changeQFormState.bind(this, 'liquidTemperatureIn')} />
-        <label>Liquid Temperature out, C</label>
-        <input className='form-control input-sm' value={liquidTemperatureOut} onChange={this.changeQFormState.bind(this, 'liquidTemperatureOut')} />
+        <input type='number' style={{MozAppearance:'textfield'}} className='form-control input-sm' value={volumetricFlowRate} onChange={this.changeQFormState.bind(this, 'volumetricFlowRate')} />
+        <div className='row'>
+          <div className='col-lg-6 col-md-6 col-sm-6 col-xs-6'>
+            <label>Liquid Temp. in, C</label>
+            <input type='number' style={{MozAppearance:'textfield'}} className='form-control input-sm' value={liquidTemperatureIn} onChange={this.changeQFormState.bind(this, 'liquidTemperatureIn')} />
+          </div>
+          <div className='col-lg-6 col-md-6 col-sm-6 col-xs-6'>
+            <label>Liquid Temp. out, C</label>
+            <input type='number' style={{MozAppearance:'textfield'}} className='form-control input-sm' value={liquidTemperatureOut} onChange={this.changeQFormState.bind(this, 'liquidTemperatureOut')} />
+          </div>
+        </div>
 
         <h2>Output data</h2>
         <blockquote>
           Q = {Q.toFixed(2)} kW
         </blockquote>
         <div className='well well-sm text-muted' style={{marginTop:'10px'}}>
-          
+
           This Q value was set to localStorage as coolingCapacity. It can be used in other projects.
           <br />
           <code className={cpError===true?'text-danger':'text-muted'}>

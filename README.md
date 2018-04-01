@@ -59,6 +59,8 @@ Set as const value = 0.00 C
 - [x] **4.2 Freezing Temperature** should be able to be changed by user for percentage calc for required freezing temperature
 - [ ] **5. Chillers** calc for something brand for example
 - [x] **6. Tank volume** should be calculated by some input parameters. [Read more about it on page 80](http://yktstroy.ru/wp-content/uploads/2013/09/R_NOSTROI_2.15.4-2011.pdf).
+- [x] **7. Duct System calc** by tubes Length and Diameter. Internal `LiquidParameters` module updated. This calc could be enabled in **dPw total calc (see below)**.
+- [x] **8. Total Pressure Drop calc** added
 
 ## Original ReadMe
 

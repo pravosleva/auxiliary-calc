@@ -62,8 +62,8 @@ class Glycole extends Component {
   }
   getLiquidName(optionName) {
     switch (optionName) {
-      case 'MEG': return 'ETHYLENE GLYCOLE';
-      case 'MPG': return 'PROPYLENE GLYCOLE';
+      case 'MEG': return 'ETHYLENE';
+      case 'MPG': return 'PROPYLENE';
       default: return 'WATER';
     }
   }
@@ -81,48 +81,58 @@ class Glycole extends Component {
         <hr />
 
         <h2>Input data</h2>
-        <label>Liquid type</label>
-        <div className='input-group'>
-          <input className='form-control input-sm' value={this.getLiquidName(liquidType)} onChange={this.changeGlycoleFormState.bind(this, 'liquidType')} disabled />
-          <span className="input-group-btn dropdown">
-            <button className="btn btn-sm btn-secondary dropdown-toggle btn-default" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span>{liquidType}</span>&nbsp;&nbsp;<span className="caret"></span>
-            </button>
-            <ul className="dropdown-menu dropdown-menu-right" role="menu">
-              <li><a style={{cursor:'pointer'}}
-                className="dropdown-item"
-                value="MEG"
-                onClick={this.changeGlycoleFormState.bind( this, 'liquidType', {target:{value:"MEG"}} )}
-                >ETHYLENE GLYCOLE</a></li>
-              <li><a style={{cursor:'pointer'}}
-                className="dropdown-item"
-                value="MPG"
-                onClick={this.changeGlycoleFormState.bind( this, 'liquidType', {target:{value:"MPG"}} )}
-                >PROPYLENE GLYCOLE</a></li>
-              <li><a style={{cursor:'pointer'}}
-                className="dropdown-item"
-                value="WATER"
-                onClick={this.changeGlycoleFormState.bind( this, 'liquidType', {target:{value:"WATER"}} )}
-                >WATER</a></li>
-            </ul>
-          </span>
+        <div className='row'>
+          <div className='col-lg-6 col-md-6 col-sm-6 col-xs-6'>
+            <label>Percentage, %</label>
+            {/*
+            <select disabled={liquidType==='WATER'?true:false} className='form-control input-sm' value={percentage} onChange={this.changeGlycoleFormState.bind(this, 'percentage')}>
+              {
+                percentageRange.map((e, i) => <option key={i} value={e}>{e}</option>)
+              }
+            </select>
+            */}
+            <input disabled={liquidType==='WATER'?true:false} type='number' className='form-control input-sm' style={{MozAppearance:'textfield'}} value={percentage} onChange={this.changeGlycoleFormState.bind(this, 'percentage')} />
+          </div>
+          <div className='col-lg-6 col-md-6 col-sm-6 col-xs-6'>
+            <label>Liquid type</label>
+            <div className='input-group'>
+              <input className='form-control input-sm' value={this.getLiquidName(liquidType)} onChange={this.changeGlycoleFormState.bind(this, 'liquidType')} disabled />
+              <span className="input-group-btn dropdown">
+                <button className="btn btn-sm btn-secondary dropdown-toggle btn-default" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span>{liquidType}</span>&nbsp;&nbsp;<span className="caret"></span>
+                </button>
+                <ul className="dropdown-menu dropdown-menu-right" role="menu">
+                  <li><a style={{cursor:'pointer'}}
+                    className="dropdown-item"
+                    value="MEG"
+                    onClick={this.changeGlycoleFormState.bind( this, 'liquidType', {target:{value:"MEG"}} )}
+                    >ETHYLENE GLYCOLE</a></li>
+                  <li><a style={{cursor:'pointer'}}
+                    className="dropdown-item"
+                    value="MPG"
+                    onClick={this.changeGlycoleFormState.bind( this, 'liquidType', {target:{value:"MPG"}} )}
+                    >PROPYLENE GLYCOLE</a></li>
+                  <li><a style={{cursor:'pointer'}}
+                    className="dropdown-item"
+                    value="WATER"
+                    onClick={this.changeGlycoleFormState.bind( this, 'liquidType', {target:{value:"WATER"}} )}
+                    >WATER</a></li>
+                </ul>
+              </span>
+            </div>
+          </div>
+
         </div>
-        <label>Percentage, %</label>
-        {/*
-        <select disabled={liquidType==='WATER'?true:false} className='form-control input-sm' value={percentage} onChange={this.changeGlycoleFormState.bind(this, 'percentage')}>
-          {
-            percentageRange.map((e, i) => <option key={i} value={e}>{e}</option>)
-          }
-        </select>
-        */}
-        <input disabled={liquidType==='WATER'?true:false} className='form-control input-sm' value={percentage} onChange={this.changeGlycoleFormState.bind(this, 'percentage')} />
-
-        <label>Liquid Temperature, C</label>
-        <input disabled={true} className='form-control input-sm' value={temperature} onChange={this.changeGlycoleFormState.bind(this, 'temperature')} />
-
-        <label>Freezing Temperature, C</label>
-        <input disabled={true} className='form-control input-sm' value={freezingTemperature.toFixed(2)} onChange={this.changeGlycoleFormState.bind(this, 'freezingTemperature')} />
-
+        <div className='row'>
+          <div className='col-lg-6 col-md-6 col-sm-6 col-xs-6'>
+            <label>Liquid Temp., C</label>
+            <input disabled={true} type='number' style={{MozAppearance:'textfield'}} className='form-control input-sm' value={temperature} onChange={this.changeGlycoleFormState.bind(this, 'temperature')} />
+          </div>
+          <div className='col-lg-6 col-md-6 col-sm-6 col-xs-6'>
+            <label>Freezing Temp., C</label>
+            <input disabled={true} type='number' style={{MozAppearance:'textfield'}} className='form-control input-sm' value={freezingTemperature.toFixed(2)} onChange={this.changeGlycoleFormState.bind(this, 'freezingTemperature')} />
+          </div>
+        </div>
         <h2>Output data</h2>
         <blockquote>density = {density.toFixed(2)} kg/m<sup>3</sup></blockquote>
         <div className='well well-sm text-muted' style={{marginTop:'10px'}}>
