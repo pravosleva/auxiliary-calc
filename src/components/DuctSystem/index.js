@@ -5,7 +5,7 @@ import LiquidParameters from '../Liquid/LiquidParameters';// For cp calc
 import Switch from 'rc-switch';
 import '../../css/rc-switch-custom.css';
 
-class TubePressureDrop extends Component {
+class DuctSystem extends Component {
   constructor(props){
     super(props);
     //this.state = {};
@@ -140,7 +140,7 @@ class TubePressureDrop extends Component {
 
     return (
       <div>
-        <h1>Tube Pressure Drop</h1>
+        <h1>Duct System</h1>
         <hr />
 
         <h2>Input data</h2>
@@ -188,7 +188,7 @@ class TubePressureDrop extends Component {
         <h2>Output data*</h2>
         <blockquote>
           <span className={v>3?'text-danger':''}>dPw = {ductSystemPressureDrop.kPa.toFixed(1)} kPa x2 = {(ductSystemPressureDrop.kPa*2).toFixed(0)} kPa<br />
-          = {(ductSystemPressureDrop.kPa*2*0.1019716).toFixed(1)} mAq <span style={{color: 'lightgray'}}>= {(ductSystemPressureDrop.bar*2).toFixed(0)} bar</span></span><br/>
+          = {(ductSystemPressureDrop.kPa*2*0.1019716).toFixed(1)} mAq <span style={{color: 'lightgray'}}>= {(ductSystemPressureDrop.bar*2).toFixed(1)} bar</span></span><br/>
         </blockquote>
         <div className='well well-sm text-muted' style={{marginTop:'10px'}}>
           Re = {Re.toFixed(1)}<br />
@@ -257,4 +257,4 @@ class TubePressureDrop extends Component {
   }
 }
 
-export default TubePressureDrop;
+export default DuctSystem;
