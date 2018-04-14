@@ -39,5 +39,19 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <script>
+      $(document).ready(function (){
+
+        // ===== Scroll to Element ====
+        $(".scroll-by-local-link").click(function(e){
+          //console.log(e.target.attributes.href.nodeValue);
+          e.preventDefault();
+          $('html, body').animate({
+            scrollTop: ($(e.target.attributes.href.nodeValue).offset().top - 70)
+          }, 500);
+          $('.navbar-toggle').click();
+        });
+      });
+    </script>
   </body>
 </html>

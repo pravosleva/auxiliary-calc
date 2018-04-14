@@ -32,8 +32,9 @@ let LiquidParameters = (function() {
           });
           if (percentage > 45.0 || percentage < 25.0) {
             msg = `Кинематическая вязкость может быть расчитана корректно для ${liquidType} 20% .. 52%`;
+            result = 0.0;
           } else {
-            msg = `Kinematic Viscosity ${liquidType} ${percentage}% t = ${temperature} C`;
+            msg = `Kinematic Viscosity ${liquidType} ${percentage}% for t = ${temperature} C`;
           }
           break;
         case 'MPG':

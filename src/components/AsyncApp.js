@@ -3,7 +3,8 @@ import '../css/index.css';
 import Q from './Q';
 import Liquid from './Liquid';
 import Tank from './Tank';
-import DuctSystem from './DuctSystem';
+import TubeSystem from './TubeSystem';
+import Nav from './Nav';
 
 /*
 *                             COMPONENT STRUCTURE
@@ -19,37 +20,40 @@ import DuctSystem from './DuctSystem';
 class AsyncApp extends Component {
   render() {
     return (
-      <div className='container' style={{marginBottom:'35px'}}>
-        <div className='row'>
+      <div>
+        <Nav />
+        <div className='container' style={{marginBottom:'35px', marginTop:'40px'}}>
+          <div className='row'>
 
-          <div className='col-lg-4 col-md-4 col-sm-6 col-xs-12'>
-            <Liquid {...this.props} />
-          </div>
-
-          <div className='col-lg-4 col-md-4 col-sm-6 col-xs-12'>
-            <Q {...this.props} />
-          </div>
-
-          <div className='col-lg-4 col-md-4 col-sm-6 col-xs-12'>
-            <Tank {...this.props} />
-          </div>
-
-          {/*
-          <div className='col-lg-4 col-md-4 col-sm-6 col-xs-12'>
-
-            <h1>Something else</h1>
-            <hr />
-            <div className='alert alert-warning' style={{marginTop:'10px'}}>
-              <a href="#" className="close" data-dismiss="alert" aria-label="close">&times;</a>
-              In process...
+            <div className='col-lg-4 col-md-4 col-sm-6 col-xs-12'>
+              <Liquid {...this.props} />
             </div>
 
+            <div className='col-lg-4 col-md-4 col-sm-6 col-xs-12'>
+              <Q {...this.props} />
+            </div>
+
+            <div className='col-lg-4 col-md-4 col-sm-6 col-xs-12'>
+              <Tank {...this.props} />
+            </div>
+
+            {/*
+            <div className='col-lg-4 col-md-4 col-sm-6 col-xs-12'>
+
+              <h1>Something else</h1>
+              <hr />
+              <div className='alert alert-warning' style={{marginTop:'10px'}}>
+                <a href="#" className="close" data-dismiss="alert" aria-label="close">&times;</a>
+                In process...
+              </div>
+
+            </div>
+            */}
           </div>
-          */}
-        </div>
-        <div className='row'>
-          <div className='col-lg-4 col-md-4 col-sm-6 col-xs-12'>
-            <DuctSystem {...this.props} />
+          <div className='row'>
+            <div className='col-lg-4 col-md-4 col-sm-6 col-xs-12'>
+              <TubeSystem {...this.props} />
+            </div>
           </div>
         </div>
       </div>

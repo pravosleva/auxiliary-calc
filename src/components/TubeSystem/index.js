@@ -5,7 +5,7 @@ import LiquidParameters from '../Liquid/LiquidParameters';// For cp calc
 import Switch from 'rc-switch';
 import '../../css/rc-switch-custom.css';
 
-class DuctSystem extends Component {
+class TubeSystem extends Component {
   constructor(props){
     super(props);
     //this.state = {};
@@ -20,7 +20,7 @@ class DuctSystem extends Component {
     let {
       tubeDiameter, tubeLength, diameterOptions,
       PHE_dPw_kPa, PHE_dPw_mAq, Evap_dPw_kPa, Evap_dPw_mAq, free_dPw_kPa, free_dPw_mAq,
-      enableDuctSystem_switcher,
+      enableTubeSystem_switcher,
     } = obj.TubePressureDropFormState;
     switch(propName){
       case 'tubeDiameter': tubeDiameter = Number(e.target.value); break;
@@ -54,12 +54,12 @@ class DuctSystem extends Component {
     this.props.updateTubePressureDropFormState({
       tubeDiameter, tubeLength, diameterOptions,
       PHE_dPw_kPa, PHE_dPw_mAq, Evap_dPw_kPa, Evap_dPw_mAq, free_dPw_kPa, free_dPw_mAq,
-      enableDuctSystem_switcher,
+      enableTubeSystem_switcher,
     });
   }
   setLiquidVolumeToTankSection () {
     const { obj } = this.props;
-    let { tubeDiameter, tubeLength, diameterOptions, PHE_dPw_kPa, PHE_dPw_mAq, Evap_dPw_kPa, Evap_dPw_mAq, free_dPw_kPa, free_dPw_mAq, enableDuctSystem_switcher } = obj.TubePressureDropFormState;
+    let { tubeDiameter, tubeLength, diameterOptions, PHE_dPw_kPa, PHE_dPw_mAq, Evap_dPw_kPa, Evap_dPw_mAq, free_dPw_kPa, free_dPw_mAq, enableTubeSystem_switcher } = obj.TubePressureDropFormState;
     let { workTimeCoefficient, operatingModeTime, totalLiquidDuctSystemVolume } = obj.TankFormState,
       liquidVolumeInTubes = (Math.PI*(tubeDiameter/2)*tubeLength)*2; // x2 - т.к. туда и обратно
     this.props.updateTankFormState({ workTimeCoefficient, operatingModeTime, totalLiquidDuctSystemVolume: liquidVolumeInTubes });
@@ -69,7 +69,7 @@ class DuctSystem extends Component {
     myPromise.then(() => {
       const { obj } = this.props;
       let { liquidType, temperature, percentage } = obj.LiquidFormState,
-        { tubeDiameter, tubeLength, diameterOptions, PHE_dPw_kPa, PHE_dPw_mAq, Evap_dPw_kPa, Evap_dPw_mAq, free_dPw_kPa, free_dPw_mAq, enableDuctSystem_switcher } = obj.TubePressureDropFormState,
+        { tubeDiameter, tubeLength, diameterOptions, PHE_dPw_kPa, PHE_dPw_mAq, Evap_dPw_kPa, Evap_dPw_mAq, free_dPw_kPa, free_dPw_mAq, enableTubeSystem_switcher } = obj.TubePressureDropFormState,
         volumetricFlowRate = obj.QFormState.volumetricFlowRate,
         kinematicViscosity = LiquidParameters.getKinematicViscosity({ liquidType, percentage, temperature }).result;
       for(let i=0, max=diameterOptions.length; i<max; i++){
@@ -87,7 +87,7 @@ class DuctSystem extends Component {
         }
       }
 
-      this.props.updateTubePressureDropFormState({ tubeDiameter, tubeLength, diameterOptions, PHE_dPw_kPa, PHE_dPw_mAq, Evap_dPw_kPa, Evap_dPw_mAq, free_dPw_kPa, free_dPw_mAq, enableDuctSystem_switcher });
+      this.props.updateTubePressureDropFormState({ tubeDiameter, tubeLength, diameterOptions, PHE_dPw_kPa, PHE_dPw_mAq, Evap_dPw_kPa, Evap_dPw_mAq, free_dPw_kPa, free_dPw_mAq, enableTubeSystem_switcher });
     })
     .then(() => {
       const { obj } = this.props;
@@ -95,7 +95,7 @@ class DuctSystem extends Component {
         {
           tubeDiameter, tubeLength, diameterOptions,
           //PHE_dPw_kPa, PHE_dPw_mAq, Evap_dPw_kPa, Evap_dPw_mAq,
-          //enableDuctSystem_switcher,
+          //enableTubeSystem_switcher,
         } = obj.TubePressureDropFormState,
         liquidVolumeInTubes = (Math.PI*(tubeDiameter/2)*tubeLength)*2; // x2 - т.к. туда и обратно
       this.props.updateTankFormState({ workTimeCoefficient, operatingModeTime, totalLiquidDuctSystemVolume: liquidVolumeInTubes });
@@ -105,16 +105,16 @@ class DuctSystem extends Component {
     })
     .catch((err) => {alert(err)})
   }
-  enableDuctSystem (ev) {
+  enableTubeSystem (ev) {
     let { TubePressureDropFormState } = this.props.obj;
-    TubePressureDropFormState.enableDuctSystem_switcher = !TubePressureDropFormState.enableDuctSystem_switcher;
+    TubePressureDropFormState.enableTubeSystem_switcher = !TubePressureDropFormState.enableTubeSystem_switcher;
     this.props.updateTubePressureDropFormState( TubePressureDropFormState );
   }
   render() {
     const { obj } = this.props;
     let { liquidType, temperature, percentage } = obj.LiquidFormState;
     //let { liquidTemperatureIn, liquidTemperatureOut } = obj.QFormState;
-    let { tubeDiameter, tubeLength, diameterOptions, PHE_dPw_kPa, PHE_dPw_mAq, Evap_dPw_kPa, Evap_dPw_mAq, free_dPw_kPa, free_dPw_mAq, enableDuctSystem_switcher } = obj.TubePressureDropFormState;
+    let { tubeDiameter, tubeLength, diameterOptions, PHE_dPw_kPa, PHE_dPw_mAq, Evap_dPw_kPa, Evap_dPw_mAq, free_dPw_kPa, free_dPw_mAq, enableTubeSystem_switcher } = obj.TubePressureDropFormState;
     let cpObj = LiquidParameters.cp({ liquidType, percentage, temperature }),
       cp = cpObj.result, cpError = cpObj.error, cpReport = cpObj.report,
       density = obj.QFormState.density,
@@ -140,7 +140,7 @@ class DuctSystem extends Component {
 
     return (
       <div>
-        <h1>Duct System</h1>
+        <h1 id='tubeSystem'>Tube System</h1>
         <hr />
 
         <h2>Input data</h2>
@@ -181,7 +181,7 @@ class DuctSystem extends Component {
           <input type='number' style={{MozAppearance:'textfield'}} className='form-control input-sm' value={tubeLength} onChange={this.changeTubePressureDropFormState.bind(this, 'tubeLength')} />
           <span className='input-group-btn'>
             <button onClick={this.setLiquidVolumeToTankSection} className='btn btn-sm btn-primary'
-              style={{marginBottom: '0px'}}>Set Duct System Vol. to Tank section</button>
+              style={{marginBottom: '0px'}}>Set Tube System Vol. to Tank section</button>
           </span>
         </div>
 
@@ -198,13 +198,13 @@ class DuctSystem extends Component {
         </div>
 
         <h2>Additional</h2>
-        <label>Duct System {enableDuctSystem_switcher ? `enabled` : `disabled`}</label>
+        <label>Tube System {enableTubeSystem_switcher ? `enabled` : `disabled`}</label>
         <br />
         <center>
           <Switch
             id={"_nothing"}
-            onChange={this.enableDuctSystem.bind(this)}
-            checked={enableDuctSystem_switcher}
+            onChange={this.enableTubeSystem.bind(this)}
+            checked={enableTubeSystem_switcher}
             checkedChildren={'ON'}
             unCheckedChildren={'OFF'}
 
@@ -244,12 +244,12 @@ class DuctSystem extends Component {
         <div className='well well-sm text-muted' style={{marginTop:'0px'}}>
           PHE - Plate Heat Exchanger<br/>
           Evap - User Evaporator<br />
-          Free - Additional free pressure drop<br />
-          So, dPw <b>total</b> = {enableDuctSystem_switcher ? `Duct System* + ` : null}PHE + Evap + Free
+          Free - Additional Free Pressure Drop<br />
+          <code>So, dPw <b>total</b> = {enableTubeSystem_switcher ? `Tube System* + ` : null}PHE + Evap + Free</code>
         </div>
         <blockquote>
-          dPw <b>total</b> = {((enableDuctSystem_switcher ? Number(ductSystemPressureDrop.kPa)*2 : 0.0) +Number(PHE_dPw_kPa)+Number(Evap_dPw_kPa)+Number(free_dPw_kPa)).toFixed(0)} kPa<br/>
-          = {enableDuctSystem_switcher ? `${(ductSystemPressureDrop.kPa*2*0.1019716).toFixed(1)} + ` : null}{Number(PHE_dPw_mAq).toFixed(1)} + {Number(Evap_dPw_mAq).toFixed(1)} + {Number(free_dPw_mAq).toFixed(1)} = {( (enableDuctSystem_switcher ? Number(ductSystemPressureDrop.kPa*2*0.1019716) : 0.0)+Number(PHE_dPw_mAq)+Number(Evap_dPw_mAq)+Number(free_dPw_mAq)).toFixed(1)} mAq
+          dPw <b>total</b> = {((enableTubeSystem_switcher ? Number(ductSystemPressureDrop.kPa)*2 : 0.0) +Number(PHE_dPw_kPa)+Number(Evap_dPw_kPa)+Number(free_dPw_kPa)).toFixed(0)} kPa<br/>
+          = {enableTubeSystem_switcher ? `${(ductSystemPressureDrop.kPa*2*0.1019716).toFixed(1)} + ` : null}{Number(PHE_dPw_mAq).toFixed(1)} + {Number(Evap_dPw_mAq).toFixed(1)} + {Number(free_dPw_mAq).toFixed(1)} = {( (enableTubeSystem_switcher ? Number(ductSystemPressureDrop.kPa*2*0.1019716) : 0.0)+Number(PHE_dPw_mAq)+Number(Evap_dPw_mAq)+Number(free_dPw_mAq)).toFixed(1)} mAq
         </blockquote>
 
       </div>
@@ -257,4 +257,4 @@ class DuctSystem extends Component {
   }
 }
 
-export default DuctSystem;
+export default TubeSystem;

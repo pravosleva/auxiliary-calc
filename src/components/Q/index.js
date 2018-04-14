@@ -72,7 +72,7 @@ class Q extends Component {
 
     return (
       <div>
-        <h1>Q</h1>
+        <h1 id='q'>Q</h1>
         <hr />
 
         <h2>Input data</h2>

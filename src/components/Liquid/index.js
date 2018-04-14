@@ -77,7 +77,7 @@ class Glycole extends Component {
       percentageRange = LiquidParameters.density({liquidType, temperature, percentage}).diagram.percentage;
     return (
       <div>
-        <h1>Liquid</h1>
+        <h1 id='liquid'>Liquid</h1>
         <hr />
 
         <h2>Input data</h2>

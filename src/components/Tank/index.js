@@ -75,7 +75,7 @@ class Tank extends Component {
 
     return (
       <div>
-        <h1>Tank</h1>
+        <h1 id='tank'>Tank</h1>
         <hr />
 
         <h2>Input data</h2>
