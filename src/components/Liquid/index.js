@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import LiquidParameters from './LiquidParameters';
 //console.log(LiquidParameters.density({liquidType:'MEG', temperature:50, percentage:10}));
 
+import 'js-snackbar/dist/snackbar.css';
+//https://www.npmjs.com/package/js-snackbar
+import {show, ACTION_TYPE} from 'js-snackbar';
+//show({ text: 'Custom Error Message!', backgroundColor: '#F44336' });
+
 class Glycole extends Component {
   _getNumericValue(val){ return (val!=="" && !isNaN(val)) ? Number(val) : "" }
   changeGlycoleFormState(propName, e) {

@@ -5,6 +5,11 @@ import LiquidParameters from '../Liquid/LiquidParameters';// For cp calc
 import Switch from 'rc-switch';
 import '../../css/rc-switch-custom.css';
 
+import 'js-snackbar/dist/snackbar.css';
+//https://www.npmjs.com/package/js-snackbar
+import {show, ACTION_TYPE} from 'js-snackbar';
+//show({ text: 'Custom Error Message!', backgroundColor: '#F44336' });
+
 class TubeSystem extends Component {
   constructor(props){
     super(props);
@@ -101,9 +106,11 @@ class TubeSystem extends Component {
       this.props.updateTankFormState({ workTimeCoefficient, operatingModeTime, totalLiquidDuctSystemVolume: liquidVolumeInTubes });
     })
     .then(() => {
-      alert('Liquid volume in tube x2 was set to Tank section')
+      show({ text: 'Liquid volume in tube x2 was set to Tank section', customClass: 'snackbar-container-primary' }); // backgroundColor: 'rgb(51, 122, 183)'
     })
-    .catch((err) => {alert(err)})
+    .catch((err) => {
+      show({ text: `${err}`, backgroundColor: '#F44336', customClass: 'snackbar-container-primary' });
+    })
   }
   enableTubeSystem (ev) {
     let { TubePressureDropFormState } = this.props.obj;
@@ -111,29 +118,34 @@ class TubeSystem extends Component {
     this.props.updateTubePressureDropFormState( TubePressureDropFormState );
   }
   render() {
-    const { obj } = this.props;
-    let { liquidType, temperature, percentage } = obj.LiquidFormState;
-    //let { liquidTemperatureIn, liquidTemperatureOut } = obj.QFormState;
-    let { tubeDiameter, tubeLength, diameterOptions, PHE_dPw_kPa, PHE_dPw_mAq, Evap_dPw_kPa, Evap_dPw_mAq, free_dPw_kPa, free_dPw_mAq, enableTubeSystem_switcher } = obj.TubePressureDropFormState;
-    let cpObj = LiquidParameters.cp({ liquidType, percentage, temperature }),
-      cp = cpObj.result, cpError = cpObj.error, cpReport = cpObj.report,
-      density = obj.QFormState.density,
-      volumetricFlowRate = obj.QFormState.volumetricFlowRate,
-      liquidTemperatureIn = obj.QFormState.liquidTemperatureIn,
-      liquidTemperatureOut = obj.QFormState.liquidTemperatureOut;
-    //console.log(liquidTemperatureIn, liquidTemperatureOut);
-    let kinematicViscosity = LiquidParameters.getKinematicViscosity({ liquidType, percentage, temperature }).result,
-      about_kinematicViscosity = LiquidParameters.getKinematicViscosity({ liquidType, percentage, temperature }).msg,
-      Re = LiquidParameters.getRe({
-        diameter: tubeDiameter,
-        flow: volumetricFlowRate,
-        kinematicViscosity,
-      }).result,
-      v = LiquidParameters.getRe({ diameter: tubeDiameter, flow: volumetricFlowRate, kinematicViscosity }).v,
-      ductSystemPressureDrop = LiquidParameters.getTubePressureDrop({
+    try{
+      var { obj } = this.props;
+      var { liquidType, temperature, percentage } = obj.LiquidFormState;
+      //let { liquidTemperatureIn, liquidTemperatureOut } = obj.QFormState;
+      var { tubeDiameter, tubeLength, diameterOptions, PHE_dPw_kPa, PHE_dPw_mAq, Evap_dPw_kPa, Evap_dPw_mAq, free_dPw_kPa, free_dPw_mAq, enableTubeSystem_switcher } = obj.TubePressureDropFormState;
+      var cpObj = LiquidParameters.cp({ liquidType, percentage, temperature }),
+        cp = cpObj.result, cpError = cpObj.error, cpReport = cpObj.report,
+        density = obj.QFormState.density,
+        volumetricFlowRate = obj.QFormState.volumetricFlowRate,
+        liquidTemperatureIn = obj.QFormState.liquidTemperatureIn,
+        liquidTemperatureOut = obj.QFormState.liquidTemperatureOut;
+      //console.log(liquidTemperatureIn, liquidTemperatureOut);
+      var kinematicViscosity = LiquidParameters.getKinematicViscosity({ liquidType, percentage, temperature }).result,
+        about_kinematicViscosity = LiquidParameters.getKinematicViscosity({ liquidType, percentage, temperature }).msg,
+        Re = LiquidParameters.getRe({
+          diameter: tubeDiameter,
+          flow: volumetricFlowRate,
+          kinematicViscosity,
+        }).result,
+        v = LiquidParameters.getRe({ diameter: tubeDiameter, flow: volumetricFlowRate, kinematicViscosity }).v;
+      var tubeSystemPressureDrop = LiquidParameters.getTubePressureDrop({
         Re, tubeLength, tubeDiameter, density, v
       });
-    //console.log(Re, v)
+
+      //console.log(Re, v)
+    } catch (err) {
+      show({ text: `${err}`, backgroundColor: '#F44336' });
+    }
 
     // For other progects in this site:
     //localStorage.setItem('coolingCapacity', Q);
@@ -187,8 +199,8 @@ class TubeSystem extends Component {
 
         <h2>Output data*</h2>
         <blockquote>
-          <span className={v>3?'text-danger':''}>dPw = {ductSystemPressureDrop.kPa.toFixed(1)} kPa x2 = {(ductSystemPressureDrop.kPa*2).toFixed(0)} kPa<br />
-          = {(ductSystemPressureDrop.kPa*2*0.1019716).toFixed(1)} mAq <span style={{color: 'lightgray'}}>= {(ductSystemPressureDrop.bar*2).toFixed(1)} bar</span></span><br/>
+          <span className={v>3?'text-danger':''}>dPw = {tubeSystemPressureDrop.kPa.toFixed(1)} kPa x2 = {(tubeSystemPressureDrop.kPa*2).toFixed(0)} kPa<br />
+          = {(tubeSystemPressureDrop.kPa*2*0.1019716).toFixed(1)} mAq <span style={{color: 'lightgray'}}>= {(tubeSystemPressureDrop.bar*2).toFixed(1)} bar</span></span><br/>
         </blockquote>
         <div className='well well-sm text-muted' style={{marginTop:'10px'}}>
           Re = {Re.toFixed(1)}<br />
@@ -248,8 +260,8 @@ class TubeSystem extends Component {
           <code>So, dPw <b>total</b> = {enableTubeSystem_switcher ? `Tube System* + ` : null}PHE + Evap + Free</code>
         </div>
         <blockquote>
-          dPw <b>total</b> = {((enableTubeSystem_switcher ? Number(ductSystemPressureDrop.kPa)*2 : 0.0) +Number(PHE_dPw_kPa)+Number(Evap_dPw_kPa)+Number(free_dPw_kPa)).toFixed(0)} kPa<br/>
-          = {enableTubeSystem_switcher ? `${(ductSystemPressureDrop.kPa*2*0.1019716).toFixed(1)} + ` : null}{Number(PHE_dPw_mAq).toFixed(1)} + {Number(Evap_dPw_mAq).toFixed(1)} + {Number(free_dPw_mAq).toFixed(1)} = {( (enableTubeSystem_switcher ? Number(ductSystemPressureDrop.kPa*2*0.1019716) : 0.0)+Number(PHE_dPw_mAq)+Number(Evap_dPw_mAq)+Number(free_dPw_mAq)).toFixed(1)} mAq
+          dPw <b>total</b> = {((enableTubeSystem_switcher ? Number(tubeSystemPressureDrop.kPa)*2 : 0.0) +Number(PHE_dPw_kPa)+Number(Evap_dPw_kPa)+Number(free_dPw_kPa)).toFixed(0)} kPa<br/>
+          = {enableTubeSystem_switcher ? `${(tubeSystemPressureDrop.kPa*2*0.1019716).toFixed(1)} + ` : null}{Number(PHE_dPw_mAq).toFixed(1)} + {Number(Evap_dPw_mAq).toFixed(1)} + {Number(free_dPw_mAq).toFixed(1)} = {( (enableTubeSystem_switcher ? Number(tubeSystemPressureDrop.kPa*2*0.1019716) : 0.0)+Number(PHE_dPw_mAq)+Number(Evap_dPw_mAq)+Number(free_dPw_mAq)).toFixed(1)} mAq
         </blockquote>
 
       </div>
