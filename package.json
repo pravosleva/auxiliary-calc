@@ -5,6 +5,7 @@
   "dependencies": {
     "jquery": "^3.3.1",
     "js-snackbar": "^0.3.1",
+    "liquid-parameters": "^2.0.0",
     "rc-switch": "^1.6.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",

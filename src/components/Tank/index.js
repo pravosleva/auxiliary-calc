@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import LiquidParameters from '../Liquid/LiquidParameters';// For cp calc
-//import interpolate from '../interpolate';
+import LiquidParameters from 'liquid-parameters'; // For cp calc
+
 
 class Tank extends Component {
   constructor(props){

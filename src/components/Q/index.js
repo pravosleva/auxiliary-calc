@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import LiquidParameters from '../Liquid/LiquidParameters';// For cp calc
-//css..
+import LiquidParameters from 'liquid-parameters'; // For cp calc
+
 
 class Q extends Component {
   constructor(props){

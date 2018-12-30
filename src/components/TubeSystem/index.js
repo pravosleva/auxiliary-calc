@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import LiquidParameters from '../Liquid/LiquidParameters';// For cp calc
-//import interpolate from '../interpolate';
-
+import LiquidParameters from 'liquid-parameters'; // For cp calc
 import Switch from 'rc-switch';
-import '../../css/rc-switch-custom.css';
-
 import 'js-snackbar/dist/snackbar.css';
 //https://www.npmjs.com/package/js-snackbar
-import {show, ACTION_TYPE} from 'js-snackbar';
+import { show, ACTION_TYPE } from 'js-snackbar';
 //show({ text: 'Custom Error Message!', backgroundColor: '#F44336' });
+
+import '../../css/rc-switch-custom.css';
+
 
 class TubeSystem extends Component {
   constructor(props){
