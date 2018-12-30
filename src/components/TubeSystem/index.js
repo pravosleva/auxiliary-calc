@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import LiquidParameters from 'liquid-parameters'; // For cp calc
+// import LiquidParameters from 'liquid-parameters'; // For cp calc
+import LiquidParameters from './LiquidParameters'; // For cp calc
 import Switch from 'rc-switch';
 import 'js-snackbar/dist/snackbar.css';
 //https://www.npmjs.com/package/js-snackbar

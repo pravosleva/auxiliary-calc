@@ -10,7 +10,7 @@
   /*width: 44px;*/
   width: 55px;
   height: 22px;
-  line-height: 20px;
+  /* line-height: 20px; */
   vertical-align: middle;
   border-radius: 20px 20px;
   border: 1px solid dimgray;
@@ -26,6 +26,7 @@
   font-size: 12px;
   position: absolute;
   left: 22px;
+  transform: translateY(-50%);
 }
 .rc-switch:after {
   position: absolute;
@@ -80,6 +81,9 @@
 }
 .rc-switch-checked:after {
   left: 34px;
+}
+.rc-switch[aria-checked="false"] {
+  /* transform: translateX(-5px); */
 }
 .rc-switch-disabled {
   cursor: no-drop;
