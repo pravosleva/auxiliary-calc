@@ -51,6 +51,15 @@
           }, 500);
           $('.navbar-toggle').click();
         });
+
+        // ===== Blur =====
+        $(".input-sm").keypress(function(e){
+          // console.log(e.which);
+          if (e.which == 13) {
+            $(this).blur();
+            return false;    //<---- Add this line
+          }
+        })
       });
     </script>
   </body>
