@@ -76,21 +76,21 @@ class Q extends Component {
         <hr />
 
         <h2>Input data</h2>
-        <label>cp, kJ/kg.K <span style={{color: 'lightgray'}}>[ density = {density.toFixed(2)} kg/m3 ]</span></label>
-        <input disabled className='form-control input-sm' value={cp.toFixed(2)} />{/* onChange={this.changeQFormState.bind(this, 'cp')}*/}
+        <label>cp, kJ/kg.K<br /><span style={{color: 'lightgray'}}>[ density = {density.toFixed(2)} kg/m3, {liquidType} {percentage}% ]</span></label>
+        <input disabled className='form-control' value={cp.toFixed(2)} />{/* onChange={this.changeQFormState.bind(this, 'cp')}*/}
         {/*<label className='text-muted pull-right'>density = {density.toFixed(2)} kg/m3</label>*/}
-        {/*<input disabled className='form-control input-sm' value={density.toFixed(2)} />
+        {/*<input disabled className='form-control' value={density.toFixed(2)} />
         <br />*/}
         <label>Volumetric flow rate, m3/h <span style={{color: 'lightgray'}}>[ = {(volumetricFlowRate*1000/3600).toFixed(2)} l/sec ]</span></label>
-        <input type='number' style={{MozAppearance:'textfield'}} className='form-control input-sm' value={volumetricFlowRate} onChange={this.changeQFormState.bind(this, 'volumetricFlowRate')} />
+        <input type='number' style={{MozAppearance:'textfield'}} className='form-control' value={volumetricFlowRate} onChange={this.changeQFormState.bind(this, 'volumetricFlowRate')} />
         <div className='row'>
           <div className='col-lg-6 col-md-6 col-sm-6 col-xs-6'>
-            <label>Liquid Temp. in, C</label>
-            <input type='number' style={{MozAppearance:'textfield'}} className='form-control input-sm' value={liquidTemperatureIn} onChange={this.changeQFormState.bind(this, 'liquidTemperatureIn')} />
+            <label>Liquid t in, C</label>
+            <input type='number' style={{MozAppearance:'textfield'}} className='form-control' value={liquidTemperatureIn} onChange={this.changeQFormState.bind(this, 'liquidTemperatureIn')} />
           </div>
           <div className='col-lg-6 col-md-6 col-sm-6 col-xs-6'>
-            <label>Liquid Temp. out, C</label>
-            <input type='number' style={{MozAppearance:'textfield'}} className='form-control input-sm' value={liquidTemperatureOut} onChange={this.changeQFormState.bind(this, 'liquidTemperatureOut')} />
+            <label>Liquid t out, C</label>
+            <input type='number' style={{MozAppearance:'textfield'}} className='form-control' value={liquidTemperatureOut} onChange={this.changeQFormState.bind(this, 'liquidTemperatureOut')} />
           </div>
         </div>
 

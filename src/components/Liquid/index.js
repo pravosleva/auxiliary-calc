@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import LiquidParameters from 'liquid-parameters';
 // console.log(LiquidParameters.density({liquidType:'MEG', temperature:50, percentage:10}));
-import 'js-snackbar/dist/snackbar.css';
+// import 'js-snackbar/dist/snackbar.css';
 // https://www.npmjs.com/package/js-snackbar
-import {show, ACTION_TYPE} from 'js-snackbar';
+// import {show, ACTION_TYPE} from 'js-snackbar';
 // show({ text: 'Custom Error Message!', backgroundColor: '#F44336' });
 
 
@@ -96,15 +96,52 @@ class Glycole extends Component {
               }
             </select>
             */}
-            <input disabled={liquidType==='WATER'?true:false} type='number' className='form-control input-sm' style={{MozAppearance:'textfield'}} value={percentage} onChange={this.changeGlycoleFormState.bind(this, 'percentage')} />
+            <input disabled={liquidType==='WATER'?true:false} type='number' className='form-control' style={{MozAppearance:'textfield'}} value={percentage} onChange={this.changeGlycoleFormState.bind(this, 'percentage')} />
           </div>
           <div className='col-lg-6 col-md-6 col-sm-6 col-xs-6'>
             <label>Liquid type</label>
-            <div className='input-group'>
-              <input className='form-control input-sm' value={this.getLiquidName(liquidType)} onChange={this.changeGlycoleFormState.bind(this, 'liquidType')} disabled />
-              <span className="input-group-btn dropdown">
-                <button className="btn btn-sm btn-secondary dropdown-toggle btn-default" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <span>{liquidType}</span>&nbsp;&nbsp;<span className="caret"></span>
+            <div
+              // className='input-group'
+              style={{
+                display: 'flex',
+                justifyContent: 'flex-start',
+              }}
+            >
+              <input
+                className='form-control'
+                value={this.getLiquidName(liquidType)}
+                onChange={this.changeGlycoleFormState.bind(this, 'liquidType')}
+                disabled
+                style={{
+                  width: 'calc(100% - 80px)',
+                  // marginRight: '10px'
+                  borderRadius: '4px 0 0 4px',
+                  borderRight: 'none'
+                }}
+              />
+              <div
+                className="dropdown"
+                style={{
+                  width: 'auto',
+                  lineHeight: 'inherit',
+                  height: '34px'
+                }}
+              >
+                <button
+                  className="btn dropdown-toggle btn-default"
+                  type="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  style={{
+                    lineHeight: 'inherit',
+                    height: '34px',
+                    width: '80px',
+                    borderRadius: '0 4px 4px 0',
+                    outline: 'none'
+                  }}
+                >
+                  <span><span>{liquidType}</span>&nbsp;<span className="caret"></span></span>
                 </button>
                 <ul className="dropdown-menu dropdown-menu-right" role="menu">
                   <li><a style={{cursor:'pointer'}}
@@ -123,19 +160,19 @@ class Glycole extends Component {
                     onClick={this.changeGlycoleFormState.bind( this, 'liquidType', {target:{value:"WATER"}} )}
                     >WATER</a></li>
                 </ul>
-              </span>
+              </div>
             </div>
           </div>
 
         </div>
         <div className='row'>
           <div className='col-lg-6 col-md-6 col-sm-6 col-xs-6'>
-            <label>Liquid Temp., C</label>
-            <input disabled={true} type='number' style={{MozAppearance:'textfield'}} className='form-control input-sm' value={temperature} onChange={this.changeGlycoleFormState.bind(this, 'temperature')} />
+            <label>Liquid t, C</label>
+            <input disabled={true} type='number' style={{MozAppearance:'textfield'}} className='form-control' value={temperature} onChange={this.changeGlycoleFormState.bind(this, 'temperature')} />
           </div>
           <div className='col-lg-6 col-md-6 col-sm-6 col-xs-6'>
-            <label>Freezing Temp., C</label>
-            <input disabled={true} type='number' style={{MozAppearance:'textfield'}} className='form-control input-sm' value={freezingTemperature.toFixed(2)} onChange={this.changeGlycoleFormState.bind(this, 'freezingTemperature')} />
+            <label>Freezing t, C</label>
+            <input disabled={true} type='number' style={{MozAppearance:'textfield'}} className='form-control' value={freezingTemperature.toFixed(2)} onChange={this.changeGlycoleFormState.bind(this, 'freezingTemperature')} />
           </div>
         </div>
         <h2>Output data</h2>

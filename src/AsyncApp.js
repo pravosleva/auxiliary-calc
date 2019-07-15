@@ -1,21 +1,11 @@
 import React, { Component } from 'react';
-import '../css/index.css';
-import Q from './Q';
-import Liquid from './Liquid';
-import Tank from './Tank';
-import TubeSystem from './TubeSystem';
-import Nav from './Nav';
 
-/*
-*                             COMPONENT STRUCTURE
-*
-* - AsyncApp
-    props = {
-      obj: state,
-      updateQFormState (fs),
-      updateGlycoleFormState (fs),
-    }
-*/
+import Q from './components/Q';
+import Liquid from './components/Liquid';
+import Tank from './components/Tank';
+import TubeSystem from './components/TubeSystem';
+import Nav from './components/Nav';
+
 
 class AsyncApp extends Component {
   render() {

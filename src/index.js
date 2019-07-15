@@ -1,13 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
+// import 'js-snackbar/dist/snackbar.css';
+
+import './css/js-snackbar.css';
+import './css/bootstrap-3.3.7.css';
 import './css/index.css';
-import AsyncApp from './components/AsyncApp';
+import AsyncApp from './AsyncApp';
 //import registerServiceWorker from './registerServiceWorker';
-import stt from './reducers';
+import state from './reducers';
 
 const store = createStore(
-  stt,
+  state,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
 );
 const rootEl = document.getElementById('root');

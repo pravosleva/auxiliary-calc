@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 // import LiquidParameters from 'liquid-parameters'; // For cp calc
 import LiquidParameters from './LiquidParameters'; // For cp calc
 import Switch from 'rc-switch';
-import 'js-snackbar/dist/snackbar.css';
 //https://www.npmjs.com/package/js-snackbar
 import { show, ACTION_TYPE } from 'js-snackbar';
 //show({ text: 'Custom Error Message!', backgroundColor: '#F44336' });
@@ -96,7 +95,7 @@ class TubeSystem extends Component {
     })
     .then(() => {
       const { obj } = this.props;
-      let { workTimeCoefficient, operatingModeTime, totalLiquidDuctSystemVolume } = obj.TankFormState,
+      const { workTimeCoefficient, operatingModeTime, totalLiquidDuctSystemVolume } = obj.TankFormState,
         {
           tubeDiameter, tubeLength, diameterOptions,
           //PHE_dPw_kPa, PHE_dPw_mAq, Evap_dPw_kPa, Evap_dPw_mAq,
@@ -113,7 +112,7 @@ class TubeSystem extends Component {
     })
   }
   enableTubeSystem (ev) {
-    let { TubePressureDropFormState } = this.props.obj;
+    const { TubePressureDropFormState } = this.props.obj;
     TubePressureDropFormState.enableTubeSystem_switcher = !TubePressureDropFormState.enableTubeSystem_switcher;
     this.props.updateTubePressureDropFormState( TubePressureDropFormState );
   }
@@ -158,10 +157,20 @@ class TubeSystem extends Component {
         <h2>Input data</h2>
         <label>Tube Diameter</label>
         <div className='input-group'>
-          <span className='input-group-btn'>
-            <button onClick={this.setOptimalDiameter} className='btn btn-sm btn-primary'>Set Optimal Diameter</button>
-          </span>
-          <select className="form-control input-sm" value={tubeDiameter} onChange={this.changeTubePressureDropFormState.bind(this, 'tubeDiameter')}>
+          <div className='input-group-btn'>
+            <button
+              onClick={this.setOptimalDiameter}
+              className='btn btn-primary'
+              style={{
+                lineHeight: 'inherit',
+                height: '34px',
+                outline: 'none'
+              }}
+            >
+                Set Optimal Diameter
+            </button>
+          </div>
+          <select style={{ borderLeft: 'none' }} className="form-control" value={tubeDiameter} onChange={this.changeTubePressureDropFormState.bind(this, 'tubeDiameter')}>
             {/*
             <option value='0.0127'>1/2 inch</option>
             <option value='0.01905'>3/4</option>
@@ -190,11 +199,21 @@ class TubeSystem extends Component {
         </div>
         <label>Tube Length, m</label>
         <div className='input-group'>
-          <input type='number' style={{MozAppearance:'textfield'}} className='form-control input-sm' value={tubeLength} onChange={this.changeTubePressureDropFormState.bind(this, 'tubeLength')} />
-          <span className='input-group-btn'>
-            <button onClick={this.setLiquidVolumeToTankSection} className='btn btn-sm btn-primary'
-              style={{marginBottom: '0px'}}>Set Tube System Vol. to Tank section</button>
-          </span>
+          <input type='number' style={{MozAppearance:'textfield'}} className='form-control' value={tubeLength} onChange={this.changeTubePressureDropFormState.bind(this, 'tubeLength')} />
+          <div className='input-group-btn'>
+            <button
+              onClick={this.setLiquidVolumeToTankSection}
+              className='btn btn-primary'
+              style={{
+                marginBottom: '0px',
+                lineHeight: 'inherit',
+                height: '34px',
+                outline: 'none'
+              }}
+            >
+              Set Tube System Vol. to Tank section
+            </button>
+          </div>
         </div>
 
         <h2>Output data*</h2>
@@ -225,31 +244,31 @@ class TubeSystem extends Component {
         <div className='row'>
           <div className='col-lg-6 col-md-6 col-sm-6 col-xs-6'>
             <label>PHE, kPa</label>
-            <input type='number' style={{MozAppearance:'textfield'}} className='form-control input-sm' value={PHE_dPw_kPa} onChange={this.changeTubePressureDropFormState.bind(this, 'PHE_dPw_kPa')} />
+            <input type='number' style={{MozAppearance:'textfield'}} className='form-control' value={PHE_dPw_kPa} onChange={this.changeTubePressureDropFormState.bind(this, 'PHE_dPw_kPa')} />
           </div>
           <div className='col-lg-6 col-md-6 col-sm-6 col-xs-6'>
             <label>PHE, mAq</label>
-            <input type='number' style={{MozAppearance:'textfield'}} className='form-control input-sm' value={PHE_dPw_mAq} onChange={this.changeTubePressureDropFormState.bind(this, 'PHE_dPw_mAq')} />
+            <input type='number' style={{MozAppearance:'textfield'}} className='form-control' value={PHE_dPw_mAq} onChange={this.changeTubePressureDropFormState.bind(this, 'PHE_dPw_mAq')} />
           </div>
         </div>
         <div className='row'>
           <div className='col-lg-6 col-md-6 col-sm-6 col-xs-6'>
             <label>Evap, kPa</label>
-            <input type='number' style={{MozAppearance:'textfield'}} className='form-control input-sm' value={Evap_dPw_kPa} onChange={this.changeTubePressureDropFormState.bind(this, 'Evap_dPw_kPa')} />
+            <input type='number' style={{MozAppearance:'textfield'}} className='form-control' value={Evap_dPw_kPa} onChange={this.changeTubePressureDropFormState.bind(this, 'Evap_dPw_kPa')} />
           </div>
           <div className='col-lg-6 col-md-6 col-sm-6 col-xs-6'>
             <label>Evap, mAq</label>
-            <input type='number' style={{MozAppearance:'textfield'}} className='form-control input-sm' value={Evap_dPw_mAq} onChange={this.changeTubePressureDropFormState.bind(this, 'Evap_dPw_mAq')} />
+            <input type='number' style={{MozAppearance:'textfield'}} className='form-control' value={Evap_dPw_mAq} onChange={this.changeTubePressureDropFormState.bind(this, 'Evap_dPw_mAq')} />
           </div>
         </div>
         <div className='row'>
           <div className='col-lg-6 col-md-6 col-sm-6 col-xs-6'>
             <label>Free, kPa</label>
-            <input type='number' style={{MozAppearance:'textfield'}} className='form-control input-sm' value={free_dPw_kPa} onChange={this.changeTubePressureDropFormState.bind(this, 'free_dPw_kPa')} />
+            <input type='number' style={{MozAppearance:'textfield'}} className='form-control' value={free_dPw_kPa} onChange={this.changeTubePressureDropFormState.bind(this, 'free_dPw_kPa')} />
           </div>
           <div className='col-lg-6 col-md-6 col-sm-6 col-xs-6'>
             <label>Free, mAq</label>
-            <input type='number' style={{MozAppearance:'textfield'}} className='form-control input-sm' value={free_dPw_mAq} onChange={this.changeTubePressureDropFormState.bind(this, 'free_dPw_mAq')} />
+            <input type='number' style={{MozAppearance:'textfield'}} className='form-control' value={free_dPw_mAq} onChange={this.changeTubePressureDropFormState.bind(this, 'free_dPw_mAq')} />
           </div>
         </div>
         <label>Description</label>
