@@ -4568,9 +4568,10 @@ levn@^0.3.0, levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
-liquid-parameters@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/liquid-parameters/-/liquid-parameters-2.0.0.tgz#5057dd12e3d9a586770153e3994c6009e409b1e1"
+liquid-parameters@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/liquid-parameters/-/liquid-parameters-2.1.1.tgz#87209b00a5308982ab7566432a100f1c386140ed"
+  integrity sha512-VeexCj+HWJi2ydSGYlK1BbwAvqhSdgByrOc+zqL09peXC8W8bLLADTPft+21NhQ0MHLt5WaVYM5c3ux+TYEELw==
   dependencies:
     interpolate-by-pravosleva "2"
 
