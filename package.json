@@ -3,7 +3,7 @@
   "version": "0.1.1",
   "private": true,
   "dependencies": {
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "js-snackbar": "^0.3.1",
     "liquid-parameters": "^2.1.1",
     "rc-switch": "^1.6.0",
